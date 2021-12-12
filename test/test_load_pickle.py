@@ -1,7 +1,7 @@
 import pickle
 
 # Load
-with open('artifacts/cnn_mnist/example_mnist_agingevosearch_state.pickle', 'rb') as f:
+with open('../artifacts/cnn_mnist/example_mnist_agingevosearch_state.pickle', 'rb') as f:
   end_point = pickle.load(f)
 
 print("end_point:",end_point)
@@ -19,7 +19,7 @@ from architecture import Architecture
 from cnn import CnnSearchSpace
 from resource_models.models import model_size, peak_memory_usage
 
-output_dir = "tmp/tflite"
+output_dir = "../tmp/tflite"
 
 cnn_arch = end_point[0].point.arch
 
