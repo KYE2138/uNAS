@@ -1,7 +1,7 @@
 import pickle
 
 # Load
-with open('artifacts/cnn_mnist/example_mnist_agingevosearch_state.pickle', 'rb') as f:
+with open('artifacts/cnn_speech_commands/example_cnn_speech_commands_aging_agingevosearch_state.pickle', 'rb') as f:
   end_point = pickle.load(f)
 
 print("end_point:",end_point)
@@ -23,7 +23,7 @@ output_dir = "tmp/tflite"
 
 cnn_arch = end_point[5].point.arch
 
-input_shape = (28, 28, 1)
+input_shape = (49, 40, 1)
 num_classes = 10
 
 
@@ -43,4 +43,4 @@ def convert_to_tflite(arch, output_file):
     with open(output_file, "wb") as f:
         f.write(model_bytes)
 
-convert_to_tflite(cnn_arch, output_file=f"{output_dir}/end_point[0]_point_arch.tflite")
+convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_end_point[t]_point_arch.tflite")
