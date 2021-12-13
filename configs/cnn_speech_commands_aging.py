@@ -19,7 +19,7 @@ def lr_schedule(epoch):
 
 training_config = TrainingConfig(
     dataset=SpeechCommands("/datasets/speech_commands_v0.02"),
-    epochs=45,
+    epochs=5,
     batch_size=50,
     optimizer=lambda: AdamW(lr=0.0005, weight_decay=1e-5),
     callbacks=lambda: [
@@ -29,7 +29,7 @@ training_config = TrainingConfig(
 
 search_config = AgingEvoConfig(
     search_space=CnnSearchSpace(),
-    rounds=2000,
+    rounds=2,
     checkpoint_dir="artifacts/cnn_speech_commands"
 )
 
