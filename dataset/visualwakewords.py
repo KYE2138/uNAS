@@ -26,7 +26,7 @@ class VisualWakeWords(Dataset):
                 "image/class/label": tf.io.FixedLenFeature([], tf.int64),
                 "image/encoded": tf.io.FixedLenFeature([], tf.string)
             })
-            img = tf.io.decode_jpeg(parsed["image/encoded"], channels=3)
+            img = tf.io.decode_jpeg(parsed["image/encoded"], channels=1)
             label = parsed["image/class/label"]
 
             # Follow the "mobilenet_v1" preprocessing (= "inception" preprocessing) from:
@@ -88,6 +88,6 @@ class VisualWakeWords(Dataset):
 
     @property
     def input_shape(self) -> Tuple[int, int, int]:
-        return self.img_size + (3, )
+        return self.img_size + (1, )
 
 
