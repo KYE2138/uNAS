@@ -11,7 +11,7 @@ from .utils import with_probability, random_shift, random_rotate
 class VisualWakeWords(Dataset):
     """Provides the Visual Wake Words dataset (https://arxiv.org/abs/1906.05721) from the generated TFRecords."""
 
-    def __init__(self, records_dir, validation_split=10000, img_size=(192, 220)):
+    def __init__(self, records_dir, validation_split=10000, img_size=(96, 96)):
         self.records_dir = Path(records_dir)
         self.train_records = sorted(p.as_posix() for p in self.records_dir.glob("train.record-*"))
         self.val_records = sorted(p.as_posix() for p in self.records_dir.glob("val.record-*"))
