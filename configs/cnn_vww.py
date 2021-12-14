@@ -6,16 +6,17 @@ from dataset import VisualWakeWords
 from cnn import CnnSearchSpace
 
 training_config = TrainingConfig(
-    dataset=VisualWakeWords("/datasets/COCO/2014/records"),
+    dataset=VisualWakeWords("/storage/data/visualwakewords"),
     optimizer=lambda: tfa.optimizers.SGDW(learning_rate=0.001, weight_decay=5e-5),
-    batch_size=64,
-    epochs=30,
+    batch_size=1,
+    epochs=1,
     callbacks=lambda: [EarlyStopping(patience=15, verbose=1)]
 )
 
 search_config = BayesOptConfig(
     search_space=CnnSearchSpace(),
-    starting_points=15,
+    starting_points=1,
+    rounds= 2,
     checkpoint_dir="artifacts/cnn_vww"
 )
 

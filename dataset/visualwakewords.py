@@ -33,6 +33,8 @@ class VisualWakeWords(Dataset):
             # https://github.com/tensorflow/models/blob/master/research/slim/preprocessing/inception_preprocessing.py
             img = tf.image.central_crop(img, central_fraction=0.875)
             img = tf.image.resize(img, self.img_size)
+            
+            print("------------------------",img)
 
             img = tf.cast(img, tf.float32) / 255   # Standard image conventions
             return img, label
@@ -87,3 +89,5 @@ class VisualWakeWords(Dataset):
     @property
     def input_shape(self) -> Tuple[int, int, int]:
         return self.img_size + (3, )
+
+
