@@ -7,6 +7,10 @@ from config import TrainingConfig
 from pruning import DPFPruning
 from utils import debug_mode
 
+# GPU mem issue
+config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
+sess = tf.compat.v1.Session(config=config)
+
 
 class ModelTrainer:
     """Trains Keras models according to the specified config."""
