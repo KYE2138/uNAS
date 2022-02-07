@@ -12,10 +12,11 @@ from search_algorithms import BayesOpt
 
 
 def main():
+    # 設定log
     logging.basicConfig(level=logging.INFO,
                         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     log = logging.getLogger("Driver")
-
+    # 取得參數
     parser = argparse.ArgumentParser("uNAS Search")
     parser.add_argument("config_file", type=str, help="A config file describing the search parameters")
     parser.add_argument("--name", type=str, help="Experiment name (for disambiguation during state saving)")
@@ -23,35 +24,42 @@ def main():
     parser.add_argument("--save-every", type=int, default=5, help="After how many search steps to save the state")
     parser.add_argument("--seed", type=int, default=0, help="A seed for the global NumPy and TensorFlow random state")
     args = parser.parse_args()
-
+    
+    # 設定隨機變數seed
     np.random.seed(args.seed)
     tf.random.set_seed(args.seed)
-
+    
+    # gpu相關
     gpus = tf.config.experimental.list_physical_devices("GPU")
     for gpu in gpus:
         tf.config.experimental.set_memory_growth(gpu, True)
-
+    
+    # 檢查參數
     if args.save_every <= 0:
         raise argparse.ArgumentTypeError("Value for '--save-every' must be a positive integer.")
-
+    
+    # 執行config_file(.py)內之code,configs 則是全域變數(以字典型態儲存)
     configs = {}
     exec(Path(args.config_file).read_text(), configs)
-
+    
+    # 若執行完config_file後, 並未設定search_algorithm參數, 則將algo設定維BayesOpt
     if "search_algorithm" not in configs:
         algo = BayesOpt
     else:
         algo = configs["search_algorithm"]
-
+    
+    # 獲取config_file內之參數值
     search_space = configs["search_config"].search_space
     dataset = configs["training_config"].dataset
     search_space.input_shape = dataset.input_shape
     search_space.num_classes = dataset.num_classes
-
+    
+    # 設定搜尋演算法, algo(class)為uNAS/search_algorithms下之.py中的class
     search = algo(experiment_name=args.name or "search",
                   search_config=configs["search_config"],
                   training_config=configs["training_config"],
                   bound_config=configs["bound_config"])
-
+    # 開始搜尋, search為uNAS/search_algorithms下之.py中的class的method
     if args.load_from and not os.path.exists(args.load_from):
         log.warning("Search state file to load from is not found, the search will start from scratch.")
         args.load_from = None
