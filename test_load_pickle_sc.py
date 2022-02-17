@@ -3,12 +3,17 @@ import pickle
 # Load
 with open('artifacts/cnn_speech_commands/example_cnn_speech_commands_struct_pru_agingevosearch_state.pickle', 'rb') as f:
   end_point = pickle.load(f)
-
+print("------------------------------")
 print("end_point:",end_point)
+print("------------------------------")
 print("len of end_point:",len(end_point))
+print("------------------------------")
 print("type of end_point[0]:",type(end_point[0]))
+print("------------------------------")
 print("end_point[0].point.arch:",end_point[0].point.arch)
+print("------------------------------")
 print("end_point[0].point.arch.to_keras_model((28,28,1),10):",end_point[0].point.arch.to_keras_model((28,28,1),10))
+print("------------------------------")
 model = end_point[0].point.arch.to_keras_model((28,28,1),10)
 model.summary()
 
