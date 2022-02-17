@@ -1,7 +1,7 @@
 import pickle
 
 # Load
-with open('artifacts/cnn_speech_commands/example_cnn_speech_commands_aging_agingevosearch_state.pickle', 'rb') as f:
+with open('artifacts/cnn_speech_commands/example_cnn_speech_commands_struct_pru_agingevosearch_state.pickle', 'rb') as f:
   end_point = pickle.load(f)
 
 print("end_point:",end_point)
