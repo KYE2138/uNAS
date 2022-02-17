@@ -35,8 +35,8 @@ def convert_to_tflite(arch, output_file):
     converter.representative_dataset = \
         lambda: [[np.random.random((1,) + input_shape).astype("float32")] for _ in range(5)]
     converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
-    converter.inference_input_type = tf.uint8
-    converter.inference_output_type = tf.uint8
+    converter.inference_input_type = tf.int8
+    converter.inference_output_type = tf.int8
     model_bytes = converter.convert()
 
  
