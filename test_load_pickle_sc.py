@@ -26,7 +26,7 @@ from resource_models.models import model_size, peak_memory_usage
 
 output_dir = "tmp/tflite"
 
-cnn_arch = end_point[5].point.arch
+cnn_arch = end_point[1999].point.arch
 
 input_shape = (49, 40, 1)
 num_classes = 10
