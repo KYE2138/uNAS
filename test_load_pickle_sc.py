@@ -20,6 +20,10 @@ input_shape = (49, 40, 1)
 num_classes = 10
 
 
+def get_resource_requirements(arch: Architecture):
+    rg = arch.to_resource_graph(input_shape, num_classes)
+    return model_size(rg), peak_memory_usage(rg, exclude_inputs=False)
+
 def convert_to_tflite(arch, output_file):
     model = arch.to_keras_model(input_shape, num_classes)
     model.summary()
@@ -32,10 +36,16 @@ def convert_to_tflite(arch, output_file):
     converter.inference_input_type = tf.int8
     converter.inference_output_type = tf.int8
     model_bytes = converter.convert()
-
  
     with open(output_file, "wb") as f:
         f.write(model_bytes)
+
 for i in range(1, 21):
   cnn_arch = end_point[i*100-1].point.arch
   convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_end_point[{i*100-1}]_point_arch.tflite")
+  ms, pmu = get_resource_requirements(cnn_arch)
+  print("------------------------------")
+  print(f"model_size of speech_command_end_point[{i*100-1}]_point_arch:", ms)
+  print(f"peak_memory_usage of speech_command_end_point[{i*100-1}]_point_arch:", pmu)
+  print("------------------------------")
+
