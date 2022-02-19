@@ -2,10 +2,19 @@ import pickle
 
 # Load
 with open('artifacts/cnn_speech_commands/example_cnn_speech_commands_struct_pru_agingevosearch_state.pickle', 'rb') as f:
-  end_point = pickle.load(f)
+  EvaluatedPoint = pickle.load(f)
 print("------------------------------")
-print("len of end_point:",len(end_point))
-print("------------------------------")
+print("len of EvaluatedPoint:",len(EvaluatedPoint))
+print("-----------------------------")
+'''
+@dataclass
+class EvaluatedPoint:
+    point: ArchitecturePoint
+    val_error: float
+    test_error: float
+    resource_features: List[Union[int, float]]
+''' 
+  
   
 import numpy as np
 import tensorflow as tf
@@ -41,11 +50,18 @@ def convert_to_tflite(arch, output_file):
         f.write(model_bytes)
 
 for i in range(1, 21):
-  cnn_arch = end_point[i*100-1].point.arch
+  val_error = EvaluatedPoint[i*100-1].val_error
+  test_error = EvaluatedPoint[i*100-1].test_error
+  resource_features = EvaluatedPoint[i*100-1].resource_features
+  cnn_arch = EvaluatedPoint[i*100-1].point.arch
+  print("------------------------------")
+  print(f"val_error of speech_command_end_point[{i*100-1}]_point_arch:", val_error)
+  print(f"test_error of speech_command_end_point[{i*100-1}]_point_arch:", test_error)
+  print("resource_features: [peak_memory_usage, model_size, inference_latency]")
+  print(f"resource_features of speech_command_end_point[{i*100-1}]_point_arch:", resource_features)
+  print("------------------------------")
+  
   convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_end_point[{i*100-1}]_point_arch.tflite")
-  ms, pmu = get_resource_requirements(cnn_arch)
-  print("------------------------------")
-  print(f"model_size of speech_command_end_point[{i*100-1}]_point_arch:", ms)
-  print(f"peak_memory_usage of speech_command_end_point[{i*100-1}]_point_arch:", pmu)
-  print("------------------------------")
+
+  
 
