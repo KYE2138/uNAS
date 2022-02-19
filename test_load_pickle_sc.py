@@ -47,5 +47,6 @@ def convert_to_tflite(arch, output_file):
  
     with open(output_file, "wb") as f:
         f.write(model_bytes)
-
-convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_end_point[t]_point_arch.tflite")
+for i in range(1, 21):
+  cnn_arch = cnn_arch = end_point[i-1].point.arch
+  convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_end_point[{i}]_point_arch.tflite")
