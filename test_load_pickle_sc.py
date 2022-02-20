@@ -49,19 +49,23 @@ def convert_to_tflite(arch, output_file):
     with open(output_file, "wb") as f:
         f.write(model_bytes)
 
-for i in range(1, 21):
-  val_error = EvaluatedPoint[i*100-1].val_error
-  test_error = EvaluatedPoint[i*100-1].test_error
-  resource_features = EvaluatedPoint[i*100-1].resource_features
-  cnn_arch = EvaluatedPoint[i*100-1].point.arch
-  print("------------------------------")
-  print(f"val_error of speech_command_end_point[{i*100-1}]_point_arch:", val_error)
-  print(f"test_error of speech_command_end_point[{i*100-1}]_point_arch:", test_error)
-  print("resource_features: [peak_memory_usage, model_size, inference_latency]")
-  print(f"resource_features of speech_command_end_point[{i*100-1}]_point_arch:", resource_features)
-  print("------------------------------")
-  
-  convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_end_point[{i*100-1}]_point_arch.tflite")
-
-  
+import csv
+# 開啟
+with open(f"{output_dir}/speech_command_EvaluatedPoint_point_arch.csv", "w", newline="") as csvfile:
+  wr = csv.writer(csvfile)
+  for i in range(1, 21):
+    val_error = EvaluatedPoint[i*100-1].val_error
+    test_error = EvaluatedPoint[i*100-1].test_error
+    resource_features = EvaluatedPoint[i*100-1].resource_features
+    cnn_arch = EvaluatedPoint[i*100-1].point.arch
+    print("------------------------------")
+    print(f"val_error of speech_command_EvaluatedPoint[{i*100-1}]_point_arch:", val_error)
+    print(f"test_error of speech_command_EvaluatedPoint[{i*100-1}]_point_arch:", test_error)
+    print("resource_features: [peak_memory_usage, model_size, inference_latency]")
+    print(f"resource_features of speech_command_EvaluatedPoint[{i*100-1}]_point_arch:", resource_features)
+    print("------------------------------")
+    convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_EvaluatedPoint[{i*100-1}]_point_arch.tflite")
+    EvaluatedPoint_list = [val_error, test_error]
+    EvaluatedPoint_list.extend(resource_features)
+    wr.writerow(EvaluatedPoint_list)
 
