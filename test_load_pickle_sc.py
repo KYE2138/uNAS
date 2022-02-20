@@ -53,7 +53,7 @@ import csv
 # 開啟
 with open(f"{output_dir}/speech_command_EvaluatedPoint_point_arch.csv", "w", newline="") as csvfile:
   wr = csv.writer(csvfile)
-  wr.writerow(["val_acc","test_acc","peak_memory_usage", "model_size", "inference_latency"])
+  wr.writerow(["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency"])
   for i in range(0, 2000):
     val_error = EvaluatedPoint[i].val_error
     test_error = EvaluatedPoint[i].test_error
@@ -68,7 +68,7 @@ with open(f"{output_dir}/speech_command_EvaluatedPoint_point_arch.csv", "w", new
     print("------------------------------")
     convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_EvaluatedPoint[{i*100-1}]_point_arch.tflite")
     '''
-    EvaluatedPoint_list = [1-val_error, 1-test_error]
+    EvaluatedPoint_list = [i, 1-val_error, 1-test_error]
     EvaluatedPoint_list.extend(resource_features)
     wr.writerow(EvaluatedPoint_list)
 
