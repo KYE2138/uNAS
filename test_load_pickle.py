@@ -43,4 +43,9 @@ def convert_to_tflite(arch, output_file):
     with open(output_file, "wb") as f:
         f.write(model_bytes)
 
-convert_to_tflite(cnn_arch, output_file=f"{output_dir}/end_point[0]_point_arch.tflite")
+def convert_to_keras_model(arch, output_file):
+    model = arch.to_keras_model( input_shape, num_classes)
+    model.save(output_file + 'example_mnist_agingevosearch_state.h5')
+
+#convert_to_tflite(cnn_arch, output_file=f"{output_dir}/end_point[0]_point_arch.tflite")
+convert_to_keras_model(cnn_arch, output_file=f"{output_dir}/")
