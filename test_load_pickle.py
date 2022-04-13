@@ -19,7 +19,7 @@ from architecture import Architecture
 from cnn import CnnSearchSpace
 from resource_models.models import model_size, peak_memory_usage
 
-output_dir = "tmp/h5"
+output_dir = "tmp/"
 
 cnn_arch = end_point[5].point.arch
 
