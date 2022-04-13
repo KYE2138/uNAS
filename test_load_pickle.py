@@ -46,7 +46,8 @@ def convert_to_tflite(arch, output_file):
 def convert_to_keras_model(arch, output_file):
     model = arch.to_keras_model( input_shape, num_classes)
     model.save(output_file + 'example_mnist_agingevosearch_state.h5')
-    json_string = model.to_json() with open(f"{output_dir}/example_mnist_agingevosearch_state.config", "w") as text_file:    
+    json_string = model.to_json() 
+    with open(f"{output_dir}/example_mnist_agingevosearch_state.config", "w") as text_file:    
       text_file.write(json_string)
 
 #convert_to_tflite(cnn_arch, output_file=f"{output_dir}/end_point[0]_point_arch.tflite")
