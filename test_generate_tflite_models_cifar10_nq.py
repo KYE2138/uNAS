@@ -1,10 +1,18 @@
+import os, sys
+import time
 import pickle
+import numpy as np
+import tensorflow as tf
+from architecture import Architecture
+from cnn import CnnSearchSpace
+from resource_models.models import model_size, peak_memory_usage
 
 # Load pickle
-with open('storage/eliberis/uNAS/artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle', 'rb') as f:
-  EvaluatedPoint = pickle.load(f)
+pickle_filepath ="/storage/eliberis/uNAS/artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle"
+with open(pickle_filepath, 'r') as f:
+    EvaluatedPoint = pickle.load(f)
 print("------------------------------")
-print("len of EvaluatedPoint(search models):",len(EvaluatedPoint))
+print(f"len of EvaluatedPoint({pickle_filepah}):",len(EvaluatedPoint))
 print("-----------------------------")
 '''
 @dataclass
@@ -14,16 +22,6 @@ class EvaluatedPoint:
     test_error: float
     resource_features: List[Union[int, float]]
 ''' 
-
-import numpy as np
-import tensorflow as tf
-
-from architecture import Architecture
-from cnn import CnnSearchSpace
-from resource_models.models import model_size, peak_memory_usage
-
-import os, sys
-import time
 
 # get time 
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -36,8 +34,7 @@ print (f"output dir:{output_dir}")
 # set parameter to convert model
 input_shape = (49, 40, 1)
 num_classes = 10
-model_format = "nq"
-
+model_format = "pru_ae_nq"
 
 # convert function
 def convert_to_tflite(arch, output_file):
