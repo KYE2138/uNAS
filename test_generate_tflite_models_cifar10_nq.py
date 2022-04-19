@@ -32,7 +32,7 @@ os.makedirs(output_dir)
 print (f"output dir:{output_dir}")
 
 # set parameter to convert model
-input_shape = (49, 40, 1)
+input_shape = (32, 32, 3)
 num_classes = 10
 model_format = "pru_ae_nq"
 
@@ -57,5 +57,5 @@ def generate_model(archid=-1):
         convert_to_tflite(arch, output_file=f"{output_dir}/{dataset_name}-{archid}-{model_format}.tflite")
 
 # run func
-generate_model(0)
+generate_model()
 
