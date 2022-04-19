@@ -48,7 +48,7 @@ def convert_to_tflite(arch, output_file):
 # generate_model
 def generate_model(archid=-1):
     # if archid is not set, convert all search models in EvaluatedPoint
-    if archid = -1:
+    if archid == -1:
         for archid in range(len(EvaluatedPoint)):
             arch = EvaluatedPoint[archid].point.arch
             convert_to_tflite(arch, output_file=f"{output_dir}/{dataset_name}-{archid}-{model_format}.tflite")
