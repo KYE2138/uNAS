@@ -12,7 +12,7 @@ pickle_filepath ="/storage/eliberis/uNAS/artifacts/cnn_cifar10/example_cnn_cifar
 with open(pickle_filepath, 'rb') as f:
     EvaluatedPoint = pickle.load(f)
 print("------------------------------")
-print(f"len of EvaluatedPoint({pickle_filepah}):",len(EvaluatedPoint))
+print(f"len of EvaluatedPoint({pickle_filepath}):",len(EvaluatedPoint))
 print("-----------------------------")
 '''
 @dataclass
