@@ -26,7 +26,7 @@ class EvaluatedPoint:
 ''' 
 
 # get time 
-timestr = time.strftime("%Y%m%d-%H%M%S")
+timestr = time.strftime("%Y%m%d_%H%M%S")
 # make new dir to save search(converted) model
 dataset_name= "cifar10"
 output_dir = f"tmp/tflite/{dataset_name}/{timestr}"
