@@ -26,10 +26,10 @@ class EvaluatedPoint:
 ''' 
 
 # get time 
-timestr = time.strftime("%Y%m%d-%H%M%S")
+timestr = time.strftime("%Y%m%d_%H%M%S")
 # make new dir to save search(converted) model
 dataset_name= "cifar10"
-output_dir = f"tmp/tflite/{dataset_name}/{timestr}"
+output_dir = f"tmp/keras/{dataset_name}/{timestr}"
 os.makedirs(output_dir)
 print (f"output dir:{output_dir}")
 
@@ -39,13 +39,10 @@ num_classes = 10
 model_format = "pru_ae_nq"
 
 # convert function
-def convert_to_tflite(arch, output_file):
+def convert_to_keras(arch, output_file):
     model = arch.to_keras_model(input_shape, num_classes)
     model.summary()
-    converter = tf.lite.TFLiteConverter.from_keras_model(model)
-    converted_model = converter.convert()
-    with open(output_file, "wb") as f:
-        f.write(converted_model)
+    model.save(output_file)
 
 # generate_model
 def generate_model(archid=-1):
@@ -53,10 +50,10 @@ def generate_model(archid=-1):
     if archid == -1:
         for archid in range(len(EvaluatedPoint)):
             arch = EvaluatedPoint[archid].point.arch
-            convert_to_tflite(arch, output_file=f"{output_dir}/{dataset_name}-{archid}-{model_format}.tflite")
+            convert_to_keras(arch, output_file=f"{output_dir}/{dataset_name}-{archid}-{model_format}.h5")
     else:
         arch = EvaluatedPoint[archid].point.arch
-        convert_to_tflite(arch, output_file=f"{output_dir}/{dataset_name}-{archid}-{model_format}.tflite")
+        convert_to_keras(arch, output_file=f"{output_dir}/{dataset_name}-{archid}-{model_format}.h5")
 
 # run func
 generate_model()
