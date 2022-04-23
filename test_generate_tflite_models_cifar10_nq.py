@@ -53,10 +53,10 @@ def generate_model(archid=-1):
     if archid == -1:
         for archid in range(len(EvaluatedPoint)):
             arch = EvaluatedPoint[archid].point.arch
-            convert_to_tflite(arch, output_file=f"{output_dir}/{dataset_name}-{archid}-{model_format}.tflite")
+            convert_to_tflite(arch, output_file=f"{output_dir}/{dataset_name}_{archid}_{model_format}.tflite")
     else:
         arch = EvaluatedPoint[archid].point.arch
-        convert_to_tflite(arch, output_file=f"{output_dir}/{dataset_name}-{archid}-{model_format}.tflite")
+        convert_to_tflite(arch, output_file=f"{output_dir}/{dataset_name}_{archid}_{model_format}.tflite")
 
 # run func
 generate_model()
