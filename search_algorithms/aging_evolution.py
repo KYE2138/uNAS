@@ -13,6 +13,9 @@ from model_trainer import ModelTrainer
 from resource_models.models import peak_memory_usage, model_size, inference_latency
 from utils import Scheduler, debug_mode
 
+#ntk
+import ntk
+
 import pdb
 
 @dataclass
@@ -43,6 +46,7 @@ class GPUTrainer:
         data = self.trainer.dataset
         arch = point.arch
         model = self.ss.to_keras_model(arch, data.input_shape, data.num_classes)
+        #使用model_trainer.py內的ModelTrainer類別中的train_and_eval函數
         results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
         val_error, test_error = results["val_error"], results["test_error"]
         rg = self.ss.to_resource_graph(arch, data.input_shape, data.num_classes,
@@ -51,6 +55,10 @@ class GPUTrainer:
                                 not self.trainer.config.pruning.structured
         resource_features = [peak_memory_usage(rg), model_size(rg, sparse=unstructured_sparsity),
                              inference_latency(rg, compute_weight=1, mem_access_weight=0)]
+        #ntk
+        pdb.set_trace()
+        ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True, num_batch=1, num_classes=10)
+        
         log.info(f"Training complete: val_error={val_error:.4f}, test_error={test_error:.4f}, "
                  f"resource_features={resource_features}.")
         return EvaluatedPoint(point=point,
@@ -118,6 +126,7 @@ class AgingEvoSearch:
             return min((x - l) / (u - l), cap)
 
         def fitness(i: EvaluatedPoint):
+            #resource_features = [peak_memory_usage(rg), model_size(rg, sparse=unstructured_sparsity), inference_latency(rg, compute_weight=1, mem_access_weight=0)]
             features = [i.val_error] + i.resource_features
             pdb.set_trace()
             # All objectives must be non-negative and scaled to the same magnitude of
