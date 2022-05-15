@@ -1,3 +1,56 @@
+###uNAS
+import logging
+from typing import Optional
+
+import tensorflow as tf
+
+from config import TrainingConfig
+from pruning import DPFPruning
+from utils import debug_mode
+
+import pdb
+
+class ModelNTK:
+    """Trains Keras models according to the specified config."""
+    def __init__(self, training_config: TrainingConfig):
+        self.log = logging.getLogger("ModelNTK")
+        self.config = training_config
+        #self.distillation = training_config.distillation
+        #self.pruning = training_config.pruning
+        self.dataset = training_config.dataset
+
+    def get_ntk_n(self, model: tf.keras.Model):
+        """
+        Trains a Keras model and returns its validation set error (1.0 - accuracy).
+        :param model: A Keras model.
+        :param epochs: Overrides the duration of training.
+        :param sparsity: Desired sparsity level (for unstructured sparsity)
+        :returns Smallest error on validation set seen during training, the error on the test set,
+        pruned weights (if pruning was used)
+        """
+        dataset = self.config.dataset
+        batch_size = self.config.batch_size
+        #sparsity = sparsity or 0.0
+
+        train = dataset.train_dataset() \
+            .shuffle(batch_size * 8) \
+            .batch(batch_size) \
+            .prefetch(tf.data.experimental.AUTOTUNE)
+
+        val = dataset.validation_dataset() \
+            .batch(batch_size) \
+            .prefetch(tf.data.experimental.AUTOTUNE)
+        pdb.set_trace()
+        return {}
+
+
+
+
+
+
+
+'''
+### TEGNAS
 import numpy as np
 import torch
 import torch.nn as nn
@@ -263,4 +316,4 @@ ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True,
 print ("ntks:",ntks)
 print ("mses:",mses)
 pdb.set_trace()
-
+'''

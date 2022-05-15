@@ -14,7 +14,7 @@ from resource_models.models import peak_memory_usage, model_size, inference_late
 from utils import Scheduler, debug_mode
 
 #ntk
-import ntk
+from ntk import ModelNTK
 
 import pdb
 
@@ -36,6 +36,8 @@ class EvaluatedPoint:
 class GPUTrainer:
     def __init__(self, search_space, trainer):
         self.trainer = trainer
+        #NTK
+        self.modelntk = 
         self.ss = search_space
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -56,8 +58,9 @@ class GPUTrainer:
         resource_features = [peak_memory_usage(rg), model_size(rg, sparse=unstructured_sparsity),
                              inference_latency(rg, compute_weight=1, mem_access_weight=0)]
         #ntk
-        pdb.set_trace()
-        ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True, num_batch=1, num_classes=10)
+        self.modelntk.get_ntk_n(rg)
+        #pdb.set_trace()
+        #ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True, num_batch=1, num_classes=10)
         
         log.info(f"Training complete: val_error={val_error:.4f}, test_error={test_error:.4f}, "
                  f"resource_features={resource_features}.")
@@ -75,6 +78,8 @@ class AgingEvoSearch:
         self.log = logging.getLogger(name=f"AgingEvoSearch [{experiment_name}]")
         self.config = search_config
         self.trainer = ModelTrainer(training_config)
+        #NTK
+        self.modelntk = ModelNTK(training_config)
 
         self.root_dir = Path(search_config.checkpoint_dir)
         self.root_dir.mkdir(parents=True, exist_ok=True)
@@ -174,8 +179,11 @@ class AgingEvoSearch:
         ray.init(local_mode=debug_mode())
 
         trainer = ray.put(self.trainer)
+        #NTK
+        modelntk = ray.put(self.modelntk)
         ss = ray.put(self.config.search_space)
-        scheduler = Scheduler([GPUTrainer.remote(ss, trainer)
+        #NTK
+        scheduler = Scheduler([GPUTrainer.remote(ss, trainer, modelntk)
                                for _ in range(self.max_parallel_evaluations)])
         self.log.info(f"Searching with {self.max_parallel_evaluations} workers.")
 
