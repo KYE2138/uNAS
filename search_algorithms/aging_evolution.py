@@ -58,6 +58,7 @@ class GPUTrainer:
                                 not self.trainer.config.pruning.structured
         resource_features = [peak_memory_usage(rg), model_size(rg, sparse=unstructured_sparsity),
                              inference_latency(rg, compute_weight=1, mem_access_weight=0)]
+        # resource_features = [175104, 164176, 61449631]
         #ntk
         ntks = self.modelntk.get_ntk_n(model)
         pdb.set_trace()

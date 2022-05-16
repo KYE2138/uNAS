@@ -36,12 +36,15 @@ class ModelNTK:
             .shuffle(batch_size * 8) \
             .batch(batch_size) \
             .prefetch(tf.data.experimental.AUTOTUNE)
+        # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
 
         val = dataset.validation_dataset() \
             .batch(batch_size) \
             .prefetch(tf.data.experimental.AUTOTUNE)
         pdb.set_trace()
-
+        # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
+        # list(train.as_numpy_iterator())
+        # list(train.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
         return 1
 
 
