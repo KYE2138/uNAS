@@ -41,7 +41,8 @@ class ModelNTK:
             .batch(batch_size) \
             .prefetch(tf.data.experimental.AUTOTUNE)
         pdb.set_trace()
-        return {}
+
+        return 1
 
 
 

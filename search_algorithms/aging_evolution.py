@@ -34,14 +34,15 @@ class EvaluatedPoint:
 
 @ray.remote(num_gpus=0 if debug_mode() else 1, num_cpus=1 if debug_mode() else 6)
 class GPUTrainer:
-    def __init__(self, search_space, trainer):
+    def __init__(self, search_space, trainer, modelntk):
         self.trainer = trainer
         #NTK
-        self.modelntk = 
+        self.modelntk = modelntk
         self.ss = search_space
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
+    #在utils.py內有worker.evaluate.remote，在ray下執行
     def evaluate(self, point):
         log = logging.getLogger("Worker")
 
@@ -58,7 +59,8 @@ class GPUTrainer:
         resource_features = [peak_memory_usage(rg), model_size(rg, sparse=unstructured_sparsity),
                              inference_latency(rg, compute_weight=1, mem_access_weight=0)]
         #ntk
-        self.modelntk.get_ntk_n(rg)
+        ntks = self.modelntk.get_ntk_n(model)
+        pdb.set_trace()
         #pdb.set_trace()
         #ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True, num_batch=1, num_classes=10)
         
@@ -77,10 +79,10 @@ class AgingEvoSearch:
                  bound_config: BoundConfig):
         self.log = logging.getLogger(name=f"AgingEvoSearch [{experiment_name}]")
         self.config = search_config
+        #引用model_trainer.py內的ModelTrainer Class
         self.trainer = ModelTrainer(training_config)
-        #NTK
+        #引用ntk.py內的ModelNTK，並將training_config傳入ModelNTK Class做初始化
         self.modelntk = ModelNTK(training_config)
-
         self.root_dir = Path(search_config.checkpoint_dir)
         self.root_dir.mkdir(parents=True, exist_ok=True)
         self.experiment_name = experiment_name
@@ -179,10 +181,10 @@ class AgingEvoSearch:
         ray.init(local_mode=debug_mode())
 
         trainer = ray.put(self.trainer)
-        #NTK
-        modelntk = ray.put(self.modelntk)
         ss = ray.put(self.config.search_space)
-        #NTK
+        #將modelntk類別實體，傳入ray中
+        modelntk =  ray.put(self.modelntk)
+        #utils.py內的Scheduler class
         scheduler = Scheduler([GPUTrainer.remote(ss, trainer, modelntk)
                                for _ in range(self.max_parallel_evaluations)])
         self.log.info(f"Searching with {self.max_parallel_evaluations} workers.")
