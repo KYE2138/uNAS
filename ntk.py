@@ -1,3 +1,4 @@
+'''
 ###uNAS
 import logging
 from typing import Optional
@@ -46,14 +47,9 @@ class ModelNTK:
         # list(train.as_numpy_iterator())
         # list(train.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
         return 1
-
-
-
-
-
-
-
 '''
+
+
 ### TEGNAS
 import numpy as np
 import torch
@@ -67,7 +63,7 @@ import onnx2torch
 
 def convert_keras_model_to_torch_model(model_id):
     # Load model
-    keras_model_path = f"/uNAS/keras/cifar10/20220423_101042/cifar10_{model_id}_pru_ae_nq.h5"
+    keras_model_path = f"tmp/keras/cifar10/20220423_101042/cifar10_{model_id}_pru_ae_nq.h5"
     keras_model = tf.keras.models.load_model(keras_model_path)
 
     # tensorflow-onnx
@@ -320,4 +316,4 @@ ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True,
 print ("ntks:",ntks)
 print ("mses:",mses)
 pdb.set_trace()
-'''
+
