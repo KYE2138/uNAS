@@ -136,7 +136,7 @@ class AgingEvoSearch:
             #resource_features = [peak_memory_usage(rg), model_size(rg, sparse=unstructured_sparsity), inference_latency(rg, compute_weight=1, mem_access_weight=0)]
             #fetures = [0.6031999886035919, 40404, 6973, 651048]
             features = [i.val_error] + i.resource_features
-            pdb.set_trace()
+
             # All objectives must be non-negative and scaled to the same magnitude of
             # between 0 and 1. Values that exceed required bounds will therefore be mapped
             # to a factor > 1, and be hit by the optimiser first.
@@ -148,7 +148,7 @@ class AgingEvoSearch:
             normalised_features = [normalise(f, u=c) / l
                                    for f, c, l in zip(features, self.constraint_bounds, lambdas)
                                    if c is not None]  # bound = None means ignored objective
-            pdb.set_trace()
+            
             # -max(normalised_features) = -8.716881661420613
             return -max(normalised_features)  # Negated, due to function being maximised
         return fitness
