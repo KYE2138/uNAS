@@ -38,6 +38,11 @@ class ModelNTK:
             .batch(batch_size) \
             .prefetch(tf.data.experimental.AUTOTUNE)
         # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
+        # for get ntk input
+        # list(train.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
+        train_target = list(train.as_numpy_iterator())[0][0]
+        # list(train.as_numpy_iterator())[0][1].shape = (128, 32, 32, 3)
+        loader = list(train.as_numpy_iterator())[0][1]
 
         val = dataset.validation_dataset() \
             .batch(batch_size) \
@@ -59,7 +64,7 @@ import tensorflow as tf
 import tf2onnx
 import onnx
 import onnx2torch
-
+CUDA_LAUNCH_BLOCKING=1
 
 def convert_keras_model_to_torch_model(model_id):
     # Load model
