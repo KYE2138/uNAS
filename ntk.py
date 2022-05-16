@@ -1,4 +1,3 @@
-'''
 ###uNAS
 import logging
 from typing import Optional
@@ -20,7 +19,7 @@ class ModelNTK:
         #self.pruning = training_config.pruning
         self.dataset = training_config.dataset
 
-    def get_ntk_n(self, model: tf.keras.Model):
+    def loader(self, model: tf.keras.Model):
         """
         Trains a Keras model and returns its validation set error (1.0 - accuracy).
         :param model: A Keras model.
@@ -40,9 +39,11 @@ class ModelNTK:
         # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
         # for get ntk input
         # list(train.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
-        train_target = list(train.as_numpy_iterator())[0][0]
+        
+        train_input = list(train.as_numpy_iterator())[0][0]
         # list(train.as_numpy_iterator())[0][1].shape = (128, 32, 32, 3)
-        loader = list(train.as_numpy_iterator())[0][1]
+        train_target = list(train.as_numpy_iterator())[0][1]
+        loader = (train_input, train_target)
 
         val = dataset.validation_dataset() \
             .batch(batch_size) \
@@ -51,8 +52,8 @@ class ModelNTK:
         # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
         # list(train.as_numpy_iterator())
         # list(train.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
-        return 1
-'''
+        return loader
+
 
 
 ### TEGNAS
@@ -251,7 +252,7 @@ def get_ntk_n(loader, networks, loader_val=None, train_mode=False, num_batch=-1,
         return conds_x
     else:
         return conds_x, prediction_mses
-
+'''
 # 隨機input和target
 
 def add_loader(batch_num):
@@ -263,7 +264,7 @@ def add_loader(batch_num):
     return loader
 loader = add_loader(1)
 loader_val = add_loader(1)
-
+'''
 
 #model參數初始化
 def kaiming_normal_fanin_init(m):
@@ -292,6 +293,7 @@ def init_model(model, method='kaiming_norm_fanin'):
     return model
 
 xargs_init = 'kaiming_norm_fanin'
+
 
 #三個model進networks
 networks = []
@@ -330,6 +332,8 @@ networks.append(torch_model)
 '''
 #ntks = get_ntk_n(self._ntk_input_data, self._networks, train_mode=True, num_batch=1, num_classes=self._class_num)
 #num_batch = 1
+loader = ModelNTK.loader()
+loader_val = ModelNTK.loader() 
 ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True, num_batch=1, num_classes=10)
 #ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True, num_batch=1, num_classes=num_classes)
 print ("ntks:",ntks)
