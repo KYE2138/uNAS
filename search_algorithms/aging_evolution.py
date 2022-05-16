@@ -134,16 +134,22 @@ class AgingEvoSearch:
 
         def fitness(i: EvaluatedPoint):
             #resource_features = [peak_memory_usage(rg), model_size(rg, sparse=unstructured_sparsity), inference_latency(rg, compute_weight=1, mem_access_weight=0)]
+            #fetures = [0.6031999886035919, 40404, 6973, 651048]
             features = [i.val_error] + i.resource_features
             pdb.set_trace()
             # All objectives must be non-negative and scaled to the same magnitude of
             # between 0 and 1. Values that exceed required bounds will therefore be mapped
             # to a factor > 1, and be hit by the optimiser first.
             # 所有目標都必須是非負的，並且縮放到 0 到 1 之間的相同大小。因此，超出所需範圍的值將被映射到大於 1 的因子，並首先被優化器擊中。
+            # fetures = [0.6031999886035919, 40404, 6973, 651048]
+            # self.constraint_bounds = [0.1, 50000, 50000, 60000000]
+            # lambdas = array([0.69199057, 0.25018253, 0.38504929, 0.56419586])
+            # normalised_features = [8.716881661420613, 3.2299617023466287, 0.36218739220099627, 0.019232328286649242]
             normalised_features = [normalise(f, u=c) / l
                                    for f, c, l in zip(features, self.constraint_bounds, lambdas)
                                    if c is not None]  # bound = None means ignored objective
             pdb.set_trace()
+            # -max(normalised_features) = -8.716881661420613
             return -max(normalised_features)  # Negated, due to function being maximised
         return fitness
 
@@ -209,7 +215,9 @@ class AgingEvoSearch:
         while len(self.history) < self.rounds:
             if should_submit_more(cap=self.rounds):
                 self.log.info(f"Searching #{point_number()}...")
+                # 從population中隨機選擇幾個(sample_size)架構
                 sample = np.random.choice(self.population, size=self.sample_size)
+                # 對幾個隨機選出的架構，目標函數輸出值最大的做為parent
                 parent = max(sample, key=self.get_mo_fitness_fn())
 
                 scheduler.submit(self.evolve(parent.point))
