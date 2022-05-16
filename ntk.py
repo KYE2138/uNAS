@@ -64,9 +64,23 @@ import tensorflow as tf
 import tf2onnx
 import onnx
 import onnx2torch
-CUDA_LAUNCH_BLOCKING=1
+
 
 def convert_keras_model_to_torch_model(model_id):
+    # limit gpu memory
+    gpus = tf.config.list_physical_devices('GPU')
+    if gpus:
+        # Restrict TensorFlow to only allocate 1GB of memory on the first GPU
+        try:
+            tf.config.set_logical_device_configuration(
+                gpus[0],
+                [tf.config.LogicalDeviceConfiguration(memory_limit=4096)])
+            logical_gpus = tf.config.list_logical_devices('GPU')
+            print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+        except RuntimeError as e:
+            # Virtual devices must be set before GPUs have been initialized
+            print(e)
+    
     # Load model
     keras_model_path = f"tmp/keras/cifar10/20220423_101042/cifar10_{model_id}_pru_ae_nq.h5"
     keras_model = tf.keras.models.load_model(keras_model_path)
