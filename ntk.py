@@ -285,7 +285,7 @@ torch_model = convert_keras_model_to_torch_model(1)
 #print(torch_model)
 init_model(torch_model, xargs_init)
 networks.append(torch_model)
-
+'''
 torch_model = convert_keras_model_to_torch_model(100)
 init_model(torch_model, xargs_init)
 networks.append(torch_model)
@@ -313,7 +313,7 @@ networks.append(torch_model)
 torch_model = convert_keras_model_to_torch_model(700)
 init_model(torch_model, xargs_init)
 networks.append(torch_model)
-
+'''
 #ntks = get_ntk_n(self._ntk_input_data, self._networks, train_mode=True, num_batch=1, num_classes=self._class_num)
 #num_batch = 1
 ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True, num_batch=1, num_classes=10)
