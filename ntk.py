@@ -63,7 +63,7 @@ class ModelNTK:
             train_input = list(train.as_numpy_iterator())[0][0]
             # list(train.as_numpy_iterator())[0][1].shape = (128, 1)?
             train_target = list(train.as_numpy_iterator())[0][1]
-            train_loader = [train_input, train_target]
+            train_loader = (train_input, train_target)
             
             # from uNAS dataset by tf
             val = dataset.validation_dataset() \
@@ -75,7 +75,7 @@ class ModelNTK:
             val_input = list(val.as_numpy_iterator())[0][0]
             # list(val.as_numpy_iterator())[0][1].shape = (128, 1)?
             val_target = list(val.as_numpy_iterator())[0][1]
-            val_loader = [val_input, val_target]
+            val_loader = (val_input, val_target)
             
             del train, val
             del train_input, train_target
@@ -155,8 +155,7 @@ class ModelNTK:
             # targets = torch.Size([64])
             # len(loader) = 3
             pdb.set_trace()
-            loader = torch.from_numpy(loader)
-            pdb.set_trace()
+            #loader = torch.from_numpy(loader)
             for i, (inputs, targets) in enumerate(loader):
                 # num_batch 預設為64
                 if num_batch > 0 and i >= num_batch: break
