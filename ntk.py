@@ -25,7 +25,7 @@ class ModelNTK:
         self.log = logging.getLogger("ModelNTK")
         self.config = training_config
         self.dataset = training_config.dataset
-
+    
     def get_ntk(self, model: tf.keras.Model, networks_num=3):
         dataset = self.config.dataset
         input_shape = self.config.dataset.input_shape
@@ -34,6 +34,20 @@ class ModelNTK:
         model = model
         networks_num = networks_num
         
+        # limit gpu mem to load keras model and transfer
+        gpus = tf.config.list_physical_devices('GPU')
+        if gpus:
+            # Restrict TensorFlow to only allocate 4GB of memory on the first GPU
+            try:
+                tf.config.set_logical_device_configuration(
+                    gpus[0],
+                    [tf.config.LogicalDeviceConfiguration(memory_limit=4096)])
+                logical_gpus = tf.config.list_logical_devices('GPU')
+                print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+            except RuntimeError as e:
+                # Virtual devices must be set before GPUs have been initialized
+                print(e)
+
         # return (train_loader, val_loader)
         def generate_dataset(dataset, batch_size, input_shape, num_classes):
             #################### dataset ####################
@@ -71,20 +85,6 @@ class ModelNTK:
         # return model (pytorch)
         def transfer_init_model(model: tf.keras.Model, input_shape, num_classes):
             #################### model ####################
-            # limit gpu mem to load keras model and transfer
-            gpus = tf.config.list_physical_devices('GPU')
-            if gpus:
-                # Restrict TensorFlow to only allocate 4GB of memory on the first GPU
-                try:
-                    tf.config.set_logical_device_configuration(
-                        gpus[0],
-                        [tf.config.LogicalDeviceConfiguration(memory_limit=4096)])
-                    logical_gpus = tf.config.list_logical_devices('GPU')
-                    print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
-                except RuntimeError as e:
-                    # Virtual devices must be set before GPUs have been initialized
-                    print(e)
-            
             # (load) model
             keras_model = model
 
@@ -291,7 +291,7 @@ class ModelNTK:
             torch_model = transfer_init_model(model, input_shape, num_classes)
             networks.append(torch_model)
             del torch_model
-
+        pdb.set_trace()
         # get_ntk_n
         ntks, mses = get_ntk_n(train_loader, networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
         print ("ntks:",ntks)
