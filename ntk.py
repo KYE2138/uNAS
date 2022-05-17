@@ -188,7 +188,7 @@ class ModelNTK:
                 # 對每個network
                 for net_idx, network in enumerate(networks):
                     # 將network(weight)放入gpu
-                    network.to(device)
+                    #network.to(device)
                     # 將network的梯度歸零
                     network.zero_grad()
                     # 會將梯度疊加給inputs_
@@ -226,7 +226,11 @@ class ModelNTK:
                         else:
                             cellgrads_x[net_idx].append(cellgrad)
                         network.zero_grad()
-                        torch.cuda.empty_cache()
+                    # del cuda tensor
+                    del inputs_, inputs, targets, cellgrad
+                    torch.cuda.empty_cache()
+                    torch.cuda.ipc_collect()
+
             # For MSE, 將targets_x_onehot_mean list [tensor (64, 10)]轉換成tensor (64, 10)
             #torch.Size([64, 10])
             targets_x_onehot_mean = torch.cat(targets_x_onehot_mean, 0)
@@ -291,8 +295,10 @@ class ModelNTK:
                     grads = torch.stack(grads, 0)
                     # cellgrads_y[0].shape = torch.Size([64, 1])
                     cellgrads_y[_i] = grads
-                # clear the parameter
-                del grads, network, cellgrad, W, logit, inputs_, inputs, targets_onehot, targets, ntks
+                # del cuda tensor
+                del inputs_, inputs, targets, cellgrad
+                torch.cuda.empty_cache()
+                torch.cuda.ipc_collect()
 
 
                 for net_idx in range(len(networks)):
@@ -301,16 +307,12 @@ class ModelNTK:
                         PY = torch.einsum('jk,kl,lm->jm', _ntk_yx, torch.inverse(ntk_cell_x[net_idx]), targets_x_onehot_mean)
                         prediction_mses.append(((PY - targets_y_onehot_mean)**2).sum(1).mean(0).item())
                         # clear the parameter
-                        del cellgrads_x, cellgrads_y, _ntk_yx, PY, targets_y_onehot_mean, ntk_cell_x, targets_x_onehot_mean
                     except RuntimeError:
                         # RuntimeError: inverse_gpu: U(1,1) is zero, singular U.
                         # prediction_mses.append(((targets_y_onehot_mean)**2).sum(1).mean(0).item())
                         prediction_mses.append(-1) # bad gradients
-                # clear the parameter
-                del networks
-            
-            torch.cuda.ipc_collect()
-            gc.collect()
+         
+
             ######
             if loader_val is None:
                 return conds_x
@@ -328,16 +330,17 @@ class ModelNTK:
             torch_model = transfer_init_model(model, input_shape, num_classes)
             networks.append(torch_model)
         
-        #clear the parameter
-        del torch_model
-        torch.cuda.empty_cache()
-
         # get_ntk_n
         ntks, mses = get_ntk_n(loader=train_loader, networks=networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
         print ("ntks:",ntks)
         print ("mses:",mses)
         pdb.set_trace()
-        
+
+        #clear the parameter
+        del torch_model, networks
+        torch.cuda.empty_cache()
         torch.cuda.ipc_collect()
+
+        pdb.set_trace()
         return ntks
 
