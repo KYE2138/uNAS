@@ -179,7 +179,6 @@ class ModelNTK:
                 inputs = inputs.cuda(device=device, non_blocking=True)
                 targets = targets.cuda(device=device, non_blocking=True)
                 # For mse
-                pdb.set_trace()
                 targets_onehot = torch.nn.functional.one_hot(targets, num_classes=num_classes).float()
                 targets_onehot_mean = targets_onehot - targets_onehot.mean(0)
                 targets_x_onehot_mean.append(targets_onehot_mean)
@@ -300,7 +299,6 @@ class ModelNTK:
                         # RuntimeError: inverse_gpu: U(1,1) is zero, singular U.
                         # prediction_mses.append(((targets_y_onehot_mean)**2).sum(1).mean(0).item())
                         prediction_mses.append(-1) # bad gradients
-            pdb.set_trace()
             ######
             if loader_val is None:
                 return conds_x

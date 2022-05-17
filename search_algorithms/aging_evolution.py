@@ -61,6 +61,7 @@ class GPUTrainer:
         # resource_features = [175104, 164176, 61449631]
         #ntk
         ntks = self.modelntk.get_ntk(model)
+        ntk = np.mean(ntks)
         pdb.set_trace()
         #pdb.set_trace()
         #ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True, num_batch=1, num_classes=10)
