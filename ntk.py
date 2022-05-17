@@ -21,6 +21,7 @@ import onnx
 import onnx2torch
 
 import pdb
+import gc
 
 class ModelNTK:
     """Keras models according to the specified config."""
@@ -93,6 +94,7 @@ class ModelNTK:
             del train, val
             del train_input, train_target
             del val_input, val_target
+            gc.collect()
 
             return train_loader, val_loader
         # return model (pytorch)
@@ -149,6 +151,7 @@ class ModelNTK:
             del onnx_model
             del torch_model
             torch.cuda.empty_cache()
+            gc.collect()
 
             return model
         # return (conds_x, prediction_mses)
@@ -311,6 +314,7 @@ class ModelNTK:
             #clear the parameter
             del inputs, targets, inputs_
             torch.cuda.empty_cache()
+            gc.collect()
             ######
             if loader_val is None:
                 return conds_x
