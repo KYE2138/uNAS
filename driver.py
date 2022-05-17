@@ -36,7 +36,7 @@ def main():
         tf.config.experimental.set_memory_growth(gpu, True)
     '''
     # limit gpu mem to load keras model and transfer
-    '''
+    
     gpus = tf.config.list_physical_devices('GPU')
     print (gpus)
     if gpus:
@@ -50,11 +50,7 @@ def main():
         except RuntimeError as e:
             # Virtual devices must be set before GPUs have been initialized
             print(e)
-    '''
-    # select gpu
-    gpus = tf.config.list_physical_devices(device_type='GPU')
-    print (f'gpus:{gpus}')
-    tf.config.set_visible_devices(devices=gpus[0:1], device_type='GPU')
+    
 
 
     # 檢查參數
