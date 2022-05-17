@@ -133,7 +133,7 @@ class ModelNTK:
             
             return model
         # return (conds_x, prediction_mses)
-        def get_ntk_n(self, loader, networks, loader_val, train_mode=True, num_batch=1, num_classes=10):        
+        def get_ntk_n(loader, networks, loader_val, train_mode=True, num_batch=1, num_classes=10):        
             #################### ntk ####################
             device = torch.cuda.current_device()
             ntks = []
@@ -291,9 +291,9 @@ class ModelNTK:
             torch_model = transfer_init_model(model, input_shape, num_classes)
             networks.append(torch_model)
             del torch_model
-        pdb.set_trace()
+
         # get_ntk_n
-        ntks, mses = get_ntk_n(train_loader, networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
+        ntks, mses = get_ntk_n(loader=train_loader, networks=networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
         print ("ntks:",ntks)
         print ("mses:",mses)
         pdb.set_trace()
