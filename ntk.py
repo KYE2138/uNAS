@@ -28,6 +28,8 @@ class ModelNTK:
     def __init__(self, data):
         self.dataset = data
 
+        torch.cuda.set_device(device)
+
     def get_ntk(self, model: tf.keras.Model, networks_num=3, batch_num=1, batch_size=128):
         dataset = self.dataset
         input_shape = self.dataset.input_shape
@@ -299,6 +301,8 @@ class ModelNTK:
                     grads = torch.stack(grads, 0)
                     # cellgrads_y[0].shape = torch.Size([64, 1])
                     cellgrads_y[_i] = grads
+                # clear the parameter
+                del grads, network, networks, cellgrad, W, logit, inputs_, inputs, targets_onehot, targets, ntks
 
 
                 for net_idx in range(len(networks)):
@@ -306,20 +310,14 @@ class ModelNTK:
                         _ntk_yx = torch.einsum('nc,mc->nm', [cellgrads_y[net_idx], cellgrads_x[net_idx]])
                         PY = torch.einsum('jk,kl,lm->jm', _ntk_yx, torch.inverse(ntk_cell_x[net_idx]), targets_x_onehot_mean)
                         prediction_mses.append(((PY - targets_y_onehot_mean)**2).sum(1).mean(0).item())
+                        # clear the parameter
+                        del cellgrads_x, cellgrads_y, _ntk_yx, PY, targets_y_onehot_mean, ntk_cell_x, targets_x_onehot_mean
                     except RuntimeError:
                         # RuntimeError: inverse_gpu: U(1,1) is zero, singular U.
                         # prediction_mses.append(((targets_y_onehot_mean)**2).sum(1).mean(0).item())
                         prediction_mses.append(-1) # bad gradients
             
-            #clear the parameter
-            del inputs, targets, inputs_
-            '''
-            del ntks, networks, network, grads_x, cellgrads_x
-            del ntk_cell_x, ntk_cell_yx, targets_x_onehot_mean, targets_y_onehot_mean
-            del targets_onehot, targets_onehot_mean, logit, grad, cellgrad
-            del W, targets_x_onehot_mean, _ntk, ntk_cell_x, ntks, eigenvalues, _cond
-            del cellgrads_y, _ntk_yx, PY
-            '''
+
             torch.cuda.empty_cache()
             gc.collect()
             ######
