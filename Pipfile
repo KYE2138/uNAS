@@ -24,8 +24,8 @@ cython = "*"
 POT = "*"
 ray = "*"
 spektral = "*"
-torch = {version = "==1.9.0+cu111", index = "downloadpytorch"}
-torchvision = {version = "==0.10.0+cu111", index = "downloadpytorch"}
+torch = {version = "==1.9.0+cu102", index = "downloadpytorch"}
+torchvision = {version = "==0.10.0+cu102", index = "downloadpytorch"}
 torchaudio = {version = "==0.9.0", index = "downloadpytorch"}
 tf2onnx = "*"
 onnx2torch = "*"
