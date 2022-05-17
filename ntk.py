@@ -28,7 +28,7 @@ class ModelNTK:
     def __init__(self, data):
         self.dataset = data
 
-        torch.cuda.set_device(device)
+        #torch.cuda.set_device(device)
 
     def get_ntk(self, model: tf.keras.Model, networks_num=3, batch_num=1, batch_size=128):
         dataset = self.dataset
