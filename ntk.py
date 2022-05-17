@@ -26,13 +26,14 @@ class ModelNTK:
         self.config = training_config
         self.dataset = training_config.dataset
     
-    def get_ntk(self, model: tf.keras.Model, networks_num=3):
+    def get_ntk(self, model: tf.keras.Model, networks_num=3, batch_num=1):
         dataset = self.config.dataset
         input_shape = self.config.dataset.input_shape
         num_classes = self.config.dataset.num_classes
         batch_size = self.config.batch_size
         model = model
         networks_num = networks_num
+        batch_num = batch_num
         
         # limit gpu mem to load keras model and transfer
         gpus = tf.config.list_physical_devices('GPU')
@@ -290,7 +291,7 @@ class ModelNTK:
                 return conds_x, prediction_mses
 
         # generate_dataset
-        train_loader, val_loader = generate_dataset(dataset, batch_size, input_shape, num_classes)
+        train_loader, val_loader = generate_dataset(dataset, batch_size, input_shape, num_classes, batch_num)
         # train_loader = [(inputs, targets)]
         # val_loader = [(inputs, targets)]
 
