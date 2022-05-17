@@ -21,7 +21,8 @@ training_config = TrainingConfig(
     dataset=CIFAR10(),
     optimizer=lambda: tfa.optimizers.SGDW(learning_rate=0.01, momentum=0.9, weight_decay=1e-5),
     batch_size=128,
-    epochs=130,
+    #epochs=130,
+    epochs=1,
     callbacks=lambda: [LearningRateScheduler(lr_schedule)],
 )
 
