@@ -3,6 +3,11 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
+[[source]]
+url = "https://download.pytorch.org/whl/"
+verify_ssl = true
+name = "downloadpytorch"
+
 [dev-packages]
 
 [packages]
@@ -19,6 +24,11 @@ cython = "*"
 POT = "*"
 ray = "*"
 spektral = "*"
+torch = {version = "==1.9.0+cu111", index = "downloadpytorch"}
+torchvision = {version = "==0.10.0+cu111", index = "downloadpytorch"}
+torchaudio = {version = "==0.9.0", index = "downloadpytorch"}
+tf2onnx = "*"
+onnx2torch = "*"
 
 [requires]
 python_version = "3.7"
