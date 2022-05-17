@@ -62,8 +62,10 @@ class GPUTrainer:
         # resource_features = [175104, 164176, 61449631]
         
         #ntk
-        ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
-        ntk = np.mean(ntks)
+
+        #ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
+        #ntk = np.mean(ntks)
+        exec(open("test_ntk.py").read())
         
         #clear the parameter
         del ntks
