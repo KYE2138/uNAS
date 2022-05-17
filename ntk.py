@@ -8,9 +8,6 @@ from config import TrainingConfig
 from pruning import DPFPruning
 from utils import debug_mode
 
-# GPU mem issue
-config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
-sess = tf.compat.v1.Session(config=config)
 #################### TEGNAS testntk #################### 
 import numpy as np
 import torch
@@ -23,16 +20,16 @@ import onnx2torch
 import pdb
 import gc
 
+#################### GPU ####################
+# GPU mem issue
+config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
+sess = tf.compat.v1.Session(config=config)
+
+
 class ModelNTK:
     """Keras models according to the specified config."""
     def __init__(self, data):
         self.dataset = data
-
-        print(torch.cuda.current_device())
-        pdb.set_trace()
-        device = torch.device('cuda:1')
-        torch.cuda.set_device(device)
-
 
     def get_ntk(self, model: tf.keras.Model, networks_num=3, batch_num=1, batch_size=128):
         dataset = self.dataset
@@ -42,7 +39,13 @@ class ModelNTK:
         model = model
         networks_num = networks_num
         batch_num = batch_num
- 
+
+
+        # gpu
+        device = torch.cuda.current_device()
+        print (device)
+        pdb.set_trace()
+
         # return (train_loader, val_loader)
         def generate_dataset(dataset, batch_size, input_shape, num_classes, batch_num):
             #################### dataset ####################
@@ -149,7 +152,7 @@ class ModelNTK:
         # return (conds_x, prediction_mses)
         def get_ntk_n(loader, networks, loader_val, train_mode=True, num_batch=1, num_classes=10):        
             #################### ntk ####################
-            device = torch.cuda.current_device()
+            #device = torch.cuda.current_device()
             ntks = []
             for network in networks:
                 if train_mode:

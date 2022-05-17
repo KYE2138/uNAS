@@ -36,6 +36,7 @@ def main():
         tf.config.experimental.set_memory_growth(gpu, True)
     '''
     # limit gpu mem to load keras model and transfer
+    '''
     gpus = tf.config.list_physical_devices('GPU')
     print (gpus)
     if gpus:
@@ -49,6 +50,12 @@ def main():
         except RuntimeError as e:
             # Virtual devices must be set before GPUs have been initialized
             print(e)
+    '''
+    # select gpu
+    gpus = tf.config.list_physical_devices(device_type='GPU')
+    print (f'gpus:{gpus}')
+    tf.config.set_visible_devices(devices=gpus[0:1], device_type='GPU')
+
 
     # 檢查參數
     if args.save_every <= 0:
@@ -58,11 +65,13 @@ def main():
     configs = {}
     exec(Path(args.config_file).read_text(), configs)
     
-    # 若執行完config_file後, 並未設定search_algorithm參數, 則將algo設定維BayesOpt
+    # 執行完config_file後, algo會等於uNAS/search_algorithms下之.py中的class, 如algo = AgingEvoSearch
+    # 若未設定search_algorithm參數, 則將algo設定為BayesOpt
     if "search_algorithm" not in configs:
         algo = BayesOpt
     else:
         algo = configs["search_algorithm"]
+
     
     # 獲取config_file內之參數值
     search_space = configs["search_config"].search_space
@@ -70,7 +79,7 @@ def main():
     search_space.input_shape = dataset.input_shape
     search_space.num_classes = dataset.num_classes
     
-    # 設定搜尋演算法, algo(class)為uNAS/search_algorithms下之.py中的class
+    # 設定搜尋演算法, algo(class)為uNAS/search_algorithms下之.py中的class, 如AgingEvoSearch
     search = algo(experiment_name=args.name or "search",
                   search_config=configs["search_config"],
                   training_config=configs["training_config"],
