@@ -339,7 +339,7 @@ class ModelNTK:
         # get_ntk_n
         #ntks, mses = get_ntk_n(loader=train_loader, networks=networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
         ntks = []
-        mses = mses
+        mses = []
         print ("ntks:",ntks)
         print ("mses:",mses)
 
