@@ -71,6 +71,8 @@ class ModelNTK:
                 train_input = list(train.as_numpy_iterator())[0][0]
                 # list(train.as_numpy_iterator())[0][1].shape = (128, 1)?
                 train_target = list(train.as_numpy_iterator())[0][1]
+                # targets.shape = torch.Size([128])
+                train_target = train_target.reshape((-1,))
                 train_loader.append((train_input,train_target))
 
                 # for get ntk val_loader input
@@ -78,6 +80,8 @@ class ModelNTK:
                 val_input = list(val.as_numpy_iterator())[0][0]
                 # list(val.as_numpy_iterator())[0][1].shape = (128, 1)?
                 val_target = list(val.as_numpy_iterator())[0][1]
+                # targets.shape = torch.Size([128])
+                val_target = val_target.reshape((-1,))
                 val_loader.append((val_input,val_target))
             
             del train, val
