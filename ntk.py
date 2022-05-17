@@ -91,6 +91,7 @@ class ModelNTK:
                 val_target = val_target.astype(np.int64)
                 val_loader.append((val_input,val_target))
             
+            #clear the parameter
             del train, val
             del train_input, train_target
             del val_input, val_target
@@ -145,6 +146,12 @@ class ModelNTK:
 
             model = init_model (torch_model)
             
+            #clear the parameter
+            del keras_model
+            del onnx_model
+            del torch_model
+            torch.cuda.empty_cache()
+
             return model
         # return (conds_x, prediction_mses)
         def get_ntk_n(loader, networks, loader_val, train_mode=True, num_batch=1, num_classes=10):        
@@ -303,6 +310,8 @@ class ModelNTK:
                         # prediction_mses.append(((targets_y_onehot_mean)**2).sum(1).mean(0).item())
                         prediction_mses.append(-1) # bad gradients
             
+            #clear the parameter
+            del inputs, targets, inputs_
             torch.cuda.empty_cache()
             ######
             if loader_val is None:
@@ -320,8 +329,11 @@ class ModelNTK:
         for i in range(networks_num):
             torch_model = transfer_init_model(model, input_shape, num_classes)
             networks.append(torch_model)
-            del torch_model
         
+        #clear the parameter
+        del torch_model
+        torch.cuda.empty_cache()
+
         # get_ntk_n
         ntks, mses = get_ntk_n(loader=train_loader, networks=networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
         print ("ntks:",ntks)
