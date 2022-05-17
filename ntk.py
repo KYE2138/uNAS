@@ -29,12 +29,13 @@ class ModelNTK:
     def get_ntk(self, model: tf.keras.Model, networks_num=3):
         dataset = self.config.dataset
         input_shape = self.config.dataset.input_shape
+        num_classes = self.config.dataset.num_classes
         batch_size = self.config.batch_size
         model = model
         networks_num = networks_num
         
         # return (train_loader, val_loader)
-        def generate_dataset(input_shape):
+        def generate_dataset(input_shape, num_classes):
             #################### dataset ####################
             dataset = dataset
             batch_size = batch_size
@@ -135,7 +136,7 @@ class ModelNTK:
             
             return model
         # return (conds_x, prediction_mses)
-        def get_ntk_n(self,loader, networks, loader_val=loader_val, train_mode=True, num_batch=1, num_classes=10):        
+        def get_ntk_n(self,loader, networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10):        
             #################### ntk ####################
             device = torch.cuda.current_device()
             ntks = []
@@ -285,7 +286,7 @@ class ModelNTK:
                 return conds_x, prediction_mses
 
         # generate_dataset
-        train_loader, val_loader = generate_dataset(input_shape)
+        train_loader, val_loader = generate_dataset(input_shape, num_classes)
         
         # init_transfer_model
         networks = []
