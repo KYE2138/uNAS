@@ -188,7 +188,7 @@ class ModelNTK:
                 # 對每個network
                 for net_idx, network in enumerate(networks):
                     # 將network(weight)放入gpu
-                    #network.to(device)
+                    network.to(device)
                     # 將network的梯度歸零
                     network.zero_grad()
                     # 會將梯度疊加給inputs_
@@ -273,6 +273,8 @@ class ModelNTK:
                     targets_y_onehot_mean.append(targets_onehot_mean)
                     for net_idx, network in enumerate(networks):
                         network.zero_grad()
+                        # 將network(weight)放入gpu
+                        network.to(device)      
                         inputs_ = inputs.clone().cuda(device=device, non_blocking=True)
                         logit = network(inputs_)
                         if isinstance(logit, tuple):
@@ -334,7 +336,6 @@ class ModelNTK:
         ntks, mses = get_ntk_n(loader=train_loader, networks=networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
         print ("ntks:",ntks)
         print ("mses:",mses)
-        pdb.set_trace()
 
         #clear the parameter
         del torch_model, networks
