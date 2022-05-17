@@ -45,7 +45,7 @@ class ModelNTK:
         device = torch.cuda.current_device()
         print (device)
         pdb.set_trace()
-
+        
         # return (train_loader, val_loader)
         def generate_dataset(dataset, batch_size, input_shape, num_classes, batch_num):
             #################### dataset ####################
@@ -342,5 +342,6 @@ class ModelNTK:
         print ("mses:",mses)
         pdb.set_trace()
         
+        torch.cuda.ipc_collect()
         return ntks
 
