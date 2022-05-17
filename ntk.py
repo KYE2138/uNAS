@@ -37,7 +37,7 @@ class ModelNTK:
         model = model
         networks_num = networks_num
         batch_num = batch_num
-        
+        '''
         # limit gpu mem to load keras model and transfer
         gpus = tf.config.list_physical_devices('GPU')
         if gpus:
@@ -51,7 +51,7 @@ class ModelNTK:
             except RuntimeError as e:
                 # Virtual devices must be set before GPUs have been initialized
                 print(e)
-
+        '''
         # return (train_loader, val_loader)
         def generate_dataset(dataset, batch_size, input_shape, num_classes, batch_num):
             #################### dataset ####################
