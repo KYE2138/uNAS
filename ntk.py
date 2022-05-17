@@ -302,6 +302,8 @@ class ModelNTK:
                         # RuntimeError: inverse_gpu: U(1,1) is zero, singular U.
                         # prediction_mses.append(((targets_y_onehot_mean)**2).sum(1).mean(0).item())
                         prediction_mses.append(-1) # bad gradients
+            
+            torch.cuda.empty_cache()
             ######
             if loader_val is None:
                 return conds_x
