@@ -152,14 +152,14 @@ class ModelNTK:
             del keras_model
             del onnx_model
             del torch_model
-            torch.cuda.empty_cache()
+            #torch.cuda.empty_cache()
             gc.collect()
 
             return model
         # return (conds_x, prediction_mses)
         def get_ntk_n(loader, networks, loader_val, train_mode=True, num_batch=1, num_classes=10):        
             #################### ntk ####################
-            device = torch.cuda.current_device()
+            #device = torch.cuda.current_device()
             ntks = []
             for network in networks:
                 if train_mode:
@@ -189,8 +189,8 @@ class ModelNTK:
                 inputs = torch.from_numpy(inputs).float()
                 targets = torch.from_numpy(targets)
                 # 將inputs, targets放入gpu
-                inputs = inputs.cuda(device=device, non_blocking=True)
-                targets = targets.cuda(device=device, non_blocking=True)
+                #inputs = inputs.cuda(device=device, non_blocking=True)
+                #targets = targets.cuda(device=device, non_blocking=True)
                 # For mse
                 targets_onehot = torch.nn.functional.one_hot(targets, num_classes=num_classes).float()
                 targets_onehot_mean = targets_onehot - targets_onehot.mean(0)
@@ -202,7 +202,8 @@ class ModelNTK:
                     # 將network的梯度歸零
                     network.zero_grad()
                     # 會將梯度疊加給inputs_
-                    inputs_ = inputs.clone().cuda(device=device, non_blocking=True)
+                    #inputs_ = inputs.clone().cuda(device=device, non_blocking=True)
+                    inputs_ = inputs.clone()
                     # logit 是inputs_作為輸入的netowrk輸出, logit = (64, 10)
                     logit = network(inputs_)
                     # 若logit 是tuple的話(for nasbach201)
@@ -236,7 +237,7 @@ class ModelNTK:
                         else:
                             cellgrads_x[net_idx].append(cellgrad)
                         network.zero_grad()
-                        torch.cuda.empty_cache()
+                        #torch.cuda.empty_cache()
             # For MSE, 將targets_x_onehot_mean list [tensor (64, 10)]轉換成tensor (64, 10)
             #torch.Size([64, 10])
             targets_x_onehot_mean = torch.cat(targets_x_onehot_mean, 0)
@@ -270,8 +271,8 @@ class ModelNTK:
                     inputs = torch.from_numpy(inputs).float()
                     targets = torch.from_numpy(targets)
 
-                    inputs = inputs.cuda(device=device, non_blocking=True)
-                    targets = targets.cuda(device=device, non_blocking=True)
+                    #inputs = inputs.cuda(device=device, non_blocking=True)
+                    #targets = targets.cuda(device=device, non_blocking=True)
                     #targets_onehot = tensor([[0., 0., 0., 0., 0., 0., 0., 0., 1., 0.]], device='cuda:0')
                     targets_onehot = torch.nn.functional.one_hot(targets, num_classes=num_classes).float()
                     #targets_onehot_mean = tensor([[0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]], device='cuda:0')
@@ -279,7 +280,8 @@ class ModelNTK:
                     targets_y_onehot_mean.append(targets_onehot_mean)
                     for net_idx, network in enumerate(networks):
                         network.zero_grad()
-                        inputs_ = inputs.clone().cuda(device=device, non_blocking=True)
+                        #inputs_ = inputs.clone().cuda(device=device, non_blocking=True)
+                        inputs_ = inputs.clone()
                         logit = network(inputs_)
                         if isinstance(logit, tuple):
                             logit = logit[1]  # 201 networks: return features and logits
@@ -295,7 +297,7 @@ class ModelNTK:
                             else:
                                 cellgrads_y[net_idx].append(cellgrad)
                             network.zero_grad()
-                            torch.cuda.empty_cache()
+                            #torch.cuda.empty_cache()
                 targets_y_onehot_mean = torch.cat(targets_y_onehot_mean, 0)
                 for _i, grads in enumerate(cellgrads_y):
                     grads = torch.stack(grads, 0)
@@ -320,7 +322,7 @@ class ModelNTK:
                 del networks
             
 
-            torch.cuda.empty_cache()
+            #torch.cuda.empty_cache()
             gc.collect()
             ######
             if loader_val is None:
@@ -341,7 +343,7 @@ class ModelNTK:
         
         #clear the parameter
         del torch_model
-        torch.cuda.empty_cache()
+        #torch.cuda.empty_cache()
 
         # get_ntk_n
         ntks, mses = get_ntk_n(loader=train_loader, networks=networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
