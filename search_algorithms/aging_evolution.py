@@ -42,19 +42,6 @@ class GPUTrainer:
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
-    # limit gpu mem to load keras model and transfer
-    gpus = tf.config.list_physical_devices('GPU')
-    if gpus:
-        # Restrict TensorFlow to only allocate 4GB of memory on the first GPU
-        try:
-            tf.config.set_logical_device_configuration(
-                gpus[0],
-                [tf.config.LogicalDeviceConfiguration(memory_limit=2048)])
-            logical_gpus = tf.config.list_logical_devices('GPU')
-            print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
-        except RuntimeError as e:
-            # Virtual devices must be set before GPUs have been initialized
-            print(e)
 
 
     #在utils.py內有worker.evaluate.remote，在ray下執行
