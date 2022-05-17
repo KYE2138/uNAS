@@ -226,7 +226,7 @@ class ModelNTK:
                         else:
                             cellgrads_x[net_idx].append(cellgrad)
                         network.zero_grad()
-                        torch.cuda.empty_cache()
+                        #torch.cuda.empty_cache()
                     '''
                     # del cuda tensor
                     del network, inputs_, inputs, targets, cellgrad
@@ -294,7 +294,7 @@ class ModelNTK:
                             else:
                                 cellgrads_y[net_idx].append(cellgrad)
                             network.zero_grad()
-                            torch.cuda.empty_cache()
+                            #torch.cuda.empty_cache()
                 targets_y_onehot_mean = torch.cat(targets_y_onehot_mean, 0)
                 for _i, grads in enumerate(cellgrads_y):
                     grads = torch.stack(grads, 0)
