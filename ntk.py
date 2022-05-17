@@ -1,32 +1,33 @@
-#################### uNAS model_trainer ####################
-import logging
-from typing import Optional
-
-import tensorflow as tf
-
-from config import TrainingConfig
-from pruning import DPFPruning
-from utils import debug_mode
-
-#################### TEGNAS testntk #################### 
-import numpy as np
-import torch
-import torch.nn as nn
-import tensorflow as tf
-import tf2onnx
-import onnx
-import onnx2torch
-
-import pdb
-import gc
-
-#################### GPU ####################
-# GPU mem issue
-config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
-sess = tf.compat.v1.Session(config=config)
-
-
 class ModelNTK:
+    #################### uNAS model_trainer ####################
+    import logging
+    from typing import Optional
+
+    import tensorflow as tf
+
+    from config import TrainingConfig
+    from pruning import DPFPruning
+    from utils import debug_mode
+
+    #################### TEGNAS testntk #################### 
+    import numpy as np
+    import torch
+    import torch.nn as nn
+    import tensorflow as tf
+    import tf2onnx
+    import onnx
+    import onnx2torch
+
+    import pdb
+    import gc
+
+    #################### GPU ####################
+    # GPU mem issue
+    #config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
+    #sess = tf.compat.v1.Session(config=config)
+
+
+    #class ModelNTK:
     """Keras models according to the specified config."""
     def __init__(self, data):
         self.dataset = data
@@ -348,6 +349,6 @@ class ModelNTK:
         #torch.cuda.empty_cache()
         #torch.cuda.ipc_collect()
 
-        pdb.set_trace()
+        #pdb.set_trace()
         return ntks
 
