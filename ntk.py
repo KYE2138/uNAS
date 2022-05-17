@@ -85,8 +85,8 @@ class ModelNTK:
                     # Virtual devices must be set before GPUs have been initialized
                     print(e)
             
-            # load model
-            keras_model = tf.keras.models.load_model(model)
+            # (load) model
+            keras_model = model
 
             # tensorflow-onnx(維度可從dataset獲取)
             keras_model_spec = (tf.TensorSpec((None, 32, 32, 3), tf.float32, name="input"),)
