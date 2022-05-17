@@ -37,6 +37,7 @@ def main():
     '''
     # limit gpu mem to load keras model and transfer
     gpus = tf.config.list_physical_devices('GPU')
+    print (gpus)
     if gpus:
         # Restrict TensorFlow to only allocate 4GB of memory on the first GPU
         try:
