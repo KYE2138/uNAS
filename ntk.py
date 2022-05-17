@@ -35,7 +35,7 @@ class ModelNTK:
         networks_num = networks_num
         
         # return (train_loader, val_loader)
-        def generate_dataset(input_shape, num_classes):
+        def generate_dataset(dataset, input_shape, num_classes):
             #################### dataset ####################
             dataset = dataset
             batch_size = batch_size
@@ -286,7 +286,7 @@ class ModelNTK:
                 return conds_x, prediction_mses
 
         # generate_dataset
-        train_loader, val_loader = generate_dataset(input_shape, num_classes)
+        train_loader, val_loader = generate_dataset(dataset, input_shape, num_classes)
         
         # init_transfer_model
         networks = []
