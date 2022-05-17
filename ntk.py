@@ -165,6 +165,9 @@ class ModelNTK:
             for i, (inputs, targets) in enumerate(loader):
                 # num_batch 預設為64
                 if num_batch > 0 and i >= num_batch: break
+                # numpy to pytorch tensor
+                inputs = torch.from_numpy(inputs)
+                targets = torch.from_numpy(targets)
                 # 將inputs, targets放入gpu
                 inputs = inputs.cuda(device=device, non_blocking=True)
                 targets = targets.cuda(device=device, non_blocking=True)
@@ -242,6 +245,10 @@ class ModelNTK:
             if loader_val is not None:
                 for i, (inputs, targets) in enumerate(loader_val):
                     if num_batch > 0 and i >= num_batch: break
+                    # numpy to pytorch tensor
+                    inputs = torch.from_numpy(inputs)
+                    targets = torch.from_numpy(targets)
+                    
                     inputs = inputs.cuda(device=device, non_blocking=True)
                     targets = targets.cuda(device=device, non_blocking=True)
                     #targets_onehot = tensor([[0., 0., 0., 0., 0., 0., 0., 0., 1., 0.]], device='cuda:0')
