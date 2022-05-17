@@ -66,7 +66,7 @@ class GPUTrainer:
         #ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
         #ntk = np.mean(ntks)
         import subprocess
-        subprocess.call("test_ntk.py", shell=True)
+        subprocess.run("test_ntk.py")
         
         pdb.set_trace()
         #pdb.set_trace()
