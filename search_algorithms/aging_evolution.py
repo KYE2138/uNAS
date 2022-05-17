@@ -61,12 +61,13 @@ class GPUTrainer:
                              inference_latency(rg, compute_weight=1, mem_access_weight=0)]
         # resource_features = [175104, 164176, 61449631]
         #ntk
-
-        ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
+        modelntk = ModelNTK(data)
+        ntks = modelntk.get_ntk(model, batch_size = self.trainer.config.batch_size)
         ntk = np.mean(ntks)
         
         #clear the parameter
         del ntks
+        del modelntk
         gc.collect()
         
         pdb.set_trace()

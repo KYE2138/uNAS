@@ -313,12 +313,13 @@ class ModelNTK:
             
             #clear the parameter
             del inputs, targets, inputs_
+            '''
             del ntks, networks, network, grads_x, cellgrads_x
             del ntk_cell_x, ntk_cell_yx, targets_x_onehot_mean, targets_y_onehot_mean
             del targets_onehot, targets_onehot_mean, logit, grad, cellgrad
             del W, targets_x_onehot_mean, _ntk, ntk_cell_x, ntks, eigenvalues, _cond
             del cellgrads_y, _ntk_yx, PY
-
+            '''
             torch.cuda.empty_cache()
             gc.collect()
             ######
