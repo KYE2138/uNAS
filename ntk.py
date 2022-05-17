@@ -24,16 +24,14 @@ import pdb
 
 class ModelNTK:
     """Keras models according to the specified config."""
-    def __init__(self, training_config: TrainingConfig):
-        self.log = logging.getLogger("ModelNTK")
-        self.config = training_config
-        self.dataset = training_config.dataset
-    
-    def get_ntk(self, model: tf.keras.Model, networks_num=3, batch_num=1):
-        dataset = self.config.dataset
-        input_shape = self.config.dataset.input_shape
-        num_classes = self.config.dataset.num_classes
-        batch_size = self.config.batch_size
+    def __init__(self, data):
+        self.dataset = data
+
+    def get_ntk(self, model: tf.keras.Model, networks_num=3, batch_num=1, batch_size=128):
+        dataset = self.dataset
+        input_shape = self.dataset.input_shape
+        num_classes = self.dataset.num_classes
+        batch_size = batch_size
         model = model
         networks_num = networks_num
         batch_num = batch_num

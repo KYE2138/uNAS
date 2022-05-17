@@ -34,10 +34,8 @@ class EvaluatedPoint:
 
 @ray.remote(num_gpus=0 if debug_mode() else 1, num_cpus=1 if debug_mode() else 6)
 class GPUTrainer:
-    def __init__(self, search_space, trainer, modelntk):
+    def __init__(self, search_space, trainer):
         self.trainer = trainer
-        #NTK
-        self.modelntk = modelntk
         self.ss = search_space
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -62,7 +60,8 @@ class GPUTrainer:
                              inference_latency(rg, compute_weight=1, mem_access_weight=0)]
         # resource_features = [175104, 164176, 61449631]
         #ntk
-        ntks = self.modelntk.get_ntk(model)
+
+        ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
         ntk = np.mean(ntks)
         pdb.set_trace()
         #pdb.set_trace()
@@ -85,8 +84,6 @@ class AgingEvoSearch:
         self.config = search_config
         #引用model_trainer.py內的ModelTrainer Class
         self.trainer = ModelTrainer(training_config)
-        #引用ntk.py內的ModelNTK，並將training_config傳入ModelNTK Class做初始化
-        self.modelntk = ModelNTK(training_config)
         self.root_dir = Path(search_config.checkpoint_dir)
         self.root_dir.mkdir(parents=True, exist_ok=True)
         self.experiment_name = experiment_name
@@ -192,10 +189,8 @@ class AgingEvoSearch:
 
         trainer = ray.put(self.trainer)
         ss = ray.put(self.config.search_space)
-        #將modelntk類別實體，傳入ray中
-        modelntk =  ray.put(self.modelntk)
         #utils.py內的Scheduler class
-        scheduler = Scheduler([GPUTrainer.remote(ss, trainer, modelntk)
+        scheduler = Scheduler([GPUTrainer.remote(ss, trainer)
                                for _ in range(self.max_parallel_evaluations)])
         self.log.info(f"Searching with {self.max_parallel_evaluations} workers.")
 
