@@ -49,7 +49,6 @@ def main():
             # Virtual devices must be set before GPUs have been initialized
             print(e)
 
-
     # 檢查參數
     if args.save_every <= 0:
         raise argparse.ArgumentTypeError("Value for '--save-every' must be a positive integer.")
