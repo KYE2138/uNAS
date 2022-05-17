@@ -302,7 +302,7 @@ class ModelNTK:
                     # cellgrads_y[0].shape = torch.Size([64, 1])
                     cellgrads_y[_i] = grads
                 # clear the parameter
-                del grads, network, networks, cellgrad, W, logit, inputs_, inputs, targets_onehot, targets, ntks
+                del grads, network, cellgrad, W, logit, inputs_, inputs, targets_onehot, targets, ntks
 
 
                 for net_idx in range(len(networks)):
@@ -316,6 +316,8 @@ class ModelNTK:
                         # RuntimeError: inverse_gpu: U(1,1) is zero, singular U.
                         # prediction_mses.append(((targets_y_onehot_mean)**2).sum(1).mean(0).item())
                         prediction_mses.append(-1) # bad gradients
+                # clear the parameter
+                del networks
             
 
             torch.cuda.empty_cache()
