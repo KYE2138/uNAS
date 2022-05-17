@@ -226,10 +226,13 @@ class ModelNTK:
                         else:
                             cellgrads_x[net_idx].append(cellgrad)
                         network.zero_grad()
+                        torch.cuda.empty_cache()
+                    '''
                     # del cuda tensor
-                    del inputs_, inputs, targets, cellgrad
+                    del network, inputs_, inputs, targets, cellgrad
                     torch.cuda.empty_cache()
                     torch.cuda.ipc_collect()
+                    '''
 
             # For MSE, 將targets_x_onehot_mean list [tensor (64, 10)]轉換成tensor (64, 10)
             #torch.Size([64, 10])
@@ -297,11 +300,12 @@ class ModelNTK:
                     grads = torch.stack(grads, 0)
                     # cellgrads_y[0].shape = torch.Size([64, 1])
                     cellgrads_y[_i] = grads
+                '''
                 # del cuda tensor
-                del inputs_, inputs, targets, cellgrad
+                del network, inputs_, inputs, targets, cellgrad
                 torch.cuda.empty_cache()
                 torch.cuda.ipc_collect()
-
+                '''
 
                 for net_idx in range(len(networks)):
                     try:
