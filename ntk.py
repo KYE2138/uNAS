@@ -154,6 +154,9 @@ class ModelNTK:
             # inputs = torch.Size([64, 3, 32, 32])
             # targets = torch.Size([64])
             # len(loader) = 3
+            pdb.set_trace()
+            loader = torch.from_numpy(loader)
+            pdb.set_trace()
             for i, (inputs, targets) in enumerate(loader):
                 # num_batch 預設為64
                 if num_batch > 0 and i >= num_batch: break
