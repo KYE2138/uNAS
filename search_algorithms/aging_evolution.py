@@ -68,7 +68,7 @@ class GPUTrainer:
         exec(open("test_ntk.py").read())
         
         #clear the parameter
-        del ntks
+        #del ntks
         gc.collect()
         
         pdb.set_trace()
