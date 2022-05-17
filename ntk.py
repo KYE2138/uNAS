@@ -40,11 +40,9 @@ class ModelNTK:
         networks_num = networks_num
         batch_num = batch_num
 
-
         # gpu
         device = torch.cuda.current_device()
         print (device)
-        pdb.set_trace()
         
         # return (train_loader, val_loader)
         def generate_dataset(dataset, batch_size, input_shape, num_classes, batch_num):
@@ -145,14 +143,13 @@ class ModelNTK:
             del keras_model
             del onnx_model
             del torch_model
-            torch.cuda.empty_cache()
             gc.collect()
 
             return model
         # return (conds_x, prediction_mses)
         def get_ntk_n(loader, networks, loader_val, train_mode=True, num_batch=1, num_classes=10):        
             #################### ntk ####################
-            #device = torch.cuda.current_device()
+            device = torch.cuda.current_device()
             ntks = []
             for network in networks:
                 if train_mode:
@@ -312,8 +309,7 @@ class ModelNTK:
                 # clear the parameter
                 del networks
             
-
-            torch.cuda.empty_cache()
+            torch.cuda.ipc_collect()
             gc.collect()
             ######
             if loader_val is None:
