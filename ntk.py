@@ -35,11 +35,8 @@ class ModelNTK:
         networks_num = networks_num
         
         # return (train_loader, val_loader)
-        def generate_dataset(dataset, input_shape, num_classes):
+        def generate_dataset(dataset, batch_size, input_shape, num_classes):
             #################### dataset ####################
-            dataset = dataset
-            batch_size = batch_size
-
             # from uNAS dataset by tf
             train = dataset.train_dataset() \
                 .shuffle(batch_size * 8) \
@@ -286,7 +283,7 @@ class ModelNTK:
                 return conds_x, prediction_mses
 
         # generate_dataset
-        train_loader, val_loader = generate_dataset(dataset, input_shape, num_classes)
+        train_loader, val_loader = generate_dataset(dataset, batch_size, input_shape, num_classes)
         
         # init_transfer_model
         networks = []
