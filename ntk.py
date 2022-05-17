@@ -136,7 +136,7 @@ class ModelNTK:
             
             return model
         # return (conds_x, prediction_mses)
-        def get_ntk_n(self,loader, networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10):        
+        def get_ntk_n(self, loader, networks, loader_val, train_mode=True, num_batch=1, num_classes=10):        
             #################### ntk ####################
             device = torch.cuda.current_device()
             ntks = []
