@@ -159,8 +159,6 @@ class ModelNTK:
             # len(loader) = 1
             # loader = [(inputs, targets)]
 
-            pdb.set_trace()
-
             #loader = torch.from_numpy(loader)
             for i, (inputs, targets) in enumerate(loader):
                 # num_batch 預設為64
@@ -172,6 +170,7 @@ class ModelNTK:
                 inputs = inputs.cuda(device=device, non_blocking=True)
                 targets = targets.cuda(device=device, non_blocking=True)
                 # For mse
+                pdb.set_trace()
                 targets_onehot = torch.nn.functional.one_hot(targets, num_classes=num_classes).float()
                 targets_onehot_mean = targets_onehot - targets_onehot.mean(0)
                 targets_x_onehot_mean.append(targets_onehot_mean)
@@ -248,7 +247,7 @@ class ModelNTK:
                     # numpy to pytorch tensor
                     inputs = torch.from_numpy(inputs)
                     targets = torch.from_numpy(targets)
-                    
+
                     inputs = inputs.cuda(device=device, non_blocking=True)
                     targets = targets.cuda(device=device, non_blocking=True)
                     #targets_onehot = tensor([[0., 0., 0., 0., 0., 0., 0., 0., 1., 0.]], device='cuda:0')
@@ -308,7 +307,7 @@ class ModelNTK:
             torch_model = transfer_init_model(model, input_shape, num_classes)
             networks.append(torch_model)
             del torch_model
-        pdb.set_trace()
+        
         # get_ntk_n
         ntks, mses = get_ntk_n(loader=train_loader, networks=networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
         print ("ntks:",ntks)
