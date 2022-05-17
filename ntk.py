@@ -343,8 +343,8 @@ class ModelNTK:
 
         #clear the parameter
         del torch_model, networks
-        torch.cuda.empty_cache()
-        torch.cuda.ipc_collect()
+        #torch.cuda.empty_cache()
+        #torch.cuda.ipc_collect()
 
         pdb.set_trace()
         return ntks
