@@ -291,7 +291,7 @@ class ModelNTK:
             torch_model = transfer_init_model(model, input_shape, num_classes)
             networks.append(torch_model)
             del torch_model
-
+        pdb.set_trace()
         # get_ntk_n
         ntks, mses = get_ntk_n(loader=train_loader, networks=networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
         print ("ntks:",ntks)
