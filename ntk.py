@@ -49,7 +49,7 @@ class ModelNTK:
                 print(e)
 
         # return (train_loader, val_loader)
-        def generate_dataset(dataset, batch_size, input_shape, num_classes):
+        def generate_dataset(dataset, batch_size, input_shape, num_classes, batch_num):
             #################### dataset ####################
             # from uNAS dataset by tf
             train = dataset.train_dataset() \
@@ -57,25 +57,27 @@ class ModelNTK:
                 .batch(batch_size) \
                 .prefetch(tf.data.experimental.AUTOTUNE)
             # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
-            
-            # for get ntk loader input
-            # list(train.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
-            train_input = list(train.as_numpy_iterator())[0][0]
-            # list(train.as_numpy_iterator())[0][1].shape = (128, 1)?
-            train_target = list(train.as_numpy_iterator())[0][1]
-            train_loader = (train_input, train_target)
-            
-            # from uNAS dataset by tf
             val = dataset.validation_dataset() \
                 .batch(batch_size) \
                 .prefetch(tf.data.experimental.AUTOTUNE)
             # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
-            # for get ntk val_loader input
-            # list(val.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
-            val_input = list(val.as_numpy_iterator())[0][0]
-            # list(val.as_numpy_iterator())[0][1].shape = (128, 1)?
-            val_target = list(val.as_numpy_iterator())[0][1]
-            val_loader = (val_input, val_target)
+
+            # for get ntk loader input
+            train_loader = []
+            val_loader = []
+            for i in range(batch_num):
+                # list(train.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
+                train_input = list(train.as_numpy_iterator())[0][0]
+                # list(train.as_numpy_iterator())[0][1].shape = (128, 1)?
+                train_target = list(train.as_numpy_iterator())[0][1]
+                train_loader.append((train_input,train_target))
+
+                # for get ntk val_loader input
+                # list(val.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
+                val_input = list(val.as_numpy_iterator())[0][0]
+                # list(val.as_numpy_iterator())[0][1].shape = (128, 1)?
+                val_target = list(val.as_numpy_iterator())[0][1]
+                val_loader.append((val_input,val_target))
             
             del train, val
             del train_input, train_target
@@ -153,8 +155,11 @@ class ModelNTK:
             # 對每組inputs和targets
             # inputs = torch.Size([64, 3, 32, 32])
             # targets = torch.Size([64])
-            # len(loader) = 3
+            # len(loader) = 1
+            # loader = [(inputs, targets)]
+
             pdb.set_trace()
+
             #loader = torch.from_numpy(loader)
             for i, (inputs, targets) in enumerate(loader):
                 # num_batch 預設為64
@@ -286,7 +291,9 @@ class ModelNTK:
 
         # generate_dataset
         train_loader, val_loader = generate_dataset(dataset, batch_size, input_shape, num_classes)
-        
+        # train_loader = [(inputs, targets)]
+        # val_loader = [(inputs, targets)]
+
         # init_transfer_model
         networks = []
         for i in range(networks_num):
