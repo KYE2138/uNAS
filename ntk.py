@@ -198,7 +198,7 @@ class ModelNTK:
                 # 對每個network
                 for net_idx, network in enumerate(networks):
                     # 將network(weight)放入gpu
-                    network.to(device)
+                    #network.to(device)
                     # 將network的梯度歸零
                     network.zero_grad()
                     # 會將梯度疊加給inputs_
