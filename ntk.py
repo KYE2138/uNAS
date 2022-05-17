@@ -69,7 +69,7 @@ class ModelNTK:
 
             return train_loader, val_loader
         # return model (pytorch)
-        def transfer_init_model(model: tf.keras.Model, train_loader):
+        def transfer_init_model(model: tf.keras.Model, input_shape, num_classes):
             #################### model ####################
             # limit gpu mem to load keras model and transfer
             gpus = tf.config.list_physical_devices('GPU')
@@ -288,8 +288,9 @@ class ModelNTK:
         # init_transfer_model
         networks = []
         for i in range(networks_num):
-            transfer_init_model(model)
+            torch_model = transfer_init_model(model, input_shape, num_classes)
             networks.append(torch_model)
+            del torch_model
 
         # get_ntk_n
         ntks, mses = get_ntk_n(train_loader, networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=10)
