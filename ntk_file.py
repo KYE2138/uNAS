@@ -118,8 +118,8 @@ class ModelNTKFile:
 
         def wait_ntk(num_batch):
             save_finish_info = np.array([[]])
-            save_finish_info = np.append(save_finish_info,[[num_batch]])
-            save_finish_info = np.append(save_finish_info,[[num_batch]])
+            save_finish_info = np.append(save_finish_info,[[num_batch]], axis=0)
+            save_finish_info = np.append(save_finish_info,[[num_batch]], axis=0)
             np.save(f'{save_path}/save_finish_info.npy', save_finish_info)
             pdb.set_trace()
 
