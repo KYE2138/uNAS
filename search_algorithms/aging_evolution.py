@@ -50,6 +50,10 @@ class GPUTrainer:
         data = self.trainer.dataset
         arch = point.arch
         model = self.ss.to_keras_model(arch, data.input_shape, data.num_classes)
+        #ntk
+        ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
+        ntk = np.mean(ntks)
+        
         #使用model_trainer.py內的ModelTrainer類別中的train_and_eval函數
         results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
         val_error, test_error = results["val_error"], results["test_error"]
