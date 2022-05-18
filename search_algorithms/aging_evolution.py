@@ -135,7 +135,7 @@ class AgingEvoSearch:
             self.save_state(file.as_posix())
 
     def get_mo_fitness_fn(self):
-        lambdas = np.random.uniform(low=0.0, high=1.0, size=4)
+        lambdas = np.random.uniform(low=0.0, high=1.0, size=5)
 
         def normalise(x, l=0, u=1, cap=10.0):
             return min((x - l) / (u - l), cap)
