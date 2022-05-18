@@ -118,6 +118,7 @@ class ModelNTKFile:
 
         def wait_metrics(num_batch, save_path):
             input_finish_info_path = f'{save_path}/input_finish_info.npz'
+            pdb.set_trace()
             np.np.savez(input_finish_info_path, num_batch=num_batch, input_shape=input_shape, num_classes=num_classes)
             pdb.set_trace()
 
@@ -135,11 +136,6 @@ class ModelNTKFile:
             ntk = metrics['ntk']
 
             return ntk
-
-
-            
-
-
 
 
            
