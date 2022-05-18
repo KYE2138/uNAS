@@ -62,16 +62,12 @@ class GPUTrainer:
         # resource_features = [175104, 164176, 61449631]
         
         #ntk
-
+        # data save as numpy
+        # modle save as keras model
         ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
         ntk = np.mean(ntks)
-        #import subprocess
-        #subprocess.run(["ls"])
-        #subprocess.run("python3 test_ntk.py")
-        
+
         #pdb.set_trace()
-        #pdb.set_trace()
-        #ntks, mses = get_ntk_n(loader, networks, loader_val=loader_val, train_mode=True, num_batch=1, num_classes=10)
         
         log.info(f"Training complete: val_error={val_error:.4f}, test_error={test_error:.4f}, "
                  f"resource_features={resource_features}.")
