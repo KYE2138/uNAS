@@ -148,7 +148,7 @@ class ModelMetricsFile:
         save_model(model, input_shape, num_classes, save_path)
         
         # wait ntk
-        ntks = wait_metrics(num_batch, save_path)
+        ntks = wait_metrics(num_batch, save_path, num_classes)
 
         return ntks
 
