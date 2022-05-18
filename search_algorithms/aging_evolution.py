@@ -14,8 +14,7 @@ from resource_models.models import peak_memory_usage, model_size, inference_late
 from utils import Scheduler, debug_mode
 
 #ntk
-#from ntk import ModelNTK
-import ntk
+from ntk import ModelNTK
 
 import pdb
 import gc
@@ -64,7 +63,7 @@ class GPUTrainer:
         
         #ntk
 
-        ntks = ntk.ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
+        ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
         ntk = np.mean(ntks)
         #import subprocess
         #subprocess.run(["ls"])
