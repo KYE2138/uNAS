@@ -66,9 +66,9 @@ class GPUTrainer:
         # data save as numpy
         # modle save as keras model
         ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
-        ntk = np.mean(ntks)
+        ntk = np.mean(ntks).astype('int64')
         resource_features.append(ntk)
-        
+
 
 
 
