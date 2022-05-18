@@ -21,6 +21,8 @@ import pdb
 import gc
 
 #################### GPU ####################
+import os
+os.environ['CUDA_LAUNCH_BLOCKING'] = 1
 # GPU mem issue
 #config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
 #sess = tf.compat.v1.Session(config=config)
@@ -188,7 +190,7 @@ class ModelNTK:
                 # 對每個network
                 for net_idx, network in enumerate(networks):
                     # 將network(weight)放入gpu
-                    network.to(device, non_blocking=True)
+                    network.to(device)
                     # 將network的梯度歸零
                     network.zero_grad()
                     # 會將梯度疊加給inputs_
@@ -220,7 +222,7 @@ class ModelNTK:
                                     cellgrad.append(W.grad.view(-1).detach())                        
                         # 將(單個network的)grad list [tensor (64, 8148)]轉換成tensor (64, 8148)，append進grads_x list
                         grads_x[net_idx].append(torch.cat(grad, -1)) 
-                        cellgrad = torch.cat(cellgrad, -1) if len(cellgrad) > 0 else torch.Tensor([0]).to(device, non_blocking=True)
+                        cellgrad = torch.cat(cellgrad, -1) if len(cellgrad) > 0 else torch.Tensor([0]).to(device)
                         if len(cellgrads_x[net_idx]) == 0:
                             cellgrads_x[net_idx] = [cellgrad]
                         else:
@@ -288,7 +290,7 @@ class ModelNTK:
                             for name, W in network.named_parameters():
                                 if 'weight' in name and W.grad is not None and "cell" in name:
                                     cellgrad.append(W.grad.view(-1).detach())
-                            cellgrad = torch.cat(cellgrad, -1) if len(cellgrad) > 0 else torch.Tensor([0]).cuda()
+                            cellgrad = torch.cat(cellgrad, -1) if len(cellgrad) > 0 else torch.Tensor([0]).to(device)
                             if len(cellgrads_y[net_idx]) == 0:
                                 cellgrads_y[net_idx] = [cellgrad]
                             else:
