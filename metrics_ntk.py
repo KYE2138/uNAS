@@ -79,7 +79,7 @@ class ModelNtk:
             #################### model ####################
             # load onnx_model
             onnx_model_path = onnx_model_path = f'{save_path}/model.onnx'
-            onnx_model = onnx.load('path/to/the/model.onnx')
+            onnx_model = onnx.load(onnx_model_path)
 
             # onnx2torch
             torch_model = onnx2torch.convert(onnx_model)
