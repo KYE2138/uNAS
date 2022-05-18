@@ -10,7 +10,7 @@ import gc
 import os
 import time
 #################### GPU ####################
-#os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
+os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 
 class ModelNtk:
     def __init__(self, networks_num=3, num_batch=1):
