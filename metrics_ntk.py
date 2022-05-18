@@ -46,7 +46,8 @@ class ModelNtk:
             num_classes = input_finish_info['num_classes']
             timestamp = input_finish_info['timestamp']
             os.remove(input_finish_info_path)
-
+            
+            pdb.set_trace()
             return num_batch, num_classes, timestamp
 
         # return (train_loader, val_loader)
