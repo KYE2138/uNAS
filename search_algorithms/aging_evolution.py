@@ -65,7 +65,7 @@ class GPUTrainer:
         #ntk
         # data save as numpy
         # modle save as keras model
-        ModelNTKFile(self.trainer).save_ntk_input(model, batch_num=1)
+        ModelNTKFile(self.trainer).save_ntk_input(model, num_batch=1)
         
         #ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
         #ntk = np.mean(ntks)

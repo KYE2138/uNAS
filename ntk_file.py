@@ -30,7 +30,7 @@ class ModelNTKFile:
         self.trainer = trainer
         self.save_path = "./tmp/ntk_file"
 
-    def save_ntk_input(self, model: tf.keras.Model, batch_num):
+    def save_ntk_input(self, model: tf.keras.Model, num_batch):
         dataset = self.trainer.dataset
         input_shape = self.trainer.dataset.input_shape
         num_classes = self.trainer.dataset.num_classes
@@ -45,7 +45,7 @@ class ModelNTKFile:
         else:
             print (f"save_path is already exist:{save_path}")
 
-        # return (train_loader, val_loader)
+
         def save_dataset(dataset, batch_size, input_shape, num_classes, batch_num, save_path):
             #################### dataset ####################
             # from uNAS dataset by tf
@@ -71,8 +71,6 @@ class ModelNTKFile:
                 train_target = train_target.reshape((-1,))
                 # one_hot is only applicable to index tensor
                 train_target = train_target.astype(np.int64)
-                np.save(f'{save_path}/train_input.npy', train_input)
-                np.save(f'{save_path}/train_target.npy', train_target)
                 #train_loader.append((train_input,train_target))
 
                 # for get ntk val_loader input
@@ -84,7 +82,6 @@ class ModelNTKFile:
                 val_target = val_target.reshape((-1,))
                 # one_hot is only applicable to index tensor
                 val_target = val_target.astype(np.int64)
-
                 #val_loader.append((val_input,val_target))
 
             np.save(f'{save_path}/train_input.npy', train_input)
@@ -97,9 +94,7 @@ class ModelNTKFile:
             del train_input, train_target
             del val_input, val_target
             gc.collect()
-            #return train_loader, val_loader
-        
-        # return model (pytorch)
+
         def save_model(model: tf.keras.Model, input_shape, num_classes, save_path):
             #################### model ####################
             # (load) model
@@ -120,7 +115,15 @@ class ModelNTKFile:
             #clear the parameter
             del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
             gc.collect()
-            #return model
+
+        def wait_ntk(num_batch):
+            finish_info = np.array([])
+            finish_info.extend([num_batch])
+            finish_info.extend([num_batch])
+            np.save(f'{save_path}/finish_info.npy', finish_info)
+
+
+            
 
         # save dataset
         save_dataset(dataset, batch_size, input_shape, num_classes, batch_num, save_path)
