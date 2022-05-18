@@ -67,8 +67,10 @@ class GPUTrainer:
         # modle save as keras model
         ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
         ntk = np.mean(ntks)
-        #ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
-        #ntk = np.mean(ntks)
+        resource_features.append(ntk)
+        
+
+
 
         pdb.set_trace()
         
