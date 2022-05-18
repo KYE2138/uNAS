@@ -30,7 +30,7 @@ class ModelMetricsFile:
         self.trainer = trainer
         self.save_path = './tmp/metrics'
 
-    def get_metrics(self, num_batch):
+    def get_metrics(self, model, num_batch):
         dataset = self.trainer.dataset
         input_shape = self.trainer.dataset.input_shape
         num_classes = self.trainer.dataset.num_classes
