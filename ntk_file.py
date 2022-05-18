@@ -117,9 +117,9 @@ class ModelNTKFile:
             gc.collect()
 
         def wait_metrics(num_batch, save_path):
+            timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
             input_finish_info_path = f'{save_path}/input_finish_info.npz'
-            pdb.set_trace()
-            np.np.savez(input_finish_info_path, num_batch=num_batch, input_shape=str(input_shape), num_classes=num_classes)
+            np.np.savez(input_finish_info_path, num_batch=num_batch, timestamp=timestamp)
             pdb.set_trace()
 
             #check metrics exsit
