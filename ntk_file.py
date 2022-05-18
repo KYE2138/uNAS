@@ -117,10 +117,11 @@ class ModelNTKFile:
             gc.collect()
 
         def wait_ntk(num_batch):
-            finish_info = np.array([[]])
-            finish_info = np.append(finish_info,[[num_batch]])
-            finish_info = np.append(finish_info,[[num_batch]])
-            np.save(f'{save_path}/finish_info.npy', finish_info)
+            save_finish_info = np.array([[]])
+            save_finish_info = np.append(save_finish_info,[[num_batch]])
+            save_finish_info = np.append(save_finish_info,[[num_batch]])
+            np.save(f'{save_path}/save_finish_info.npy', save_finish_info)
+            pdb.set_trace()
 
 
             
