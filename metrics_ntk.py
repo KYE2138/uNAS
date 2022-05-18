@@ -19,7 +19,7 @@ ray.init(num_cpus=8, num_gpus=1)
 def get_ntk(num_batch=1, networks_num=3):
     save_path = './tmp/metrics'
     num_batch = num_batch
-    timestamp = ''self.timestamp''
+    timestamp = ''
     networks_num = networks_num
     num_classes = 10
     ntks = -1
