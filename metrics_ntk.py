@@ -47,7 +47,6 @@ class ModelNtk:
             timestamp = str(input_finish_info['timestamp'])
             os.remove(input_finish_info_path)
 
-            pdb.set_trace()
             return num_batch, num_classes, timestamp
 
         # return (train_loader, val_loader)
@@ -322,6 +321,8 @@ class ModelNtk:
             # transfer and init model
             torch_model = transfer_init_model(save_path)
             networks.append(torch_model)
+        
+        pdb.set_trace()
         
         # get ntk_n
         ntks, mses = get_ntk_n(loader=train_loader, networks=networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=num_classes)
