@@ -120,7 +120,6 @@ class ModelMetricsFile:
             timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
             input_finish_info_path = f'{save_path}/input_finish_info.npz'
             np.savez(input_finish_info_path, num_batch=num_batch, num_classes=num_classes , timestamp=timestamp)
-            pdb.set_trace()
 
             #check metrics exsit
             metrics_finish_info_path = f'{save_path}/metrics_finish_info.npz'
@@ -138,6 +137,7 @@ class ModelMetricsFile:
             
             #
             ntks = metrics['ntks']
+            mses = metrics['mses']
 
             return ntks
 
@@ -150,6 +150,5 @@ class ModelMetricsFile:
         # wait ntk
         ntks = wait_metrics(num_batch, save_path)
 
-        pdb.set_trace()
         return ntks
 

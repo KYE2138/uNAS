@@ -13,11 +13,11 @@ import time
 #os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 
 class ModelNtk:
-    def __init__(self, networks_num=3, batch_num=1, batch_size=128):
+    def __init__(self, networks_num=3, num_batch=1):
         self.save_path = './tmp/metrics'
-        self.num_batch = 0
+        self.num_batch = num_batch
         self.timestamp = ''
-        self.networks_num = 3
+        self.networks_num = networks_num
         self.num_classes = 10
         self.ntks = -1
         self.mses = -1
@@ -66,8 +66,6 @@ class ModelNtk:
             for i in range(num_batch):
                 train_loader.append((train_input,train_target))
                 val_loader.append((val_input,val_target))
-            
-            pdb.set_trace()
             
             #clear the parameter
             del train_input, train_target
@@ -325,7 +323,7 @@ class ModelNtk:
             networks.append(torch_model)
         
         # get ntk_n
-        ntks, mses = get_ntk_n(loader=train_loader, networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=num_classes)
+        ntks, mses = get_ntk_n(loader=train_loader, networks=networks, loader_val=val_loader, train_mode=True, num_batch=1, num_classes=num_classes)
 
         # save_ntks
         save_ntks_mses(save_path, ntks, mses)
@@ -340,4 +338,4 @@ class ModelNtk:
 
 #monitoring
 while True:
-    ntks = ModelNtk.get_ntk()
+    ntks = ModelNtk(networks_num=3, num_batch=1).get_ntk()
