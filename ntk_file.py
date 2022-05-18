@@ -8,12 +8,12 @@ from config import TrainingConfig
 from pruning import DPFPruning
 from utils import debug_mode
 
-#################### save_dataset save_model #################### 
+#################### save_dataset save_model wait_ntk#################### 
 import numpy as np
 import tensorflow as tf
 import tf2onnx
 import onnx
-
+import time
 import os
 import pdb
 import gc
@@ -30,7 +30,7 @@ class ModelNTKFile:
         self.trainer = trainer
         self.save_path = "./tmp/ntk_file"
 
-    def save_ntk_input(self, model: tf.keras.Model, num_batch):
+    def save_metrics_input(self, model: tf.keras.Model, num_batch):
         dataset = self.trainer.dataset
         input_shape = self.trainer.dataset.input_shape
         num_classes = self.trainer.dataset.num_classes
@@ -116,15 +116,33 @@ class ModelNTKFile:
             del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
             gc.collect()
 
-        def wait_ntk(num_batch):
-            save_finish_info = np.array([[]])
-            save_finish_info = np.append(save_finish_info,[[num_batch]], axis=0)
-            save_finish_info = np.append(save_finish_info,[[num_batch]], axis=0)
-            np.save(f'{save_path}/save_finish_info.npy', save_finish_info)
+        def wait_metrics(num_batch, save_path):
+            input_finish_info_path = f'{save_path}/input_finish_info.npz'
+            np.np.savez(input_finish_info_path, num_batch=num_batch, input_shape=input_shape, num_classes=num_classes)
             pdb.set_trace()
+
+            #check metrics exsit
+            metrics_path = f'{save_path}/metrics_finish_info.npz'
+            while not os.path.isfile(metrics_path):
+                time.sleep(5)
+                print (f'wait for metrics')
+            
+            #load metrics and del
+            metrics = np.load(metrics_path)
+            os.remove(metrics_path)
+
+            #
+            ntk = metrics['ntk']
+
+            return ntk
 
 
             
+
+
+
+
+           
 
         # save dataset
         save_dataset(dataset, batch_size, input_shape, num_classes, num_batch, save_path)
@@ -133,8 +151,8 @@ class ModelNTKFile:
         save_model(model, input_shape, num_classes, save_path)
         
         # wait ntk
-        wait_ntk(num_batch)
+        ntk = wait_metrics(num_batch, save_path)
 
         pdb.set_trace()
-        return True
+        return ntk
 
