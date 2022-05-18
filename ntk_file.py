@@ -46,7 +46,7 @@ class ModelNTKFile:
             print (f"save_path is already exist:{save_path}")
 
 
-        def save_dataset(dataset, batch_size, input_shape, num_classes, batch_num, save_path):
+        def save_dataset(dataset, batch_size, input_shape, num_classes, num_batch, save_path):
             #################### dataset ####################
             # from uNAS dataset by tf
             train = dataset.train_dataset() \
@@ -62,7 +62,7 @@ class ModelNTKFile:
             # for get ntk loader input
             train_loader = []
             val_loader = []
-            for i in range(batch_num):
+            for i in range(num_batch):
                 # list(train.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
                 train_input = list(train.as_numpy_iterator())[0][0]
                 # list(train.as_numpy_iterator())[0][1].shape = (128, 1)?
@@ -126,7 +126,7 @@ class ModelNTKFile:
             
 
         # save dataset
-        save_dataset(dataset, batch_size, input_shape, num_classes, batch_num, save_path)
+        save_dataset(dataset, batch_size, input_shape, num_classes, num_batch, save_path)
 
         # save model
         save_model(model, input_shape, num_classes, save_path)
