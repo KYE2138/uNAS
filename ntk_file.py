@@ -39,7 +39,7 @@ class ModelNTKFile:
         #networks_num = networks_num
         num_batch = num_batch
         save_path = self.save_path
-        if not os.path.isfile(save_path):
+        if not os.path.exists(save_path):
             os.makedirs(save_path)
             print (f"save_path dir:{save_path}")
         else:
