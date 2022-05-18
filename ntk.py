@@ -179,8 +179,8 @@ class ModelNTK:
                 inputs = torch.from_numpy(inputs).float()
                 targets = torch.from_numpy(targets)
                 # 將inputs, targets放入gpu
-                inputs = inputs.cuda(device=device, non_blocking=True)
-                targets = targets.cuda(device=device, non_blocking=True)
+                inputs = inputs.to(device, non_blocking=True)
+                targets = targets.to(device, non_blocking=True)
                 # For mse
                 targets_onehot = torch.nn.functional.one_hot(targets, num_classes=num_classes).float()
                 targets_onehot_mean = targets_onehot - targets_onehot.mean(0)
@@ -188,11 +188,11 @@ class ModelNTK:
                 # 對每個network
                 for net_idx, network in enumerate(networks):
                     # 將network(weight)放入gpu
-                    network.cuda(device=device, non_blocking=True)
+                    network.to(device, non_blocking=True)
                     # 將network的梯度歸零
                     network.zero_grad()
                     # 會將梯度疊加給inputs_
-                    inputs_ = inputs.clone().cuda(device=device, non_blocking=True)
+                    inputs_ = inputs.clone().to(device, non_blocking=True)
                     # logit 是inputs_作為輸入的netowrk輸出, logit = (64, 10)
                     logit = network(inputs_)
                     # 若logit 是tuple的話(for nasbach201)
@@ -220,7 +220,7 @@ class ModelNTK:
                                     cellgrad.append(W.grad.view(-1).detach())                        
                         # 將(單個network的)grad list [tensor (64, 8148)]轉換成tensor (64, 8148)，append進grads_x list
                         grads_x[net_idx].append(torch.cat(grad, -1)) 
-                        cellgrad = torch.cat(cellgrad, -1) if len(cellgrad) > 0 else torch.Tensor([0]).cuda()
+                        cellgrad = torch.cat(cellgrad, -1) if len(cellgrad) > 0 else torch.Tensor([0]).to(device, non_blocking=True)
                         if len(cellgrads_x[net_idx]) == 0:
                             cellgrads_x[net_idx] = [cellgrad]
                         else:
@@ -267,8 +267,8 @@ class ModelNTK:
                     inputs = torch.from_numpy(inputs).float()
                     targets = torch.from_numpy(targets)
 
-                    inputs = inputs.cuda(device=device, non_blocking=True)
-                    targets = targets.cuda(device=device, non_blocking=True)
+                    inputs = inputs.to(device, non_blocking=True)
+                    targets = targets.to(device, non_blocking=True)
                     #targets_onehot = tensor([[0., 0., 0., 0., 0., 0., 0., 0., 1., 0.]], device='cuda:0')
                     targets_onehot = torch.nn.functional.one_hot(targets, num_classes=num_classes).float()
                     #targets_onehot_mean = tensor([[0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]], device='cuda:0')
@@ -277,8 +277,8 @@ class ModelNTK:
                     for net_idx, network in enumerate(networks):
                         network.zero_grad()
                         # 將network(weight)放入gpu
-                        network.cuda(device=device, non_blocking=True)  
-                        inputs_ = inputs.clone().cuda(device=device, non_blocking=True)
+                        network.to(device)      
+                        inputs_ = inputs.clone().to(device, non_blocking=True)
                         logit = network(inputs_)
                         if isinstance(logit, tuple):
                             logit = logit[1]  # 201 networks: return features and logits
