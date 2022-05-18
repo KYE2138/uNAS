@@ -28,7 +28,7 @@ class ModelNTKFile:
     """Keras models according to the specified config."""
     def __init__(self, trainer):
         self.trainer = trainer
-        self.save_path = "/tmp/ntk_file"
+        self.save_path = "./tmp/ntk_file"
 
     def save_ntk_input(self, model: tf.keras.Model, batch_num):
         dataset = self.trainer.dataset
