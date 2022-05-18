@@ -72,7 +72,7 @@ class GPUTrainer:
 
 
 
-        pdb.set_trace()
+        #pdb.set_trace()
         
         log.info(f"Training complete: val_error={val_error:.4f}, test_error={test_error:.4f}, "
                  f"resource_features={resource_features}.")

@@ -32,6 +32,8 @@ search_config = AgingEvoConfig(
     rounds=6000,
     checkpoint_dir="artifacts/cnn_cifar10",
     max_parallel_evaluations = 1
+    population_size = 10
+    sample_size = 5
 )
 
 bound_config = BoundConfig(
