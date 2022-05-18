@@ -14,7 +14,8 @@ from resource_models.models import peak_memory_usage, model_size, inference_late
 from utils import Scheduler, debug_mode
 
 #ntk
-from ntk import ModelNTK
+#from ntk import ModelNTK
+from ntk_file import ModelNTKFile
 
 import pdb
 import gc
@@ -50,10 +51,6 @@ class GPUTrainer:
         data = self.trainer.dataset
         arch = point.arch
         model = self.ss.to_keras_model(arch, data.input_shape, data.num_classes)
-        #ntk
-        ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
-        ntk = np.mean(ntks)
-        
         #使用model_trainer.py內的ModelTrainer類別中的train_and_eval函數
         results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
         val_error, test_error = results["val_error"], results["test_error"]
@@ -68,11 +65,10 @@ class GPUTrainer:
         #ntk
         # data save as numpy
         # modle save as keras model
-        '''data.input_shape
-        data.num_classes'''
-
-        ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
-        ntk = np.mean(ntks)
+        ModelNTKFile(self.trainer).save_ntk_input(model, batch_num=1)
+        
+        #ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
+        #ntk = np.mean(ntks)
 
         #pdb.set_trace()
         
