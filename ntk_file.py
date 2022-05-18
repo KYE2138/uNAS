@@ -37,7 +37,7 @@ class ModelNTKFile:
         batch_size = self.trainer.config.batch_size
         model = model
         #networks_num = networks_num
-        batch_num = batch_num
+        num_batch = num_batch
         save_path = self.save_path
         if not os.path.isfile(save_path):
             os.makedirs(save_path)
@@ -131,6 +131,9 @@ class ModelNTKFile:
         # save model
         save_model(model, input_shape, num_classes, save_path)
         
+        # wait ntk
+        wait_ntk(num_batch)
+
         pdb.set_trace()
         return True
 
