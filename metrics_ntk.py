@@ -333,4 +333,3 @@ def get_ntk(num_batch=1, networks_num=3):
 
 while True:
     ntks = ray.get(get_ntk.remote(networks_num=3, num_batch=1))
-    pdb.set_trace()
