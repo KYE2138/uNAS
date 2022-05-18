@@ -42,11 +42,11 @@ class ModelNtk:
             time.sleep(5)
             #load input_finish_info and del
             input_finish_info = np.load(input_finish_info_path)
-            num_batch = input_finish_info['num_batch']
-            num_classes = input_finish_info['num_classes']
-            timestamp = input_finish_info['timestamp']
+            num_batch = int(input_finish_info['num_batch']))
+            num_classes = int(input_finish_info['num_classes'])
+            timestamp = str(input_finish_info['timestamp'])
             os.remove(input_finish_info_path)
-            
+
             pdb.set_trace()
             return num_batch, num_classes, timestamp
 
