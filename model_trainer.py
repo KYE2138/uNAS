@@ -7,6 +7,7 @@ from config import TrainingConfig
 from pruning import DPFPruning
 from utils import debug_mode
 
+import tensorflow_addons as tfa
 # GPU mem issue
 config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
 sess = tf.compat.v1.Session(config=config)
