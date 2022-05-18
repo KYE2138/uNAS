@@ -8,15 +8,13 @@ from config import TrainingConfig
 from pruning import DPFPruning
 from utils import debug_mode
 
-#################### TEGNAS testntk #################### 
+#################### save_dataset save_model #################### 
 import numpy as np
-import torch
-import torch.nn as nn
 import tensorflow as tf
 import tf2onnx
 import onnx
-import onnx2torch
 
+import os
 import pdb
 import gc
 
@@ -41,7 +39,12 @@ class ModelNTKFile:
         #networks_num = networks_num
         batch_num = batch_num
         save_path = self.save_path
-        
+        if not os.path.isfile(save_path):
+            os.makedirs(save_path)
+            print (f"save_path dir:{save_path}")
+        else:
+            print (f"save_path is already exist:{save_path}")
+
         # return (train_loader, val_loader)
         def save_dataset(dataset, batch_size, input_shape, num_classes, batch_num, save_path):
             #################### dataset ####################
