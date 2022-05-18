@@ -188,7 +188,7 @@ class ModelNTK:
                 # 對每個network
                 for net_idx, network in enumerate(networks):
                     # 將network(weight)放入gpu
-                    network.cuda(device=device, non_blocking=True)
+                    network.to(device)
                     # 將network的梯度歸零
                     network.zero_grad()
                     # 會將梯度疊加給inputs_
@@ -277,7 +277,7 @@ class ModelNTK:
                     for net_idx, network in enumerate(networks):
                         network.zero_grad()
                         # 將network(weight)放入gpu
-                        network.cuda(device=device, non_blocking=True)  
+                        network.to(device)      
                         inputs_ = inputs.clone().cuda(device=device, non_blocking=True)
                         logit = network(inputs_)
                         if isinstance(logit, tuple):
