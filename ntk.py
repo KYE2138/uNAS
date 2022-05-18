@@ -22,7 +22,7 @@ import gc
 
 #################### GPU ####################
 import os
-os.environ['CUDA_LAUNCH_BLOCKING'] = 1
+os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 # GPU mem issue
 #config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
 #sess = tf.compat.v1.Session(config=config)
