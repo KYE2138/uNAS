@@ -15,7 +15,7 @@ from utils import Scheduler, debug_mode
 
 #ntk
 #from ntk import ModelNTK
-from ntk_file import ModelNTKFile
+from metrics_file import ModelMetricsFile
 
 import pdb
 import gc
@@ -65,7 +65,7 @@ class GPUTrainer:
         #ntk
         # data save as numpy
         # modle save as keras model
-        ntk = ModelNTKFile(self.trainer).save_metrics_input(model, num_batch=1)
+        ntk = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
         
         #ntks = ModelNTK(data).get_ntk(model, batch_size = self.trainer.config.batch_size)
         #ntk = np.mean(ntks)

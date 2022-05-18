@@ -24,13 +24,13 @@ import gc
 #sess = tf.compat.v1.Session(config=config)
 
 
-class ModelNTKFile:
+class ModelMetricsFile:
     """Keras models according to the specified config."""
     def __init__(self, trainer):
         self.trainer = trainer
-        self.save_path = "./tmp/ntk_file"
+        self.save_path = './tmp/metrics'
 
-    def save_metrics_input(self, model: tf.keras.Model, num_batch):
+    def get_metrics(self, num_batch):
         dataset = self.trainer.dataset
         input_shape = self.trainer.dataset.input_shape
         num_classes = self.trainer.dataset.num_classes
@@ -83,11 +83,10 @@ class ModelNTKFile:
                 # one_hot is only applicable to index tensor
                 val_target = val_target.astype(np.int64)
                 #val_loader.append((val_input,val_target))
-
-            np.save(f'{save_path}/train_input.npy', train_input)
-            np.save(f'{save_path}/train_target.npy', train_target)
-            np.save(f'{save_path}/val_input.npy', val_input)
-            np.save(f'{save_path}/val_target.npy', val_target)
+            
+            # save loader as loader.npz
+            loader_save_path = f'{save_path}/loader.npz'
+            np.savez(loader_save_path, train_input=train_input, train_target=train_target, val_input=val_input, val_target=val_target)
 
             #clear the parameter
             del train, val
@@ -110,35 +109,37 @@ class ModelNTKFile:
             onnx_model = model_proto
             
             # Save the ONNX model
-            onnx.save(onnx_model, f'{save_path}/model.onnx')
+            onnx_model_path = f'{save_path}/model.onnx'
+            onnx.save(onnx_model, onnx_model_path)
             
             #clear the parameter
             del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
             gc.collect()
 
-        def wait_metrics(num_batch, save_path):
+        def wait_metrics(num_batch, save_path, num_classes):
             timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
             input_finish_info_path = f'{save_path}/input_finish_info.npz'
-            np.savez(input_finish_info_path, num_batch=num_batch, timestamp=timestamp)
+            np.savez(input_finish_info_path, num_batch=num_batch, num_classes=num_classes , timestamp=timestamp)
             pdb.set_trace()
 
             #check metrics exsit
-            metrics_path = f'{save_path}/metrics_finish_info.npz'
-            while not os.path.isfile(metrics_path):
+            metrics_finish_info_path = f'{save_path}/metrics_finish_info.npz'
+            while not os.path.isfile(metrics_finish_info_path):
                 time.sleep(5)
-                print (f'wait for metrics')
+                print (f'wait for metrics_finish_info')
             
-            #load metrics and del
-            metrics = np.load(metrics_path)
-            os.remove(metrics_path)
+            print (f'find metrics_finish_info_path')
+            time.sleep(5)
+            os.remove(metrics_finish_info_path)
 
+            #load metrics
+            ntks_mses_save_path = f'{save_path}/ntks_mses.npz'
+            metrics = np.load(ntks_mses_save_path)
+            
             #
-            ntk = metrics['ntk']
+            ntks = metrics['ntks']
 
-            return ntk
-
-
-           
+            return ntks
 
         # save dataset
         save_dataset(dataset, batch_size, input_shape, num_classes, num_batch, save_path)
@@ -147,8 +148,8 @@ class ModelNTKFile:
         save_model(model, input_shape, num_classes, save_path)
         
         # wait ntk
-        ntk = wait_metrics(num_batch, save_path)
+        ntks = wait_metrics(num_batch, save_path)
 
         pdb.set_trace()
-        return ntk
+        return ntks
 
