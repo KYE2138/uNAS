@@ -118,8 +118,8 @@ class ModelNTKFile:
 
         def wait_ntk(num_batch):
             finish_info = np.array([[]])
-            finish_info.append([[num_batch]])
-            finish_info.append([[num_batch]])
+            finish_info = np.append(finish_info,[[num_batch]])
+            finish_info = np.append(finish_info,[[num_batch]])
             np.save(f'{save_path}/finish_info.npy', finish_info)
 
 
