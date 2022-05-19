@@ -102,11 +102,11 @@ class AgingEvoSearch:
         self.log = logging.getLogger(name=f"AgingEvoSearch [{experiment_name}]")
         self.config = search_config
         #引用model_trainer.py內的ModelTrainer Class
-        self.trainer = ModelTrainer(training_config, bound_config)
+        self.trainer = ModelTrainer(training_config)
         self.root_dir = Path(search_config.checkpoint_dir)
         self.root_dir.mkdir(parents=True, exist_ok=True)
         self.experiment_name = experiment_name
-
+        self.bound_config = bound_config
         if training_config.pruning and not training_config.pruning.structured:
             self.log.warning("For unstructured pruning, we can only meaningfully use the model "
                              "size resource metric.")
@@ -209,8 +209,9 @@ class AgingEvoSearch:
 
         trainer = ray.put(self.trainer)
         ss = ray.put(self.config.search_space)
+        bound = self.bound_config
         #utils.py內的Scheduler class
-        scheduler = Scheduler([GPUTrainer.remote(ss, trainer)
+        scheduler = Scheduler([GPUTrainer.remote(ss, trainer, bound)
                                for _ in range(self.max_parallel_evaluations)])
         self.log.info(f"Searching with {self.max_parallel_evaluations} workers.")
 
