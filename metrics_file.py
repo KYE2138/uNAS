@@ -127,7 +127,7 @@ class ModelMetricsFile:
                 time.sleep(5)
                 print (f'wait for metrics_finish_info')
             
-            print (f'find metrics_finish_info_path')
+            print (f'find metrics_finish_info')
             time.sleep(5)
             os.remove(metrics_finish_info_path)
 
