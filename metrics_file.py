@@ -98,9 +98,11 @@ class ModelMetricsFile:
             #################### model ####################
             # (load) model
             keras_model = model
+            # input_shape like (None, 32, 32, 3)
+            input_shape = (None,) + input_shape
             pdb.set_trace()
             # tensorflow-onnx(維度可從dataset獲取)
-            keras_model_spec = (tf.TensorSpec((None, 32, 32, 3), tf.float32, name="input"),)
+            keras_model_spec = (tf.TensorSpec(input_shape, tf.float32, name="input"),)
             model_proto, external_tensor_storage = tf2onnx.convert.from_keras(keras_model,
                         input_signature=keras_model_spec, opset=None, custom_ops=None,
                         custom_op_handlers=None, custom_rewriter=None,
