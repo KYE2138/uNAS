@@ -57,7 +57,7 @@ class GPUTrainer:
         ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
         ntk = np.mean(ntks).astype('int64')
         
-        if ntk<0 or ntk>(self.bound_config.ntk*2) :
+        if ntk<0 or ntk>(int(self.bound_config.ntk)*3) :
             print(f'ntk = {ntk}, change epochs = 2')
             results = self.trainer.train_and_eval(model, sparsity=point.sparsity, epochs=2)
         else:
