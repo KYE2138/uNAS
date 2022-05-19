@@ -26,7 +26,6 @@ training_config.pruning = PruningConfig(
 
 search_config = AgingEvoConfig(
     search_space=CnnSearchSpace(),
-    starting_points=1,
     rounds=2000,
     checkpoint_dir="artifacts/cnn_vww",
     max_parallel_evaluations = 1
