@@ -13,5 +13,6 @@ bound_config = BoundConfig(
     error_bound=0.10,
     peak_mem_bound=50000,
     model_size_bound=50000,
-    mac_bound=60000000
+    mac_bound=60000000,
+    ntk=4000
 )
