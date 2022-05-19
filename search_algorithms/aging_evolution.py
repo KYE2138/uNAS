@@ -51,8 +51,21 @@ class GPUTrainer:
         data = self.trainer.dataset
         arch = point.arch
         model = self.ss.to_keras_model(arch, data.input_shape, data.num_classes)
+        
+        # pre ntk
+        ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
+        ntk = np.mean(ntks).astype('int64')
+        
+        if ntk>0 and ntk<8000 :
+            print(f'ntk:{ntk}, change epochs = 1')
+            results = self.trainer.train_and_eval(model, sparsity=point.sparsity, epochs=1)
+        else:
+            print(f'ntk:{ntk}, epochs = {self.trainer.config.epochs}')
+            results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
+        
+        
         #使用model_trainer.py內的ModelTrainer類別中的train_and_eval函數
-        results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
+        #results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
         val_error, test_error = results["val_error"], results["test_error"]
         rg = self.ss.to_resource_graph(arch, data.input_shape, data.num_classes,
                                        pruned_weights=results["pruned_weights"])
@@ -61,16 +74,14 @@ class GPUTrainer:
         resource_features = [peak_memory_usage(rg), model_size(rg, sparse=unstructured_sparsity),
                              inference_latency(rg, compute_weight=1, mem_access_weight=0)]
         # resource_features = [175104, 164176, 61449631]
-        
+        '''
         #ntk
         # data save as numpy
         # modle save as keras model
         ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
         ntk = np.mean(ntks).astype('int64')
+        '''
         resource_features.append(ntk)
-
-
-
 
         #pdb.set_trace()
         
