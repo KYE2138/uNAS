@@ -60,8 +60,8 @@ class GPUTrainer:
             print(f'ntk = {ntk}, epochs = {self.trainer.config.epochs}')
             results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
         else:
-            print(f'ntk = {ntk}, change epochs = 1')
-            results = self.trainer.train_and_eval(model, sparsity=point.sparsity, epochs=1)
+            print(f'ntk = {ntk}, change epochs = 2')
+            results = self.trainer.train_and_eval(model, sparsity=point.sparsity, epochs=2)
         
         
         #使用model_trainer.py內的ModelTrainer類別中的train_and_eval函數
