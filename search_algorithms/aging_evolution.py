@@ -211,7 +211,7 @@ class AgingEvoSearch:
 
         trainer = ray.put(self.trainer)
         ss = ray.put(self.config.search_space)
-        bound = self.bound_config
+        bound = ray.put(self.bound_config)
         #utils.py內的Scheduler class
         scheduler = Scheduler([GPUTrainer.remote(ss, trainer, bound)
                                for _ in range(self.max_parallel_evaluations)])
