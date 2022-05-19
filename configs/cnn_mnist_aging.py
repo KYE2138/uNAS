@@ -9,7 +9,7 @@ search_algorithm = AgingEvoSearch
 
 training_config = TrainingConfig(
     dataset=MNIST(),
-    epochs=5,
+    epochs=30,
     batch_size=32,
     optimizer=lambda: tfa.optimizers.SGDW(learning_rate=0.005, momentum=0.9, weight_decay=4e-5),
     callbacks=lambda: [],
