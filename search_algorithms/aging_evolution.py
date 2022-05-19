@@ -56,12 +56,12 @@ class GPUTrainer:
         ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
         ntk = np.mean(ntks).astype('int64')
         
-        if ntk>0 and ntk<8000 :
-            print(f'ntk = {ntk}, epochs = {self.trainer.config.epochs}')
-            results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
-        else:
+        if ntk<0 and ntk>8000 :
             print(f'ntk = {ntk}, change epochs = 2')
             results = self.trainer.train_and_eval(model, sparsity=point.sparsity, epochs=2)
+        else:
+            print(f'ntk = {ntk}, epochs = {self.trainer.config.epochs}')
+            results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
         
         
         #使用model_trainer.py內的ModelTrainer類別中的train_and_eval函數
