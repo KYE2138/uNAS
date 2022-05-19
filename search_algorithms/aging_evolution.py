@@ -36,9 +36,10 @@ class EvaluatedPoint:
 
 @ray.remote(num_gpus=0 if debug_mode() else 1, num_cpus=1 if debug_mode() else 6)
 class GPUTrainer:
-    def __init__(self, search_space, trainer):
+    def __init__(self, search_space, trainer, bound_config):
         self.trainer = trainer
         self.ss = search_space
+        self.bound_config = bound_config
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
@@ -56,7 +57,7 @@ class GPUTrainer:
         ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
         ntk = np.mean(ntks).astype('int64')
         
-        if ntk<0 or ntk>8000 :
+        if ntk<0 or ntk>(self.bound_config.ntk*2) :
             print(f'ntk = {ntk}, change epochs = 2')
             results = self.trainer.train_and_eval(model, sparsity=point.sparsity, epochs=2)
         else:
@@ -101,7 +102,7 @@ class AgingEvoSearch:
         self.log = logging.getLogger(name=f"AgingEvoSearch [{experiment_name}]")
         self.config = search_config
         #引用model_trainer.py內的ModelTrainer Class
-        self.trainer = ModelTrainer(training_config)
+        self.trainer = ModelTrainer(training_config, bound_config)
         self.root_dir = Path(search_config.checkpoint_dir)
         self.root_dir.mkdir(parents=True, exist_ok=True)
         self.experiment_name = experiment_name
@@ -117,7 +118,8 @@ class AgingEvoSearch:
         self.constraint_bounds = [bound_config.error_bound,
                                   bound_config.peak_mem_bound,
                                   bound_config.model_size_bound,
-                                  bound_config.mac_bound]
+                                  bound_config.mac_bound,
+                                  bound_config.ntk]
 
         self.history: List[EvaluatedPoint] = []
         self.population: List[EvaluatedPoint] = []
