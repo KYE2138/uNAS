@@ -100,6 +100,7 @@ class ModelMetricsFile:
             keras_model = model
             # input_shape like (None, 32, 32, 3)
             input_shape = (None,) + input_shape
+            print (f'input_shape={input_shape}')
             # tensorflow-onnx(維度可從dataset獲取)
             keras_model_spec = (tf.TensorSpec(input_shape, tf.float32, name="input"),)
             model_proto, external_tensor_storage = tf2onnx.convert.from_keras(keras_model,
@@ -118,6 +119,8 @@ class ModelMetricsFile:
             gc.collect()
 
         def wait_metrics(num_batch, save_path, num_classes):
+            print (f'num_batch={num_batch}')
+            print (f'num_classes={num_classes}')
             timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
             input_finish_info_path = f'{save_path}/input_finish_info.npz'
             np.savez(input_finish_info_path, num_batch=num_batch, num_classes=num_classes , timestamp=timestamp)

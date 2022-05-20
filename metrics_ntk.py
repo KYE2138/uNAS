@@ -116,7 +116,8 @@ def get_ntk(num_batch=1, networks_num=3):
         return model
 
     # return (conds_x, prediction_mses)
-    def get_ntk_n(loader, networks, loader_val, train_mode=True, num_batch=1, num_classes=10):        
+    def get_ntk_n(loader, networks, loader_val, train_mode=True, num_batch=1, num_classes=10): 
+        print (f'{}')       
         #################### ntk ####################
         device = torch.cuda.current_device()
         ntks = []
@@ -148,6 +149,7 @@ def get_ntk(num_batch=1, networks_num=3):
             inputs = torch.from_numpy(inputs).float()
             targets = torch.from_numpy(targets)
             # 將inputs, targets放入gpu
+            print (f'inputs={inputs.shape}')
             inputs = inputs.to(device, non_blocking=True)
             targets = targets.to(device, non_blocking=True)
             # For mse
