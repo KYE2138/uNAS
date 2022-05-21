@@ -11,7 +11,7 @@ import gc
 import os
 import time
 #################### GPU ####################
-os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
+#os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 
 ray.init(num_cpus=8, num_gpus=1)
 
