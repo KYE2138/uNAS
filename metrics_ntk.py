@@ -117,7 +117,8 @@ def get_ntk(num_batch=1, networks_num=3):
 
     # return (conds_x, prediction_mses)
     def get_ntk_n(loader, networks, loader_val, train_mode=True, num_batch=1, num_classes=10): 
-        print (f'{}')       
+        print (f'num_batch={num_batch}')
+        print (f'num_classes={num_classes}')       
         #################### ntk ####################
         device = torch.cuda.current_device()
         ntks = []
