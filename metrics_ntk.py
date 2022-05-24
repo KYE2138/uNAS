@@ -13,7 +13,7 @@ import time
 #################### GPU ####################
 #os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 
-ray.init(num_cpus=8, num_gpus=1)
+ray.init(num_cpus=2, num_gpus=1)
 
 @ray.remote(num_gpus=1, max_calls=1)
 def get_ntk(num_batch=1, networks_num=3):
