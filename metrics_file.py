@@ -135,13 +135,18 @@ class ModelMetricsFile:
             time.sleep(5)
             os.remove(metrics_finish_info_path)
 
-            #load metrics
+            #load metrics(metrics_ntk)
+            '''
             ntks_mses_save_path = f'{save_path}/ntks_mses.npz'
             metrics = np.load(ntks_mses_save_path)
-            
-            #
             ntks = metrics['ntks']
             mses = metrics['mses']
+            '''
+
+            #load metrics(metrics_ntk_v2)
+            ntks_save_path = f'{save_path}/ntks.npz'
+            metrics = np.load(ntks_save_path)
+            ntks = metrics['ntks']
 
             return ntks
 
