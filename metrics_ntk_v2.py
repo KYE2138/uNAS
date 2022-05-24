@@ -137,6 +137,10 @@ def get_ntk(num_batch=1, networks_num=3):
         for i, (inputs, targets) in enumerate(loader):
             # num_batch 預設為-1
             if num_batch > 0 and i >= num_batch: break
+            # numpy to pytorch tensor
+            # torch.cuda.DoubleTensor to torch.cuda.FloatTensor
+            inputs = torch.from_numpy(inputs).float()
+            targets = torch.from_numpy(targets)
             # 將inputs, targets放入gpu
             print (f'inputs={inputs.shape}')
             inputs = inputs.to(device, non_blocking=True)
