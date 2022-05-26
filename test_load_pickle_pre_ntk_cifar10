@@ -1,7 +1,7 @@
 import pickle
 
 # Load
-with open('artifacts/cnn_speech_commands/example_cnn_speech_commands_struct_pru_agingevosearch_state.pickle', 'rb') as f:
+with open('artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle', 'rb') as f:
   EvaluatedPoint = pickle.load(f)
 print("------------------------------")
 print("len of EvaluatedPoint:",len(EvaluatedPoint))
@@ -23,9 +23,9 @@ from architecture import Architecture
 from cnn import CnnSearchSpace
 from resource_models.models import model_size, peak_memory_usage
 
-output_dir = "tmp/tflite"
+output_dir = "artifacts/cnn_cifar10"
 
-input_shape = (49, 40, 1)
+input_shape = (32, 32, 3)
 num_classes = 10
 
 
@@ -51,10 +51,11 @@ def convert_to_tflite(arch, output_file):
 
 import csv
 # 開啟
-with open(f"{output_dir}/speech_command_EvaluatedPoint_point_arch.csv", "w", newline="") as csvfile:
+with open(f"{output_dir}/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.csv", "w", newline="") as csvfile:
   wr = csv.writer(csvfile)
-  wr.writerow(["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency"])
-  for i in range(0, 2000):
+  wr.writerow(["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency","ntk"])
+  EvaluatedPoint_num = len(EvaluatedPoint)
+  for i in range(0, EvaluatedPoint_num):
     val_error = EvaluatedPoint[i].val_error
     test_error = EvaluatedPoint[i].test_error
     resource_features = EvaluatedPoint[i].resource_features
