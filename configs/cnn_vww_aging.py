@@ -13,7 +13,7 @@ training_config = TrainingConfig(
     optimizer=lambda: tfa.optimizers.SGDW(learning_rate=0.001, weight_decay=5e-5),
     batch_size=32,
     epochs=30,
-    callbacks=lambda: [EarlyStopping(patience=15, verbose=1)]
+    #callbacks=lambda: [EarlyStopping(patience=15, verbose=1)]
 )
 
 search_config = AgingEvoConfig(
