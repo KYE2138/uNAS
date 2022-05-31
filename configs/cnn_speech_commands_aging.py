@@ -20,7 +20,7 @@ def lr_schedule(epoch):
 training_config = TrainingConfig(
     dataset=SpeechCommands("/datasets/speech_commands_v0.02"),
     epochs=45,
-    batch_size=32,
+    batch_size=50,
     optimizer=lambda: AdamW(lr=0.0005, weight_decay=1e-5),
     callbacks=lambda: [
         LearningRateScheduler(lr_schedule)
