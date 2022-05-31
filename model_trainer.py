@@ -88,15 +88,16 @@ class ModelTrainer:
 
         pruning_cb = None
         
-
-        if self.pruning and sparsity > 0.0:
-            assert 0.0 < sparsity <= 1.0
-            self.log.info(f"Target sparsity: {sparsity:.4f}")
-            pruning_cb = DPFPruning(target_sparsity=sparsity, structured=self.pruning.structured,
-                                    start_pruning_at_epoch=self.pruning.start_pruning_at_epoch,
-                                    finish_pruning_by_epoch=self.pruning.finish_pruning_by_epoch)
-            check_logs_from_epoch = self.pruning.finish_pruning_by_epoch
-            callbacks.append(pruning_cb)
+        #skip by ntk
+        if epochs != 1:
+            if self.pruning and sparsity > 0.0:
+                assert 0.0 < sparsity <= 1.0
+                self.log.info(f"Target sparsity: {sparsity:.4f}")
+                pruning_cb = DPFPruning(target_sparsity=sparsity, structured=self.pruning.structured,
+                                        start_pruning_at_epoch=self.pruning.start_pruning_at_epoch,
+                                        finish_pruning_by_epoch=self.pruning.finish_pruning_by_epoch)
+                check_logs_from_epoch = self.pruning.finish_pruning_by_epoch
+                callbacks.append(pruning_cb)
 
         log = model.fit(train, epochs=epochs, validation_data=val,
                         verbose=1 if debug_mode() else 2,
