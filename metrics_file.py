@@ -50,7 +50,7 @@ class ModelMetricsFile:
             #################### dataset ####################
             # from uNAS dataset by tf
             train = dataset.train_dataset() \
-                .shuffle(batch_size * 8) \
+                .shuffle(100000000) \
                 .batch(batch_size) \
                 .prefetch(tf.data.experimental.AUTOTUNE)
             # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
