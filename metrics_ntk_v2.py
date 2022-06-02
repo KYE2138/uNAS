@@ -166,6 +166,7 @@ def get_ntk(num_batch=1, networks_num=3):
                     grad = []
                     # 對所有netowrk的參數
                     for name, W in network.named_parameters():
+                        
                         # 將權重梯度append進grad中
                         if 'weight' in name and W.grad is not None:
                             grad.append(W.grad.view(-1).detach())
