@@ -31,7 +31,7 @@ search_config = AgingEvoConfig(
     checkpoint_dir="artifacts/cnn_vww",
     max_parallel_evaluations = 1,
     population_size = 40,
-    sample_size = 10
+    sample_size = 20
 )
 
 bound_config = BoundConfig(
