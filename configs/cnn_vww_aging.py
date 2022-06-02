@@ -9,7 +9,7 @@ from search_algorithms import AgingEvoSearch
 search_algorithm = AgingEvoSearch
 
 training_config = TrainingConfig(
-    dataset=VisualWakeWords("/storage/dataset/visualwakewords"),
+    dataset=VisualWakeWords("/docker/file/dataset/visualwakewords"),
     optimizer=lambda: tfa.optimizers.SGDW(learning_rate=0.001, weight_decay=5e-5),
     batch_size=32,
     epochs=30,
