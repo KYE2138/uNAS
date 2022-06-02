@@ -11,7 +11,7 @@ search_algorithm = AgingEvoSearch
 training_config = TrainingConfig(
     dataset=VisualWakeWords("/docker/file/dataset/visualwakewords"),
     optimizer=lambda: tfa.optimizers.SGDW(learning_rate=0.001, weight_decay=5e-5),
-    batch_size=64,
+    batch_size=16,
     epochs=30,
     callbacks=lambda: []
     #callbacks=lambda: [EarlyStopping(patience=15, verbose=1)]
