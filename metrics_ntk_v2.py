@@ -175,6 +175,7 @@ def get_ntk(num_batch=1, networks_num=3):
                     network.zero_grad()
                     # 清空cache
                     torch.cuda.empty_cache()
+        pdb.set_trace()
         ######
         # 
         grads = [torch.stack(_grads, 0) for _grads in grads]
