@@ -30,7 +30,7 @@ search_config = AgingEvoConfig(
     rounds=2000,
     checkpoint_dir="artifacts/cnn_vww",
     max_parallel_evaluations = 1,
-    population_size = 40
+    population_size = 40,
     sample_size = 10
 )
 
