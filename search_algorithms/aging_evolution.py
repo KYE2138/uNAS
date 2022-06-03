@@ -56,8 +56,8 @@ class GPUTrainer:
         # pre ntk
         ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
         ntk = np.mean(ntks).astype('int64')
-        # ntk_threshold是bound三倍
-        ntk_threshold = int(self.bound_config.ntk)*3
+        # ntk_threshold是bound兩倍
+        ntk_threshold = int(self.bound_config.ntk)*2
         #pdb.set_trace()
         if ntk<0 or ntk>ntk_threshold :
             print(f'ntk = {ntk}, change epochs = 1')
