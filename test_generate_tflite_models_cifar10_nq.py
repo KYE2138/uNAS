@@ -10,7 +10,7 @@ from resource_models.models import model_size, peak_memory_usage
 
 
 # Load pickle
-pickle_filepath ="/storage/KYE2138/uNAS/artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle"
+pickle_filepath ="/storage/KYE2138/uNAS/artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle"
 with open(pickle_filepath, 'rb') as f:
     EvaluatedPoint = pickle.load(f)
 print("------------------------------")
@@ -36,7 +36,7 @@ print (f"output dir:{output_dir}")
 # set parameter to convert model
 input_shape = (32, 32, 3)
 num_classes = 10
-model_format = "pru_ae_q"
+model_format = "pru_ae_q_pre_ntk"
 
 # convert function
 def convert_to_tflite(arch, output_file):
