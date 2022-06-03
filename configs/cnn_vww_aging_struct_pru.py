@@ -12,15 +12,15 @@ training_config = TrainingConfig(
     dataset=VisualWakeWords("/docker/file/dataset/visualwakewords"),
     optimizer=lambda: tfa.optimizers.SGDW(learning_rate=0.001, weight_decay=5e-5),
     batch_size=64,
-    epochs=30,
+    epochs=35,
     callbacks=lambda: []
     #callbacks=lambda: [EarlyStopping(patience=15, verbose=1)]
 )
 
 training_config.pruning = PruningConfig(
     structured=True,
-    start_pruning_at_epoch=20,
-    finish_pruning_by_epoch=25,
+    start_pruning_at_epoch=25,
+    finish_pruning_by_epoch=30,
     min_sparsity=0.1,
     max_sparsity=0.90
 )
@@ -35,9 +35,9 @@ search_config = AgingEvoConfig(
 )
 
 bound_config = BoundConfig(
-    error_bound=0.10,
+    error_bound=0.20,
     peak_mem_bound=250000,
-    model_size_bound=250000,
-    mac_bound=30000000,
-    ntk=15000
+    model_size_bound=350000,
+    mac_bound=50000000,
+    ntk=2000
 )

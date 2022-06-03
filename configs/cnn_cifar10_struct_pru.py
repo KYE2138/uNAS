@@ -10,9 +10,9 @@ training_config.pruning = PruningConfig(
 )
 
 bound_config = BoundConfig(
-    error_bound=0.10,
+    error_bound=0.13,
     peak_mem_bound=50000,
     model_size_bound=50000,
-    mac_bound=60000000,
-    ntk=8000
+    mac_bound=30000000,
+    ntk=2000
 )
