@@ -62,7 +62,7 @@ class VisualWakeWords(Dataset):
             # x = tf.clip_by_value(x, 0.0, 1.0)
             return x, y
         return augment
-
+    '''
     def train_dataset(self) -> tf.data.Dataset:
         train_data = tf.data.TFRecordDataset(self.train_records)
         train_data = train_data.apply(tf.data.experimental.assert_cardinality(self.train_size)).skip(self.val_split)
@@ -80,6 +80,25 @@ class VisualWakeWords(Dataset):
         test_data = tf.data.TFRecordDataset(self.val_records)
         test_data = test_data.apply(tf.data.experimental.assert_cardinality(self.val_size))
         test_data = test_data.map(self.parse_func(), num_parallel_calls=tf.data.experimental.AUTOTUNE)
+        return test_data
+    '''
+    def train_dataset(self) -> tf.data.Dataset:
+        train_data = tf.data.TFRecordDataset(self.train_records)
+        train_data = train_data.apply(tf.data.experimental.assert_cardinality(self.train_size)).skip(self.val_split)
+        train_data = train_data.map(self.parse_func())
+        train_data = train_data.map(self.augment_func())
+        return train_data
+
+    def validation_dataset(self) -> tf.data.Dataset:
+        valid_data = tf.data.TFRecordDataset(self.train_records)
+        valid_data = valid_data.apply(tf.data.experimental.assert_cardinality(self.train_size)).take(self.val_split)
+        valid_data = valid_data.map(self.parse_func())
+        return valid_data
+
+    def test_dataset(self) -> tf.data.Dataset:
+        test_data = tf.data.TFRecordDataset(self.val_records)
+        test_data = test_data.apply(tf.data.experimental.assert_cardinality(self.val_size))
+        test_data = test_data.map(self.parse_func())
         return test_data
 
     @property
