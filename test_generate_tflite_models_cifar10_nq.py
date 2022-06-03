@@ -10,7 +10,7 @@ from resource_models.models import model_size, peak_memory_usage
 
 
 # Load pickle
-pickle_filepath ="/storage/eliberis/uNAS/artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle"
+pickle_filepath ="/storage/KYE2138/uNAS/artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle"
 with open(pickle_filepath, 'rb') as f:
     EvaluatedPoint = pickle.load(f)
 print("------------------------------")
