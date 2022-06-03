@@ -36,13 +36,21 @@ print (f"output dir:{output_dir}")
 # set parameter to convert model
 input_shape = (32, 32, 3)
 num_classes = 10
-model_format = "pru_ae_nq"
+model_format = "pru_ae_q"
 
 # convert function
 def convert_to_tflite(arch, output_file):
     model = arch.to_keras_model(input_shape, num_classes)
-    model.summary()
+    #model.summary()
     converter = tf.lite.TFLiteConverter.from_keras_model(model)
+    #quantization
+    converter.optimizations = [tf.lite.Optimize.DEFAULT]
+    converter.representative_dataset = \
+        lambda: [[np.random.random((1,) + input_shape).astype("float32")] for _ in range(5)]
+    converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
+    converter.inference_input_type = tf.uint8
+    converter.inference_output_type = tf.uint8
+    #convert
     converted_model = converter.convert()
     with open(output_file, "wb") as f:
         f.write(converted_model)
