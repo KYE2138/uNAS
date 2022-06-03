@@ -98,7 +98,7 @@ def get_ntk(num_batch=1, networks_num=3):
                 nn.init.ones_(m.weight.data)
                 nn.init.constant_(m.bias.data, 0.0)
 
-        def init_model(model, method='kaiming_norm_fanin'):
+        def init_model(model, method='kaiming_norm_fanout'):
             if method == 'kaiming_norm_fanin':
                 model.apply(kaiming_normal_fanin_init)
             elif method == 'kaiming_norm_fanout':
