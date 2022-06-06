@@ -50,6 +50,13 @@ class ModelMetricsFile:
         def save_dataset(dataset, batch_size, input_shape, num_classes, num_batch, save_path):
             #################### dataset ####################
             #check loader
+            '''   
+            loader_save_path = f'{save_path}/loader.npz'
+            if os.path.isfile(loader_save_path):
+                print (f"loader is already exist:{loader_save_path}")
+            else:
+                print (f"generate loader :{loader_save_path}")
+            '''
             train_loader_save_path = f'{save_path}/train_loader.pickle'
             val_loader_save_path = f'{save_path}/val_loader.pickle'
             if os.path.isfile(train_loader_save_path) and os.path.isfile(val_loader_save_path):
@@ -58,13 +65,7 @@ class ModelMetricsFile:
             else:
                 print (f"generate train_loader_save_path :{train_loader_save_path}")
                 print (f"generate val_loader_save_path :{val_loader_save_path}")
-            '''   
-            loader_save_path = f'{save_path}/loader.npz'
-            if os.path.isfile(loader_save_path):
-                print (f"loader is already exist:{loader_save_path}")
-            else:
-                print (f"generate loader :{loader_save_path}")
-            '''                 
+                         
                 # from uNAS dataset by tf
                 train = dataset.train_dataset() \
                     .shuffle(100000) \
