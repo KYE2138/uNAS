@@ -8,7 +8,7 @@ from pruning import DPFPruning
 from utils import debug_mode
 
 import tensorflow_addons as tfa
-
+import pdb
 
 # GPU mem issue
 config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
@@ -117,6 +117,7 @@ class ModelTrainer:
         # 關閉 Session
         sess.close()
         tf.keras.backend.clear_session()
+        pdb.set_trace()
 
         return {
             "val_error": 1.0 - max(log.history["val_accuracy"][check_logs_from_epoch:]),
