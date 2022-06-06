@@ -112,6 +112,11 @@ class ModelTrainer:
             .prefetch(tf.data.experimental.AUTOTUNE)
         _, test_acc = model.evaluate(test, verbose=0)
 
+
+        #gpu mem clean
+        # 關閉 Session
+        sess.close()
+
         return {
             "val_error": 1.0 - max(log.history["val_accuracy"][check_logs_from_epoch:]),
             "test_error": 1.0 - test_acc,
