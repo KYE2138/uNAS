@@ -226,7 +226,7 @@ def get_ntk(num_batch=1, networks_num=3):
     
 
     # get ntk_n
-    ntks = get_ntk_n(loader=train_loader, networks=networks, train_mode=True, num_batch=1, num_classes=num_classes)
+    ntks = get_ntk_n(loader=train_loader, networks=networks, train_mode=True, num_batch=num_batch, num_classes=num_classes)
 
     # save_ntks
     save_ntks(save_path, ntks)

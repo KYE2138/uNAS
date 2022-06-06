@@ -60,10 +60,10 @@ class GPUTrainer:
         ntk_threshold = int(self.bound_config.ntk)*2
         #pdb.set_trace()
         if ntk<0 or ntk>ntk_threshold :
-            print(f'ntk = {ntk}, change epochs = 1')
+            print(f'ntks = {ntks}, ntk = {ntk}, change epochs = 1')
             results = self.trainer.train_and_eval(model, sparsity=point.sparsity, epochs=1)
         else:
-            print(f'ntk = {ntk}, epochs = {self.trainer.config.epochs}')
+            print(f'ntks = {ntks}, ntk = {ntk}, epochs = {self.trainer.config.epochs}')
             results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
         
         
