@@ -6,6 +6,7 @@ import torch.nn as nn
 import tf2onnx
 import onnx
 import onnx2torch
+import pickle
 import pdb
 import gc
 import os
@@ -44,20 +45,18 @@ def get_ntk(num_batch=1, networks_num=3):
     # return (train_loader, val_loader)
     def load_dataset(save_path, num_batch):
         #################### dataset ####################
+        '''
         #load loader
         loader_save_path = f'{save_path}/loader.npz'
         loader = np.load(loader_save_path)
-        '''
+        
         train_input = loader['train_input']
         train_target = loader['train_target']
         val_input = loader['val_input']
         val_target = loader['val_target']
-        '''
-        train_loader = loader['train_loader']
-        val_loader = loader['val_loader']
+        
 
         # for get ntk loader input
-        '''
         train_loader = []
         val_loader = []
         for i in range(num_batch):
@@ -65,9 +64,19 @@ def get_ntk(num_batch=1, networks_num=3):
             val_loader.append((val_input,val_target))
         '''
 
+        # train_loader.pickle/val_loader.pickle
+        train_loader_save_path = f'{save_path}/train_loader.pickle'
+        with open(train_loader_save_path, 'rb') as f:
+            train_loader = pickle.load(f)
+        val_loader_save_path = f'{save_path}/val_loader.pickle'
+        with open(val_loader_save_path, 'rb') as f:
+            val_loader = pickle.load(f)
+        
+        
+
         #clear the parameter
-        del train_input, train_target
-        del val_input, val_target
+        #del train_input, train_target
+        #del val_input, val_target
         gc.collect()
         
         return train_loader, val_loader

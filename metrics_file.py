@@ -13,6 +13,7 @@ import numpy as np
 import tensorflow as tf
 import tf2onnx
 import onnx
+import pickle
 import time
 import os
 import pdb
@@ -57,7 +58,7 @@ class ModelMetricsFile:
                 
                 # from uNAS dataset by tf
                 train = dataset.train_dataset() \
-                    .shuffle(100000000) \
+                    .shuffle(100) \
                     .batch(batch_size) \
                     .prefetch(tf.data.experimental.AUTOTUNE)
                 # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
@@ -94,8 +95,16 @@ class ModelMetricsFile:
                 # save loader as loader.npz
                 #loader_save_path = f'{save_path}/{batch_size}_{input_shape}_{num_classes}_{num_batch}_loader.npz'
                 #np.savez(loader_save_path, train_input=train_input, train_target=train_target, val_input=val_input, val_target=val_target)
-                np.savez(loader_save_path, train_loader=train_loader, val_loader=val_loader)
+                #np.savez(loader_save_path, train_loader=train_loader, val_loader=val_loader)
                 
+                # save loader as train_loader.pickle/val_loader.pickle
+                train_loader_save_path = f'{save_path}/train_loader.pickle'
+                with open(train_loader_save_path, 'wb') as f:
+                    pickle.dump(train_loader, f)
+                val_loader_save_path = f'{save_path}/val_loader.pickle'
+                with open(val_loader_save_path, 'wb') as f:
+                    pickle.dump(val_loader, f)
+
                 #clear the parameter
                 del train, val
                 del train_input, train_target
