@@ -54,7 +54,13 @@ def main():
 
     #del metrics
     save_path = './tmp/metrics'
-    os.remove(f'{save_path}/loader.npz')
+    train_loader_save_path = f'{save_path}/train_loader.pickle'
+    val_loader_save_path = f'{save_path}/val_loader.pickle'
+    if os.path.isfile(train_loader_save_path) and os.path.isfile(val_loader_save_path):
+        print (f"train_loader_save_path is already exist:{train_loader_save_path}")
+        print (f"val_loader_save_path is already exist:{val_loader_save_path}")
+        os.remove(train_loader_save_path)
+        os.remove(val_loader_save_path)
 
 
     # 檢查參數
