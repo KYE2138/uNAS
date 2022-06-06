@@ -59,7 +59,7 @@ class GPUTrainer:
         # ntk_threshold是bound兩倍
         ntk_threshold = int(self.bound_config.ntk)*2
         #pdb.set_trace()
-        if ntk<0 or ntk>ntk_threshold :
+        if ntk>ntk_threshold :
             print(f'ntks = {ntks}, ntk = {ntk}, change epochs = 1')
             results = self.trainer.train_and_eval(model, sparsity=point.sparsity, epochs=1)
         else:
