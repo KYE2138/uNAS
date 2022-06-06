@@ -62,7 +62,7 @@ class VisualWakeWords(Dataset):
             # x = tf.clip_by_value(x, 0.0, 1.0)
             return x, y
         return augment
-    '''
+    
     def train_dataset(self) -> tf.data.Dataset:
         train_data = tf.data.TFRecordDataset(self.train_records)
         train_data = train_data.apply(tf.data.experimental.assert_cardinality(self.train_size)).skip(self.val_split)
@@ -81,6 +81,7 @@ class VisualWakeWords(Dataset):
         test_data = test_data.apply(tf.data.experimental.assert_cardinality(self.val_size))
         test_data = test_data.map(self.parse_func(), num_parallel_calls=tf.data.experimental.AUTOTUNE)
         return test_data
+    
     '''
     def train_dataset(self) -> tf.data.Dataset:
         train_data = tf.data.TFRecordDataset(self.train_records)
@@ -100,7 +101,7 @@ class VisualWakeWords(Dataset):
         test_data = test_data.apply(tf.data.experimental.assert_cardinality(self.val_size))
         test_data = test_data.map(self.parse_func())
         return test_data
-
+    '''
     @property
     def num_classes(self):
         return 2
