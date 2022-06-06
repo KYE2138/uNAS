@@ -52,6 +52,10 @@ def main():
             print(e)
     '''
 
+    #del metrics
+    save_path = './tmp/metrics'
+    os.remove(f'{save_path}/loader.npz')
+
 
     # 檢查參數
     if args.save_every <= 0:

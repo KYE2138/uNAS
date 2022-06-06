@@ -49,7 +49,7 @@ class ModelMetricsFile:
         def save_dataset(dataset, batch_size, input_shape, num_classes, num_batch, save_path):
             #################### dataset ####################
             #check loader
-            loader_save_path = f'{save_path}/{batch_size}_{input_shape}_{num_classes}_{num_batch}_loader.npz'
+            loader_save_path = f'{save_path}/loader.npz'
             if os.path.isfile(loader_save_path):
                 print (f"loader is already exist:{loader_save_path}")
             else:
