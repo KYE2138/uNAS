@@ -12,9 +12,8 @@ import pdb
 
 # GPU mem issue
 config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
-config.gpu_options.per_process_gpu_memory_fraction = 0.5
+config.gpu_options.per_process_gpu_memory_fraction = 0.4
 sess = tf.compat.v1.Session(config=config)
-
 
 
 class ModelTrainer:
@@ -113,11 +112,6 @@ class ModelTrainer:
         _, test_acc = model.evaluate(test, verbose=0)
 
 
-        #gpu mem clean
-        # 關閉 Session
-        sess.close()
-        tf.keras.backend.clear_session()
-        pdb.set_trace()
 
         return {
             "val_error": 1.0 - max(log.history["val_accuracy"][check_logs_from_epoch:]),

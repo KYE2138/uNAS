@@ -54,7 +54,7 @@ def main():
 
     #del metrics
     save_path = './tmp/metrics'
-    #os.remove(f'{save_path}/loader.npz')
+    os.remove(f'{save_path}/loader.npz')
 
 
     # 檢查參數
