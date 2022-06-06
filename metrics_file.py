@@ -78,7 +78,7 @@ class ModelMetricsFile:
                     train_target = train_target.reshape((-1,))
                     # one_hot is only applicable to index tensor
                     train_target = train_target.astype(np.int64)
-                    #train_loader.append((train_input,train_target))
+                    train_loader.append((train_input,train_target))
 
                     # for get ntk val_loader input
                     # list(val.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
@@ -89,11 +89,12 @@ class ModelMetricsFile:
                     val_target = val_target.reshape((-1,))
                     # one_hot is only applicable to index tensor
                     val_target = val_target.astype(np.int64)
-                    #val_loader.append((val_input,val_target))
+                    val_loader.append((val_input,val_target))
                 
                 # save loader as loader.npz
                 #loader_save_path = f'{save_path}/{batch_size}_{input_shape}_{num_classes}_{num_batch}_loader.npz'
-                np.savez(loader_save_path, train_input=train_input, train_target=train_target, val_input=val_input, val_target=val_target)
+                #np.savez(loader_save_path, train_input=train_input, train_target=train_target, val_input=val_input, val_target=val_target)
+                np.savez(loader_save_path, train_loader=train_loader, val_loader=val_loader)
                 
                 #clear the parameter
                 del train, val

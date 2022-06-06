@@ -47,18 +47,24 @@ def get_ntk(num_batch=1, networks_num=3):
         #load loader
         loader_save_path = f'{save_path}/loader.npz'
         loader = np.load(loader_save_path)
+        '''
         train_input = loader['train_input']
         train_target = loader['train_target']
         val_input = loader['val_input']
         val_target = loader['val_target']
+        '''
+        train_loader = loader['train_loader']
+        val_loader = loader['val_loader']
 
         # for get ntk loader input
+        '''
         train_loader = []
         val_loader = []
         for i in range(num_batch):
             train_loader.append((train_input,train_target))
             val_loader.append((val_input,val_target))
-        
+        '''
+
         #clear the parameter
         del train_input, train_target
         del val_input, val_target
