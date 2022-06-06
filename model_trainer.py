@@ -116,6 +116,7 @@ class ModelTrainer:
         #gpu mem clean
         # 關閉 Session
         sess.close()
+        tf.reset_default_graph()
 
         return {
             "val_error": 1.0 - max(log.history["val_accuracy"][check_logs_from_epoch:]),
