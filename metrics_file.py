@@ -48,51 +48,58 @@ class ModelMetricsFile:
 
         def save_dataset(dataset, batch_size, input_shape, num_classes, num_batch, save_path):
             #################### dataset ####################
-            # from uNAS dataset by tf
-            train = dataset.train_dataset() \
-                .shuffle(100000000) \
-                .batch(batch_size) \
-                .prefetch(tf.data.experimental.AUTOTUNE)
-            # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
-            val = dataset.validation_dataset() \
-                .batch(batch_size) \
-                .prefetch(tf.data.experimental.AUTOTUNE)
-            # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
+            #check loader
+            loader_save_path = f'{save_path}/{batch_size}_{input_shape}_{num_classes}_{num_batch}_loader.npz'
+            if os.path.isfile(loader_save_path):
+                print (f"loader is already exist:{loader_save_path}")
+            else:
+                print (f"generate loader :{loader_save_path}")
+                
+                # from uNAS dataset by tf
+                train = dataset.train_dataset() \
+                    .shuffle(100000000) \
+                    .batch(batch_size) \
+                    .prefetch(tf.data.experimental.AUTOTUNE)
+                # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
+                val = dataset.validation_dataset() \
+                    .batch(batch_size) \
+                    .prefetch(tf.data.experimental.AUTOTUNE)
+                # <PrefetchDataset shapes: ((None, 32, 32, 3), (None, 1)), types: (tf.float64, tf.uint8)>
 
-            # for get ntk loader input
-            train_loader = []
-            val_loader = []
-            for i in range(num_batch):
-                # list(train.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
-                train_input = list(train.as_numpy_iterator())[0][0]
-                # list(train.as_numpy_iterator())[0][1].shape = (128, 1)?
-                train_target = list(train.as_numpy_iterator())[0][1]
-                # targets.shape = torch.Size([128])
-                train_target = train_target.reshape((-1,))
-                # one_hot is only applicable to index tensor
-                train_target = train_target.astype(np.int64)
-                #train_loader.append((train_input,train_target))
+                # for get ntk loader input
+                train_loader = []
+                val_loader = []
+                for i in range(num_batch):
+                    # list(train.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
+                    train_input = list(train.as_numpy_iterator())[0][0]
+                    # list(train.as_numpy_iterator())[0][1].shape = (128, 1)?
+                    train_target = list(train.as_numpy_iterator())[0][1]
+                    # targets.shape = torch.Size([128])
+                    train_target = train_target.reshape((-1,))
+                    # one_hot is only applicable to index tensor
+                    train_target = train_target.astype(np.int64)
+                    #train_loader.append((train_input,train_target))
 
-                # for get ntk val_loader input
-                # list(val.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
-                val_input = list(val.as_numpy_iterator())[0][0]
-                # list(val.as_numpy_iterator())[0][1].shape = (128, 1)?
-                val_target = list(val.as_numpy_iterator())[0][1]
-                # targets.shape = torch.Size([128])
-                val_target = val_target.reshape((-1,))
-                # one_hot is only applicable to index tensor
-                val_target = val_target.astype(np.int64)
-                #val_loader.append((val_input,val_target))
-            
-            # save loader as loader.npz
-            loader_save_path = f'{save_path}/loader.npz'
-            np.savez(loader_save_path, train_input=train_input, train_target=train_target, val_input=val_input, val_target=val_target)
-
-            #clear the parameter
-            del train, val
-            del train_input, train_target
-            del val_input, val_target
-            gc.collect()
+                    # for get ntk val_loader input
+                    # list(val.as_numpy_iterator())[0][0].shape = (128, 32, 32, 3)
+                    val_input = list(val.as_numpy_iterator())[0][0]
+                    # list(val.as_numpy_iterator())[0][1].shape = (128, 1)?
+                    val_target = list(val.as_numpy_iterator())[0][1]
+                    # targets.shape = torch.Size([128])
+                    val_target = val_target.reshape((-1,))
+                    # one_hot is only applicable to index tensor
+                    val_target = val_target.astype(np.int64)
+                    #val_loader.append((val_input,val_target))
+                
+                # save loader as loader.npz
+                #loader_save_path = f'{save_path}/{batch_size}_{input_shape}_{num_classes}_{num_batch}_loader.npz'
+                np.savez(loader_save_path, train_input=train_input, train_target=train_target, val_input=val_input, val_target=val_target)
+                
+                #clear the parameter
+                del train, val
+                del train_input, train_target
+                del val_input, val_target
+                gc.collect()
 
         def save_model(model: tf.keras.Model, input_shape, num_classes, save_path):
             #################### model ####################
