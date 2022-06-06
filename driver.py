@@ -35,7 +35,22 @@ def main():
     for gpu in gpus:
         tf.config.experimental.set_memory_growth(gpu, True)
     
-    
+    '''好像沒用...
+    # limit gpu mem to load keras model and transfer
+    gpus = tf.config.list_physical_devices('GPU')
+    print (gpus)
+    if gpus:
+        # Restrict TensorFlow to only allocate 4GB of memory on the first GPU
+        try:
+            tf.config.set_logical_device_configuration(
+                gpus[0],
+                [tf.config.LogicalDeviceConfiguration(memory_limit=4096)])
+            logical_gpus = tf.config.list_logical_devices('GPU')
+            print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+        except RuntimeError as e:
+            # Virtual devices must be set before GPUs have been initialized
+            print(e)
+    '''
 
 
     # 檢查參數

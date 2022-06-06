@@ -10,20 +10,6 @@ from utils import debug_mode
 import tensorflow_addons as tfa
 
 
-# limit gpu mem to load keras model and transfer
-gpus = tf.config.list_physical_devices('GPU')
-print (gpus)
-if gpus:
-    # Restrict TensorFlow to only allocate 4GB of memory on the first GPU
-    try:
-        tf.config.set_logical_device_configuration(
-            gpus[0],
-            [tf.config.LogicalDeviceConfiguration(memory_limit=4096)])
-        logical_gpus = tf.config.list_logical_devices('GPU')
-        print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
-    except RuntimeError as e:
-        # Virtual devices must be set before GPUs have been initialized
-        print(e)
 # GPU mem issue
 config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
 sess = tf.compat.v1.Session(config=config)
