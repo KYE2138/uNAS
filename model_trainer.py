@@ -12,7 +12,7 @@ import pdb
 
 # GPU mem issue
 config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
-config.gpu_options.per_process_gpu_memory_fraction = 0.4
+config.gpu_options.per_process_gpu_memory_fraction = 0.3
 sess = tf.compat.v1.Session(config=config)
 
 
