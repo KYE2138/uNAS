@@ -280,7 +280,7 @@ def plot_latency_vs_mac(latency_file, take_n=1000, x_range=(0, 90), y_range=(0, 
 
 
 if __name__ == '__main__':
-    main()
+    #main()
     # plot_latency_vs_mac("artifacts/latency.csv", output_file="mcu_latency.pdf")
     # plot_pareto_front("artifacts/cnn_mnist/no_ms_agingevosearch_state.pickle",
     #                   x_range=(0.00, 0.04), y_range=(100, 3_000_000),
@@ -294,10 +294,10 @@ if __name__ == '__main__':
     #                   x_range=(0.00, 0.04), y_range=(100, 3_000_000),
     #                   title="μNAS on MNIST w/ all constraints",
     #                   output_file="mnist_all.pdf")
-    #plot_pareto_front("artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
-    #                   x_range=(0.00, 0.04), y_range=(100, 3_000_000),
-    #                   title="μNAS on MNIST w/ ntk",
-    #                   output_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pdf")
+    plot_pareto_front("artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+                       x_range=(0.00, 0.04), y_range=(100, 3_000_000),
+                       title="μNAS on MNIST w/ ntk",
+                       output_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pdf")
 
 
     # multiple_pareto_fronts(
