@@ -74,38 +74,38 @@ def main():
 
     # 開啟
     with open(f"{output_dir}/example_cnn_cifar10_struct_pru_agingevosearch_state_ntk.csv", "w", newline="") as csvfile:
-    wr = csv.writer(csvfile)
-    wr.writerow(["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency","ntk"])
-    EvaluatedPoint_num = len(EvaluatedPoint)
-    for i in range(0, EvaluatedPoint_num):
-        val_error = EvaluatedPoint[i].val_error
-        test_error = EvaluatedPoint[i].test_error
-        resource_features = EvaluatedPoint[i].resource_features
+        wr = csv.writer(csvfile)
+        wr.writerow(["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency","ntk"])
+        EvaluatedPoint_num = len(EvaluatedPoint)
+        for i in range(0, EvaluatedPoint_num):
+            val_error = EvaluatedPoint[i].val_error
+            test_error = EvaluatedPoint[i].test_error
+            resource_features = EvaluatedPoint[i].resource_features
 
-        # pre ntk
-        arch = EvaluatedPoint[i].point.arch
-        model = arch.to_keras_model(input_shape, num_classes)
-        ntks = ModelMetricsFile(training_config).get_metrics(model, num_batch=1)
-        ntk = np.mean(ntks).astype('int64')
-        resource_features.append(ntk)
-        '''
-        cnn_arch = EvaluatedPoint[i*100-1].point.arch
-        print("------------------------------")
-        print(f"val_error of speech_command_EvaluatedPoint[{i*100-1}]_point_arch:", val_error)
-        print(f"test_error of speech_command_EvaluatedPoint[{i*100-1}]_point_arch:", test_error)
-        print("resource_features: [peak_memory_usage, model_size, inference_latency]")
-        print(f"resource_features of speech_command_EvaluatedPoint[{i*100-1}]_point_arch:", resource_features)
-        print("------------------------------")
-        convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_EvaluatedPoint[{i*100-1}]_point_arch.tflite")
-        '''
+            # pre ntk
+            arch = EvaluatedPoint[i].point.arch
+            model = arch.to_keras_model(input_shape, num_classes)
+            ntks = ModelMetricsFile(training_config).get_metrics(model, num_batch=1)
+            ntk = np.mean(ntks).astype('int64')
+            resource_features.append(ntk)
+            '''
+            cnn_arch = EvaluatedPoint[i*100-1].point.arch
+            print("------------------------------")
+            print(f"val_error of speech_command_EvaluatedPoint[{i*100-1}]_point_arch:", val_error)
+            print(f"test_error of speech_command_EvaluatedPoint[{i*100-1}]_point_arch:", test_error)
+            print("resource_features: [peak_memory_usage, model_size, inference_latency]")
+            print(f"resource_features of speech_command_EvaluatedPoint[{i*100-1}]_point_arch:", resource_features)
+            print("------------------------------")
+            convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_EvaluatedPoint[{i*100-1}]_point_arch.tflite")
+            '''
 
-        #################### TEGNAS testntk #################### 
+            #################### TEGNAS testntk #################### 
 
 
 
-        EvaluatedPoint_list = [i, 1-val_error, 1-test_error]
-        EvaluatedPoint_list.extend(resource_features)
-        wr.writerow(EvaluatedPoint_list)
+            EvaluatedPoint_list = [i, 1-val_error, 1-test_error]
+            EvaluatedPoint_list.extend(resource_features)
+            wr.writerow(EvaluatedPoint_list)
 
 if __name__ == "__main__":
     main()
