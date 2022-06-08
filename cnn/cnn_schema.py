@@ -29,7 +29,7 @@ def build_schema() -> Dict[str, ValueType]:
                 Boolean(f"conv{c}-l{i}-has-pre-pool", can_be_optional=True),
                 Boolean(f"conv{c}-l{i}-has-bn", can_be_optional=True),
                 Boolean(f"conv{c}-l{i}-has-relu", can_be_optional=True),
-            ])
+            ]) 
 
     keys.extend([
         Boolean("pool-is-avg", can_be_optional=True),

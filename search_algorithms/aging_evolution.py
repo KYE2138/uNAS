@@ -213,6 +213,8 @@ class AgingEvoSearch:
         ss = ray.put(self.config.search_space)
         bound = ray.put(self.bound_config)
         #utils.py內的Scheduler class
+        #Create some GpuTrainer actors
+        #建立一個list，每個元素內，建立一個GpuTrainer actors，再傳入Scheduler Class做初始化
         scheduler = Scheduler([GPUTrainer.remote(ss, trainer, bound)
                                for _ in range(self.max_parallel_evaluations)])
         self.log.info(f"Searching with {self.max_parallel_evaluations} workers.")
