@@ -294,6 +294,12 @@ if __name__ == '__main__':
     #                   x_range=(0.00, 0.04), y_range=(100, 3_000_000),
     #                   title="μNAS on MNIST w/ all constraints",
     #                   output_file="mnist_all.pdf")
+    plot_pareto_front("artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+                       x_range=(0.00, 0.04), y_range=(100, 3_000_000),
+                       title="μNAS on MNIST w/ ntk",
+                       output_file="pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pdf")
+
+
     # multiple_pareto_fronts(
     #     ["artifacts/cnn_mnist/plain_final_agingevosearch_state.pickle",
     #      "artifacts/cnn_mnist/plain_final_bo_search_state.pickle",
