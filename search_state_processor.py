@@ -326,26 +326,32 @@ if __name__ == '__main__':
     #
     multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle"
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_ntk_200_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_lessntk_200_block_10_layer_3 _agingevosearch_state.pickle",
         ],
-        ["uNAS", "uNAS with ntk 1000 bounds"],
+        ["uNAS", "uNAS with ntk 1000 bounds", "uNAS with ntk 200 bounds", "uNAS with ntk less 200 bounds"],
         x_range=(0, 0.10), y_range=(0, 8000), y_key=1,
         title="Model size vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/peak_mem_use_pareto_MNIST.pdf")
     multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle"
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_ntk_200_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_lessntk_200_block_10_layer_3 _agingevosearch_state.pickle",
         ],
-        ["uNAS", "uNAS with ntk 1000 bounds"],
+        ["uNAS", "uNAS with ntk 1000 bounds", "uNAS with ntk 200 bounds", "uNAS with ntk less 200 bounds"],
         x_range=(0, 0.10), y_range=(0, 8000), y_key=2,
         title="Model size vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/model_size_pareto_MNIST.pdf")
 
     multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle"
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_ntk_200_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_lessntk_200_block_10_layer_3 _agingevosearch_state.pickle",
         ],
-        ["uNAS", "uNAS with ntk 1000 bounds"],
+        ["uNAS", "uNAS with ntk 1000 bounds", "uNAS with ntk 200 bounds", "uNAS with ntk less 200 bounds"],
         x_range=(0, 0.20), y_range=(0, 30000), y_key=3,
         title="Model size vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/MACs_pareto_MNIST.pdf")
