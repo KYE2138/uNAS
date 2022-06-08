@@ -21,7 +21,7 @@ def main():
 
     # Load
     with open('artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle', 'rb') as f:
-    EvaluatedPoint = pickle.load(f)
+        EvaluatedPoint = pickle.load(f)
     print("------------------------------")
     print("len of EvaluatedPoint:",len(EvaluatedPoint))
     print("-----------------------------")
