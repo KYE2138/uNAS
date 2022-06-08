@@ -17,7 +17,7 @@ dataset = training_config.dataset
 import pickle
 
 # Load
-with open('artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_ntk_500_block_15_layer_4_agingevosearch_state.pickle', 'rb') as f:
+with open('artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle', 'rb') as f:
   EvaluatedPoint = pickle.load(f)
 print("------------------------------")
 print("len of EvaluatedPoint:",len(EvaluatedPoint))
@@ -43,8 +43,7 @@ output_dir = "artifacts/cnn_cifar10"
 input_shape = (32, 32, 3)
 num_classes = 10
 
-#ntk
-from metrics_file import ModelMetricsFile
+
 
 def get_resource_requirements(arch: Architecture):
     rg = arch.to_resource_graph(input_shape, num_classes)
@@ -67,8 +66,11 @@ def convert_to_tflite(arch, output_file):
         f.write(model_bytes)
 
 import csv
+#ntk
+from metrics_file import ModelMetricsFile
+
 # 開啟
-with open(f"{output_dir}/pre_ntk_cnn_cifar10_struct_pru_ntk_500_block_15_layer_4_agingevosearch_state.csv", "w", newline="") as csvfile:
+with open(f"{output_dir}/example_cnn_cifar10_struct_pru_agingevosearch_state_ntk.csv", "w", newline="") as csvfile:
   wr = csv.writer(csvfile)
   wr.writerow(["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency","ntk"])
   EvaluatedPoint_num = len(EvaluatedPoint)
