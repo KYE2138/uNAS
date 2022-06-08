@@ -300,6 +300,12 @@ if __name__ == '__main__':
                        title="μNAS on MNIST w/ ntk",
                        output_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pdf")
     '''
+    '''
+    plot_pareto_front("artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+                       x_range=(0.00, 0.04), y_range=(100, 3_000_000),
+                       title="μNAS on MNIST w/ ntk",
+                       output_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pdf")
+    '''
 
     # multiple_pareto_fronts(
     #     ["artifacts/cnn_mnist/plain_final_agingevosearch_state.pickle",
@@ -323,6 +329,23 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle"
         ],
         ["uNAS", "uNAS with ntk 1000 bounds"],
+        x_range=(0, 0.10), y_range=(0, 8000), y_key=1,
+        title="Model size vs error rate Pareto fronts for MNIST",
+        output_file="artifacts/cnn_mnist/peak_mem_use_pareto_MNIST.pdf")
+    multiple_pareto_fronts(
+        ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle"
+        ],
+        ["uNAS", "uNAS with ntk 1000 bounds"],
         x_range=(0, 0.10), y_range=(0, 8000), y_key=2,
         title="Model size vs error rate Pareto fronts for MNIST",
-        output_file="artifacts/cnn_mnist/pareto_MNIST.pdf")
+        output_file="artifacts/cnn_mnist/model_size_pareto_MNIST.pdf")
+
+    multiple_pareto_fronts(
+        ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle"
+        ],
+        ["uNAS", "uNAS with ntk 1000 bounds"],
+        x_range=(0, 0.10), y_range=(0, 8000), y_key=3,
+        title="Model size vs error rate Pareto fronts for MNIST",
+        output_file="artifacts/cnn_mnist/MACs_pareto_MNIST.pdf")
