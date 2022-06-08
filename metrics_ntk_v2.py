@@ -1,3 +1,10 @@
+'''
+Copyright (C) 2010-2021 Alibaba Group Holding Limited.
+
+This file is modified from:
+https://github.com/VITA-Group/TENAS
+'''
+
 import ray
 #################### TEGNAS testntk #################### 
 import numpy as np
