@@ -42,7 +42,7 @@ class ModelMetricsFile:
         dataset = self.trainer.dataset
         input_shape = self.trainer.dataset.input_shape
         num_classes = self.trainer.dataset.num_classes
-        batch_size = self.trainer.batch_size
+        batch_size = self.trainer.config.batch_size
         #batch_size = 64
         model = model
         #networks_num = networks_num
