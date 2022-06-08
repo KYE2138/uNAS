@@ -333,7 +333,7 @@ if __name__ == '__main__':
         ],
         ["uNAS", "uNAS with ntk 1000 bounds", "uNAS with ntk 200 bounds", "uNAS with ntk less 200 bounds"],
         x_range=(0, 0.10), y_range=(0, 8000), y_key=1,
-        title="Peak memory usage vs error rate Pareto fronts for MNIST",
+        title="PMU vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/peak_mem_use_pareto_MNIST.pdf")
     multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
@@ -364,7 +364,7 @@ if __name__ == '__main__':
         ],
         ["uNAS", "uNAS with ntk 4000 bounds"],
         x_range=(0.12, 0.30), y_range=(0, 150000), y_key=1,
-        title="Peak memory usage vs error rate Pareto fronts for Cifar10",
+        title="PMU vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/peak_mem_use_pareto_Cifar10.pdf")
 
     multiple_pareto_fronts(
