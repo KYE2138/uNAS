@@ -54,7 +54,12 @@ class GPUTrainer:
         model = self.ss.to_keras_model(arch, data.input_shape, data.num_classes)
         
         # pre ntk
-        ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
+        #metrics_file.py
+        #ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
+        #metrics_file_ntk_rn.py
+        ntks, rns= ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1, networks_num=3)
+        pdb.set_trace()
+
         ntk = np.mean(ntks).astype('int64')
         # ntk_threshold是bound兩倍
         ntk_threshold = int(self.bound_config.ntk)*3
