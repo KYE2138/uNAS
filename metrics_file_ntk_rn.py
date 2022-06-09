@@ -1,4 +1,3 @@
-
 #################### uNAS model_trainer ####################
 import logging
 from typing import Optional
@@ -9,7 +8,7 @@ from config import TrainingConfig
 from pruning import DPFPruning
 from utils import debug_mode
 
-#################### save_dataset save_model wait_ntk#################### 
+#################### save_dataset save_model wait_metrics#################### 
 import numpy as np
 import tensorflow as tf
 import tf2onnx
@@ -25,23 +24,29 @@ import gc
 #config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
 #sess = tf.compat.v1.Session(config=config)
 
-
 class ModelMetricsFile:
     """Keras models according to the specified config."""
     def __init__(self, trainer):
         self.trainer = trainer
-        self.save_path = './tmp/metrics'
+        self.save_path = './tmp/metrics/ntk_rn'
 
-    def get_metrics(self, model, num_batch):
+    def get_metrics(self, model, num_batch, networks_num):
         dataset = self.trainer.dataset
         input_shape = self.trainer.dataset.input_shape
         num_classes = self.trainer.dataset.num_classes
         batch_size = self.trainer.config.batch_size
-        #batch_size = 64
-        model = model
-        #networks_num = networks_num
+        save_path = self.save_path
+        
+        #save_dataset
+        dataset = self.trainer.dataset
+        batch_size = self.trainer.config.batch_size
         num_batch = num_batch
         save_path = self.save_path
+
+        #save_model
+        model = model
+        
+        
         if not os.path.exists(save_path):
             os.makedirs(save_path)
             print (f"save_path dir:{save_path}")
@@ -49,16 +54,9 @@ class ModelMetricsFile:
             print (f"save_path is already exist:{save_path}")
 
 
-        def save_dataset(dataset, batch_size, input_shape, num_classes, num_batch, save_path):
+        def save_dataset(dataset, batch_size, num_batch, save_path):
             #################### dataset ####################
             #check loader
-            '''   
-            loader_save_path = f'{save_path}/loader.npz'
-            if os.path.isfile(loader_save_path):
-                print (f"loader is already exist:{loader_save_path}")
-            else:
-                print (f"generate loader :{loader_save_path}")
-            '''
             train_loader_save_path = f'{save_path}/train_loader.pickle'
             val_loader_save_path = f'{save_path}/val_loader.pickle'
             if os.path.isfile(train_loader_save_path) and os.path.isfile(val_loader_save_path):
@@ -67,7 +65,7 @@ class ModelMetricsFile:
             else:
                 print (f"generate train_loader_save_path :{train_loader_save_path}")
                 print (f"generate val_loader_save_path :{val_loader_save_path}")
-                         
+   
                 # from uNAS dataset by tf
                 train = dataset.train_dataset() \
                     .shuffle(100000) \
@@ -147,37 +145,43 @@ class ModelMetricsFile:
             del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
             gc.collect()
 
-        def wait_metrics(num_batch, save_path, num_classes):
+        def wait_metrics(save_path, num_batch, num_classes, num_networks):
+            
+            # input_finish_info
+            timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
             print (f'num_batch={num_batch}')
             print (f'num_classes={num_classes}')
-            timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
-            input_finish_info_path = f'{save_path}/input_finish_info.npz'
-            np.savez(input_finish_info_path, num_batch=num_batch, num_classes=num_classes , timestamp=timestamp)
+            print (f'num_networks={num_networks}')
+            print (f'timestamp={timestamp}')
+            input_finish_info = {"num_batch":num_batch, "num_classes":num_classes, "num_networks":num_networks,"timestamp":timestamp}
+            # save input_finish_info as input_finish_info.pickle
+            input_finish_info_save_path = f'{save_path}/input_finish_info.pickle'
+            with open(input_finish_info_save_path, 'wb') as f:
+                pickle.dump(input_finish_info, f)
 
-            #check metrics exsit
-            metrics_finish_info_path = f'{save_path}/metrics_finish_info.npz'
-            while not os.path.isfile(metrics_finish_info_path):
-                time.sleep(5)
+
+            #check metrics_finish_info.pickle exsit
+            metrics_finish_info_save_path = f'{save_path}/metrics_finish_info.pickle'
+            while not os.path.isfile(metrics_finish_info_save_path):
+                time.sleep(10)
+                # load metrics_finish_info.pickle
+                with open(metrics_finish_info_save_path, 'rb') as f:
+                    metrics_finish_info = pickle.load(f)
+                # check the timestamp
+                if timestamp == metrics_finish_info["timestamp"]:
+                    break
+                elif timestamp != metrics_finish_info["timestamp"]:
+                    print (f'the timestamp of metrics_finish_info is not right, wait for metrics_finish_info.')
                 print (f'wait for metrics_finish_info')
             
             print (f'find metrics_finish_info')
             time.sleep(5)
-            os.remove(metrics_finish_info_path)
+            ntks = metrics_finish_info['ntks']
+            rns = metrics_finish_info['rns']
+            # del
+            os.remove(metrics_finish_info)
 
-            #load metrics(metrics_ntk)
-            '''
-            ntks_mses_save_path = f'{save_path}/ntks_mses.npz'
-            metrics = np.load(ntks_mses_save_path)
-            ntks = metrics['ntks']
-            mses = metrics['mses']
-            '''
-
-            #load metrics(metrics_ntk_v2)
-            ntks_save_path = f'{save_path}/ntks.npz'
-            metrics = np.load(ntks_save_path)
-            ntks = metrics['ntks']
-
-            return ntks
+            return ntks,rns
 
         # save dataset
         save_dataset(dataset, batch_size, input_shape, num_classes, num_batch, save_path)
@@ -186,7 +190,7 @@ class ModelMetricsFile:
         save_model(model, input_shape, num_classes, save_path)
         
         # wait ntk
-        ntks = wait_metrics(num_batch, save_path, num_classes)
+        ntks, rns = wait_metrics(num_batch, save_path, num_classes)
 
-        return ntks
+        return ntks, rns
 
