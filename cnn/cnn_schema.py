@@ -1,7 +1,7 @@
 from typing import Dict
 from schema_types import Discrete, Boolean, Categorical, ValueType
 
-MAX_CONV_BLOCKS = 10
+MAX_CONV_BLOCKS = 15
 MAX_LAYERS_PER_CONV_BLOCK = 3
 MAX_DENSE_BLOCKS = 3
 
