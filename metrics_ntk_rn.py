@@ -474,6 +474,8 @@ def save_metrics(save_path, input_finish_info, ntks, rns):
     metrics_finish_info_save_path = f'{save_path}/metrics_finish_info.pickle'
     with open(metrics_finish_info_save_path, 'wb') as f:
         pickle.dump(metrics_finish_info, f)
+    
+    return 1
 
 
 
