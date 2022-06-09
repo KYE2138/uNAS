@@ -103,7 +103,7 @@ class ModelTrainer:
                 callbacks.append(pruning_cb)
 
         log = model.fit(train, epochs=epochs, validation_data=val,
-                        verbose=1 if debug_mode() else 8,
+                        verbose=1 if debug_mode() else 6,
                         callbacks=callbacks, class_weight=class_weight)
 
         test = dataset.test_dataset() \
