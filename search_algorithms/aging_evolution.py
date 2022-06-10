@@ -53,7 +53,7 @@ class GPUTrainer:
         data = self.trainer.dataset
         arch = point.arch
         print (f'model input_shape:{data.input_shape}')
-        print (f'model_rn input_shape:(3, 3, 1)')
+        print (f'model_rn input_shape:(1, 1, 1)')
         model = self.ss.to_keras_model(arch, data.input_shape, data.num_classes)
         model_rn = self.ss.to_keras_model(arch, (1, 1, 1), data.num_classes)
         
@@ -68,7 +68,7 @@ class GPUTrainer:
         # ntk_threshold是bound兩倍
         ntk_threshold = int(self.bound_config.ntk)*3
         #pdb.set_trace()
-        if ntk<0 or ntk>ntk_threshold or rns==100000:
+        if ntk<0 or ntk>ntk_threshold or rns>=3000:
             print(f'ntks = {ntks}, ntk = {ntk}')
             print(f'rns = {rns}, epochs = {self.trainer.config.epochs}')
             print(f'epochs = 1')
