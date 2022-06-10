@@ -431,6 +431,9 @@ def get_rn(save_path, input_finish_info):
                 inputs = torch.randn(self.input_size, device=self.device)
 
                 for model, LRCount in zip(self.models, self.LRCounts):
+                    #RuntimeError: Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same
+                    #move model to cuda
+                    model.to(device)
                     self.forward(model, LRCount, inputs)
             return [LRCount.getLinearReginCount() for LRCount in self.LRCounts]
 
