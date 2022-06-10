@@ -296,6 +296,7 @@ def get_rn(save_path, input_finish_info):
             return model
 
         model = init_model (torch_model)
+        print(model)
         
         #clear the parameter
         del onnx_model
