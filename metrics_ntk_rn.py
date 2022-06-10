@@ -444,7 +444,7 @@ def get_rn(save_path, input_finish_info):
                 model.forward(input_data)
                 if len(self.interFeature) == 0: return
                 #RuntimeError: view size is not compatible with input tensor's size and stride (at least one dimension spans across two contiguous subspaces). Use .reshape(...) 
-                feature_data = torch.cat([f.view(input_data.size(0), -1) for f in self.interFeature], 1)
+                feature_data = torch.cat([f.reshape(input_data.size(0), -1) for f in self.interFeature], 1)
                 LRCount.update2D(feature_data)
 
     def compute_RN_score(model: nn.Module, gpu=0, loader=[], num_batch=32):
@@ -454,7 +454,7 @@ def get_rn(save_path, input_finish_info):
         inputs = loader[0][0]
         input_size = inputs.shape
         #fix rns is always =batch_size=64
-        input_size=(1000, 1, 3, 3)
+        #input_size=(1000, 1, 3, 3)
         print (f'input_size={input_size}')
         
 
