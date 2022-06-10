@@ -1,7 +1,7 @@
 import pickle
 
 # Load
-with open('artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle', 'rb') as f:
+with open('artifacts/cnn_cifar10/ntk_rn_cnn_cifar10_struct_pru_4000_block_10_layer_3_agingevosearch_state.pickle', 'rb') as f:
   EvaluatedPoint = pickle.load(f)
 print("------------------------------")
 print("len of EvaluatedPoint:",len(EvaluatedPoint))
@@ -51,7 +51,7 @@ def convert_to_tflite(arch, output_file):
 
 import csv
 # 開啟
-with open(f"{output_dir}/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.csv", "w", newline="") as csvfile:
+with open(f"{output_dir}/ntk_rn_cnn_cifar10_struct_pru_4000_block_10_layer_3_agingevosearch_state.csv", "w", newline="") as csvfile:
   wr = csv.writer(csvfile)
   wr.writerow(["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency","ntk"])
   EvaluatedPoint_num = len(EvaluatedPoint)
