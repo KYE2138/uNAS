@@ -186,7 +186,7 @@ class ModelMetricsFile:
             ntks = metrics_finish_info['ntks']
             rns = metrics_finish_info['rns']
             # del
-            os.remove(metrics_finish_info)
+            os.remove(metrics_finish_info_save_path)
 
             return ntks,rns
 
