@@ -168,8 +168,8 @@ class ModelMetricsFile:
             #check metrics_finish_info.pickle exsit
             metrics_finish_info_save_path = f'{save_path}/metrics_finish_info.pickle'
             while not os.path.isfile(metrics_finish_info_save_path):
-                time.sleep(5)
                 print (f'wait for metrics_finish_info')
+                time.sleep(5)
             
             # check the timestamp
             while True:
@@ -178,6 +178,7 @@ class ModelMetricsFile:
                     metrics_finish_info = pickle.load(f)
                 if timestamp != metrics_finish_info["timestamp"]:
                     print (f'the timestamp of metrics_finish_info is not right, wait for metrics_finish_info.')
+                    time.sleep(5)
                 elif timestamp == metrics_finish_info["timestamp"]:
                     print (f'find metrics_finish_info')
                     break
