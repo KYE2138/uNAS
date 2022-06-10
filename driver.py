@@ -53,7 +53,7 @@ def main():
     '''
 
     #del metrics
-    save_path = './tmp/metrics'
+    save_path = './tmp/metrics/ntk_rn'
     train_loader_save_path = f'{save_path}/train_loader.pickle'
     val_loader_save_path = f'{save_path}/val_loader.pickle'
     if os.path.isfile(train_loader_save_path) and os.path.isfile(val_loader_save_path):
