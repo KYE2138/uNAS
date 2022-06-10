@@ -58,7 +58,7 @@ class GPUTrainer:
         #metrics_file.py
         #ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
         #metrics_file_ntk_rn.py
-        ntks, rns= ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1, networks_num=3)
+        ntks, rns= ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1, num_networks=3)
         pdb.set_trace()
 
         ntk = np.mean(ntks).astype('int64')
