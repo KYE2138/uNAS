@@ -55,7 +55,7 @@ class GPUTrainer:
         print (f'model input_shape:{data.input_shape}')
         print (f'model_rn input_shape:(3, 3, 1)')
         model = self.ss.to_keras_model(arch, data.input_shape, data.num_classes)
-        model_rn = self.ss.to_keras_model(arch, (3, 3, 1), data.num_classes)
+        model_rn = self.ss.to_keras_model(arch, (1, 1, 1), data.num_classes)
         
         # pre ntk
         #metrics_file.py
