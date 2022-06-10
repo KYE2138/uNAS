@@ -70,7 +70,7 @@ class GPUTrainer:
         # rns
         rn = int(rns)
         pdb.set_trace()
-        if ntk<0 or ntk>ntk_threshold or rn>=3000:
+        if ntk<0 or ntk>ntk_threshold or rn<=3000:
             print(f'ntks = {ntks}, ntk = {ntk}')
             print(f'rn = {rn}')
             print(f'epochs = 1')
