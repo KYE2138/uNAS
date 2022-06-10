@@ -30,7 +30,7 @@ class ModelMetricsFile:
         self.trainer = trainer
         self.save_path = './tmp/metrics/ntk_rn'
 
-    def get_metrics(self, model, num_batch, networks_num):
+    def get_metrics(self, model, num_batch, num_networks):
         dataset = self.trainer.dataset
         input_shape = self.trainer.dataset.input_shape
         num_classes = self.trainer.dataset.num_classes
@@ -43,8 +43,12 @@ class ModelMetricsFile:
         num_batch = num_batch
         save_path = self.save_path
 
+
         #save_model
         model = model
+
+        #wait_metrics
+        num_networks = num_networks
         
         
         if not os.path.exists(save_path):
@@ -186,7 +190,7 @@ class ModelMetricsFile:
         save_model(model, input_shape, save_path)
         
         # wait ntk
-        ntks, rns = wait_metrics(num_batch, save_path, num_classes)
+        ntks, rns = wait_metrics(save_path, num_batch, num_classes, num_networks)
 
         return ntks, rns
 
