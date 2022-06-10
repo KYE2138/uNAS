@@ -68,7 +68,7 @@ class GPUTrainer:
         # ntk_threshold是bound兩倍
         ntk_threshold = int(self.bound_config.ntk)*3
         #pdb.set_trace()
-        if ntk<0 or ntk>ntk_threshold or rns=100000:
+        if ntk<0 or ntk>ntk_threshold or rns==100000:
             print(f'ntks = {ntks}, ntk = {ntk}')
             print(f'rns = {rns}, epochs = {self.trainer.config.epochs}')
             print(f'epochs = 1')
