@@ -65,3 +65,4 @@ class BoundConfig:
     model_size_bound: Optional[int] = None
     mac_bound: Optional[int] = None
     ntk: Optional[int] = None
+    rn: Optional[int] = None
