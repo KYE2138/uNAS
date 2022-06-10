@@ -59,7 +59,7 @@ class GPUTrainer:
         #ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
         #metrics_file_ntk_rn.py
         ntks, rns= ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1, num_networks=3)
-        pdb.set_trace()
+        #pdb.set_trace()
 
         ntk = np.mean(ntks).astype('int64')
         # ntk_threshold是bound兩倍
