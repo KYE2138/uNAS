@@ -176,7 +176,7 @@ class ModelMetricsFile:
             onnx.save(onnx_model, onnx_model_path)
             
             #clear the parameter
-            del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
+            del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model_rn
             gc.collect()
 
         def wait_metrics(save_path, num_classes, num_batch, num_networks):
