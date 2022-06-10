@@ -15,7 +15,8 @@ from utils import Scheduler, debug_mode
 
 #ntk
 #from ntk import ModelNTK
-from metrics_file import ModelMetricsFile
+#from metrics_file import ModelMetricsFile
+from metrics_file_ntk_rn import ModelMetricsFile
 
 import pdb
 import gc
