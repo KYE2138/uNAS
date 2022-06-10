@@ -155,7 +155,7 @@ class ModelMetricsFile:
             # (load) model
             keras_model = model
             # input_shape like (1000, 3, 3, 1)
-            input_shape = (1000, 3, 3, 1)
+            input_shape = (None, 3, 3, 1)
             print (f'input_shape={input_shape}')
             # tensorflow-onnx(維度可從dataset獲取)
             keras_model_spec = (tf.TensorSpec(input_shape, tf.float32, name="input"),)
