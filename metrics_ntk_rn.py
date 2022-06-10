@@ -461,6 +461,8 @@ def get_rn(save_path, input_finish_info):
 
         lrc_model = Linear_Region_Collector(models=model, input_size=input_size,
                                             gpu=gpu, sample_batch=num_batch)
+        rns = lrc_model.forward_batch_sample()     
+        pdb.set_trace()            
         num_linear_regions = float(lrc_model.forward_batch_sample()[0])
         del lrc_model
         torch.cuda.empty_cache()
