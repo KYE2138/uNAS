@@ -443,7 +443,7 @@ def get_rn(save_path, input_finish_info):
                 feature_data = torch.cat([f.view(input_data.size(0), -1) for f in self.interFeature], 1)
                 LRCount.update2D(feature_data)
 
-    def compute_RN_score(model: nn.Module, gpu=1, loader=[], num_batch=32):
+    def compute_RN_score(model: nn.Module, gpu=0, loader=[], num_batch=32):
         
         # loader = [(inputs, targets),(inputs, targets)...]
         # get input_size
