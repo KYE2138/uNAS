@@ -468,10 +468,15 @@ def get_rn(save_path, input_finish_info):
     
     # loaddataset
     train_loader, val_loader = load_dataset(save_path=save_path)
-    # transfer and init model
-    model = transfer_init_model(save_path=save_path)
 
-    rns = compute_RN_score(model=model, loader=train_loader, num_batch=num_batch)
+    # transfer and init model
+    networks = []
+    for i in range(num_networks):
+        # transfer and init model
+        torch_model = transfer_init_model(save_path)
+        networks.append(torch_model) 
+
+    rns = compute_RN_score(model=networks, loader=train_loader, num_batch=num_batch)
     #pdb.set_trace()
     return rns
 
