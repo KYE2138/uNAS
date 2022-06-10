@@ -149,6 +149,30 @@ class ModelMetricsFile:
             #clear the parameter
             del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
             gc.collect()
+        
+        def save_model_rn(save_path, input_shape, model: tf.keras.Model):
+            #################### model ####################
+            # (load) model
+            keras_model = model
+            # input_shape like (1000, 3, 3, 1)
+            input_shape = (1000, 3, 3, 1)
+            print (f'input_shape={input_shape}')
+            # tensorflow-onnx(維度可從dataset獲取)
+            keras_model_spec = (tf.TensorSpec(input_shape, tf.float32, name="input"),)
+            model_proto, external_tensor_storage = tf2onnx.convert.from_keras(keras_model,
+                        input_signature=keras_model_spec, opset=None, custom_ops=None,
+                        custom_op_handlers=None, custom_rewriter=None,
+                        inputs_as_nchw=None, extra_opset=None, shape_override=None,
+                        target=None, large_model=False, output_path=None)
+            onnx_model = model_proto
+            
+            # Save the ONNX model
+            onnx_model_path = f'{save_path}/model_rn.onnx'
+            onnx.save(onnx_model, onnx_model_path)
+            
+            #clear the parameter
+            del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
+            gc.collect()
 
         def wait_metrics(save_path, num_classes, num_batch, num_networks):
             
@@ -197,6 +221,8 @@ class ModelMetricsFile:
 
         # save model
         save_model(save_path=save_path, input_shape=input_shape, model=model)
+        save_model_rn(save_path=save_path, input_shape=input_shape, model=model)
+        
         
         # wait ntk
         ntks, rns = wait_metrics(save_path, num_classes=num_classes, num_batch=num_batch, num_networks=num_networks)

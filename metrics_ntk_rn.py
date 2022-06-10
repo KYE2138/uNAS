@@ -257,10 +257,10 @@ def get_rn(save_path, input_finish_info):
         return train_loader, val_loader
 
     # return model (pytorch)
-    def transfer_init_model(save_path):
+    def transfer_init_model_rn(save_path):
         #################### model ####################
         # load onnx_model
-        onnx_model_path = onnx_model_path = f'{save_path}/model.onnx'
+        onnx_model_path = onnx_model_path = f'{save_path}/model_rn.onnx'
         onnx_model = onnx.load(onnx_model_path)
 
         # onnx2torch
@@ -455,7 +455,7 @@ def get_rn(save_path, input_finish_info):
         inputs = loader[0][0]
         input_size = inputs.shape
         #fix rns is always =batch_size=64
-        #input_size=(500, 32, 32, 3)
+        input_size=(1000, 3, 3, 1)
         print (f'input_size={input_size}')
         
 
@@ -473,7 +473,7 @@ def get_rn(save_path, input_finish_info):
     networks = []
     for i in range(num_networks):
         # transfer and init model
-        torch_model = transfer_init_model(save_path)
+        torch_model = transfer_init_model_rn(save_path)
         networks.append(torch_model) 
 
     rns = compute_RN_score(model=networks, loader=train_loader, num_batch=num_batch)
