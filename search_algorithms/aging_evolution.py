@@ -65,13 +65,17 @@ class GPUTrainer:
         #pdb.set_trace()
 
         ntk = np.mean(ntks).astype('int64')
-        # ntk_threshold是bound兩倍
+        # ntk_threshold是bound三倍
         ntk_threshold = int(self.bound_config.ntk)*3
         # rns
         rn = np.mean(rns).astype('int64')
         rn = int(rn)
+        #max rn ~ 3000
+        # 限制rn在1500以上
+        rn = 4000-rn
+        # rn要在2500以下
         #pdb.set_trace()
-        if ntk<0 or ntk>ntk_threshold or rn<=1995:
+        if ntk<0 or ntk>ntk_threshold or rn>=2500:
             print(f'ntks = {ntks}, ntk = {ntk}')
             print(f'rns = {rns}, rn = {rn}')
             print(f'epochs = 1')
@@ -101,6 +105,7 @@ class GPUTrainer:
         ntk = np.mean(ntks).astype('int64')
         '''
         resource_features.append(ntk)
+        resource_features.append(rn)
 
         #pdb.set_trace()
         
@@ -166,7 +171,7 @@ class AgingEvoSearch:
             self.save_state(file.as_posix())
 
     def get_mo_fitness_fn(self):
-        lambdas = np.random.uniform(low=0.0, high=1.0, size=5)
+        lambdas = np.random.uniform(low=0.0, high=1.0, size=6)
 
         def normalise(x, l=0, u=1, cap=10.0):
             return min((x - l) / (u - l), cap)
