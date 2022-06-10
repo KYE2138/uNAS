@@ -453,7 +453,9 @@ def get_rn(save_path, input_finish_info):
         # get input_size
         inputs = loader[0][0]
         input_size = inputs.shape
+        input_size=(1000, 1, 3, 3)
         print (f'inputs={inputs.shape}')
+        
 
         lrc_model = Linear_Region_Collector(models=[model], input_size=input_size,
                                             gpu=gpu, sample_batch=num_batch)
