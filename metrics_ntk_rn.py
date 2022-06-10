@@ -455,15 +455,15 @@ def get_rn(save_path, input_finish_info):
         inputs = loader[0][0]
         input_size = inputs.shape
         #fix rns is always =batch_size=64
-        input_size=(10000, 1, 1, 1)
+        input_size=(1000, 2, 2, 1)
         print (f'input_size={input_size}')
         
 
         lrc_model = Linear_Region_Collector(models=model, input_size=input_size,
-                                            gpu=gpu, sample_batch=num_batch)
-        rns = lrc_model.forward_batch_sample()     
-        pdb.set_trace()            
-        num_linear_regions = float(lrc_model.forward_batch_sample()[0])
+                                            gpu=gpu, sample_batch=num_batch)              
+        
+        #num_linear_regions = float(lrc_model.forward_batch_sample()[0])
+        num_linear_regions = lrc_model.forward_batch_sample()
         del lrc_model
         torch.cuda.empty_cache()
         return num_linear_regions
