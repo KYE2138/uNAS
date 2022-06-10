@@ -169,17 +169,19 @@ class ModelMetricsFile:
             metrics_finish_info_save_path = f'{save_path}/metrics_finish_info.pickle'
             while not os.path.isfile(metrics_finish_info_save_path):
                 time.sleep(10)
+                print (f'wait for metrics_finish_info')
+            
+            # check the timestamp
+            while True:
                 # load metrics_finish_info.pickle
                 with open(metrics_finish_info_save_path, 'rb') as f:
                     metrics_finish_info = pickle.load(f)
-                # check the timestamp
-                if timestamp == metrics_finish_info["timestamp"]:
-                    break
-                elif timestamp != metrics_finish_info["timestamp"]:
+                if timestamp != metrics_finish_info["timestamp"]:
                     print (f'the timestamp of metrics_finish_info is not right, wait for metrics_finish_info.')
-                print (f'wait for metrics_finish_info')
-            
-            print (f'find metrics_finish_info')
+                elif timestamp == metrics_finish_info["timestamp"]:
+                    print (f'find metrics_finish_info')
+                    break
+                
             time.sleep(5)
             ntks = metrics_finish_info['ntks']
             rns = metrics_finish_info['rns']
