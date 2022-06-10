@@ -296,7 +296,7 @@ def get_rn(save_path, input_finish_info):
             return model
 
         model = init_model (torch_model)
-        print(model)
+        #print(model)
         
         #clear the parameter
         del onnx_model
@@ -459,7 +459,7 @@ def get_rn(save_path, input_finish_info):
         print (f'input_size={input_size}')
         
 
-        lrc_model = Linear_Region_Collector(models=[model], input_size=input_size,
+        lrc_model = Linear_Region_Collector(models=model, input_size=input_size,
                                             gpu=gpu, sample_batch=num_batch)
         num_linear_regions = float(lrc_model.forward_batch_sample()[0])
         del lrc_model
