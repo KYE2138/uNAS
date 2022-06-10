@@ -226,7 +226,7 @@ class ModelMetricsFile:
 
         # save model
         save_model(save_path=save_path, input_shape=input_shape, model=model)
-        save_model_rn(save_path=save_path, input_shape=input_shape, model=model)
+        save_model_rn(save_path=save_path, input_shape=input_shape, model_rn=model_rn)
         
         
         # wait ntk
