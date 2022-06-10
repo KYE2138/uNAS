@@ -453,6 +453,7 @@ def get_rn(save_path, input_finish_info):
         # get input_size
         inputs = loader[0][0]
         input_size = inputs.shape
+        #fix rns is always =batch_size=64
         input_size=(1000, 1, 3, 3)
         print (f'inputs={inputs.shape}')
         
