@@ -102,11 +102,7 @@ class ModelMetricsFile:
                     val_target = val_target.astype(np.int64)
                     val_loader.append((val_input,val_target))
                 
-                # save loader as loader.npz
-                #loader_save_path = f'{save_path}/{batch_size}_{input_shape}_{num_classes}_{num_batch}_loader.npz'
-                #np.savez(loader_save_path, train_input=train_input, train_target=train_target, val_input=val_input, val_target=val_target)
-                #np.savez(loader_save_path, train_loader=train_loader, val_loader=val_loader)
-                
+              
                 # save loader as train_loader.pickle/val_loader.pickle
                 train_loader_save_path = f'{save_path}/train_loader.pickle'
                 with open(train_loader_save_path, 'wb') as f:
@@ -121,7 +117,7 @@ class ModelMetricsFile:
                 del val_input, val_target
                 gc.collect()
 
-        def save_model(model: tf.keras.Model, input_shape, num_classes, save_path):
+        def save_model(model: tf.keras.Model, input_shape, save_path):
             #################### model ####################
             # (load) model
             keras_model = model
@@ -184,10 +180,10 @@ class ModelMetricsFile:
             return ntks,rns
 
         # save dataset
-        save_dataset(dataset, batch_size, input_shape, num_classes, num_batch, save_path)
+        save_dataset(dataset, batch_size, num_batch, save_path)
 
         # save model
-        save_model(model, input_shape, num_classes, save_path)
+        save_model(model, input_shape, save_path)
         
         # wait ntk
         ntks, rns = wait_metrics(num_batch, save_path, num_classes)
