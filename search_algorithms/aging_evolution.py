@@ -52,13 +52,16 @@ class GPUTrainer:
 
         data = self.trainer.dataset
         arch = point.arch
+        print (f'model input_shape:{data.input_shape}')
+        print (f'model_rn input_shape:(3, 3, 1)')
         model = self.ss.to_keras_model(arch, data.input_shape, data.num_classes)
+        model_rn = self.ss.to_keras_model(arch, (3, 3, 1), data.num_classes)
         
         # pre ntk
         #metrics_file.py
         #ntks = ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1)
         #metrics_file_ntk_rn.py
-        ntks, rns= ModelMetricsFile(self.trainer).get_metrics(model, num_batch=1, num_networks=3)
+        ntks, rns= ModelMetricsFile(self.trainer).get_metrics(model=model, model_rn=model_rn, num_batch=1, num_networks=3)
         #pdb.set_trace()
 
         ntk = np.mean(ntks).astype('int64')

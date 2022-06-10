@@ -30,7 +30,7 @@ class ModelMetricsFile:
         self.trainer = trainer
         self.save_path = './tmp/metrics/ntk_rn'
 
-    def get_metrics(self, model, num_batch, num_networks):
+    def get_metrics(self, model, model_rn, num_batch, num_networks):
         dataset = self.trainer.dataset
         input_shape = self.trainer.dataset.input_shape
         num_classes = self.trainer.dataset.num_classes
@@ -48,6 +48,11 @@ class ModelMetricsFile:
         save_path = self.save_path
         input_shape = self.trainer.dataset.input_shape
         model = model
+
+        #save_model_rn
+        save_path = self.save_path
+        input_shape = self.trainer.dataset.input_shape
+        model_rn = model_rn
 
         #wait_metrics
         save_path = self.save_path
@@ -150,10 +155,10 @@ class ModelMetricsFile:
             del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
             gc.collect()
         
-        def save_model_rn(save_path, input_shape, model: tf.keras.Model):
+        def save_model_rn(save_path, input_shape, model_rn=model_rn):
             #################### model ####################
             # (load) model
-            keras_model = model
+            keras_model = model_rn
             # input_shape like (1000, 3, 3, 1)
             input_shape = (None, 3, 3, 1)
             print (f'input_shape={input_shape}')
