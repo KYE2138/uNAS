@@ -38,16 +38,21 @@ class ModelMetricsFile:
         save_path = self.save_path
         
         #save_dataset
+        save_path = self.save_path
         dataset = self.trainer.dataset
         batch_size = self.trainer.config.batch_size
         num_batch = num_batch
-        save_path = self.save_path
 
 
         #save_model
+        save_path = self.save_path
+        input_shape = self.trainer.dataset.input_shape
         model = model
 
         #wait_metrics
+        save_path = self.save_path
+        num_classes = self.trainer.dataset.num_classes
+        num_batch = num_batch
         num_networks = num_networks
         
         
@@ -58,7 +63,7 @@ class ModelMetricsFile:
             print (f"save_path is already exist:{save_path}")
 
 
-        def save_dataset(dataset, batch_size, num_batch, save_path):
+        def save_dataset(save_path, dataset, batch_size, num_batch):
             #################### dataset ####################
             #check loader
             train_loader_save_path = f'{save_path}/train_loader.pickle'
@@ -121,7 +126,7 @@ class ModelMetricsFile:
                 del val_input, val_target
                 gc.collect()
 
-        def save_model(model: tf.keras.Model, input_shape, save_path):
+        def save_model(save_path, input_shape, model: tf.keras.Model):
             #################### model ####################
             # (load) model
             keras_model = model
@@ -145,7 +150,7 @@ class ModelMetricsFile:
             del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
             gc.collect()
 
-        def wait_metrics(save_path, num_batch, num_classes, num_networks):
+        def wait_metrics(save_path, num_classes, num_batch, num_networks):
             
             # input_finish_info
             timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
@@ -184,13 +189,13 @@ class ModelMetricsFile:
             return ntks,rns
 
         # save dataset
-        save_dataset(dataset, batch_size, num_batch, save_path)
+        save_dataset(save_path=save_path , dataset=dataset, batch_size=batch_size, num_batch=num_batch)
 
         # save model
-        save_model(model, input_shape, save_path)
+        save_model(save_path=save_path, input_shape=input_shape, model=model)
         
         # wait ntk
-        ntks, rns = wait_metrics(save_path, num_batch, num_classes, num_networks)
+        ntks, rns = wait_metrics(save_path, num_classes=num_classes, num_batch=num_batch, num_networks=num_networks)
 
         return ntks, rns
 
