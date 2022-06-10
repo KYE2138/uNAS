@@ -173,6 +173,7 @@ class ModelMetricsFile:
             
             # check the timestamp
             while True:
+                time.sleep(5)
                 # load metrics_finish_info.pickle
                 with open(metrics_finish_info_save_path, 'rb') as f:
                     metrics_finish_info = pickle.load(f)

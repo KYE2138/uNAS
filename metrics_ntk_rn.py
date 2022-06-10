@@ -467,7 +467,7 @@ def get_rn(save_path, input_finish_info):
     model = transfer_init_model(save_path=save_path)
 
     rns = compute_RN_score(model=model, loader=train_loader, num_batch=num_batch)
-    pdb.set_trace()
+    #pdb.set_trace()
     return rns
 
 @ray.remote(num_gpus=1, max_calls=1)
