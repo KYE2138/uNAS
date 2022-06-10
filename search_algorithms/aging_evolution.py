@@ -71,14 +71,14 @@ class GPUTrainer:
         rn = np.mean(rns).astype('int64')
         rn = int(rn)
         #pdb.set_trace()
-        if ntk<0 or ntk>ntk_threshold or rn<=200:
+        if ntk<0 or ntk>ntk_threshold or rn<=1995:
             print(f'ntks = {ntks}, ntk = {ntk}')
-            print(f'rn = {rn}')
+            print(f'rns = {rns}, rn = {rn}')
             print(f'epochs = 1')
             results = self.trainer.train_and_eval(model, sparsity=point.sparsity, epochs=1)
         else:
             print(f'ntks = {ntks}, ntk = {ntk}')
-            print(f'rn = {rn}')
+            print(f'rns = {rns}, rn = {rn}')
             print(f'epochs = {self.trainer.config.epochs}')
             results = self.trainer.train_and_eval(model, sparsity=point.sparsity)
         
