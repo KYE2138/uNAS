@@ -69,7 +69,7 @@ class GPUTrainer:
         ntk_threshold = int(self.bound_config.ntk)*3
         # rns
         rn = int(rns)
-        pdb.set_trace()
+        #pdb.set_trace()
         if ntk<0 or ntk>ntk_threshold or rn<=3000:
             print(f'ntks = {ntks}, ntk = {ntk}')
             print(f'rn = {rn}')
