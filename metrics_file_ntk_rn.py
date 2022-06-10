@@ -168,7 +168,7 @@ class ModelMetricsFile:
             #check metrics_finish_info.pickle exsit
             metrics_finish_info_save_path = f'{save_path}/metrics_finish_info.pickle'
             while not os.path.isfile(metrics_finish_info_save_path):
-                time.sleep(10)
+                time.sleep(5)
                 print (f'wait for metrics_finish_info')
             
             # check the timestamp

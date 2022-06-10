@@ -57,8 +57,9 @@ def get_ntk(save_path, input_finish_info={}):
     print (f'timestamp={timestamp}')
     
     #get_ntk_n
-    num_networks = num_networks
-    num_classes = num_classes
+    num_networks = input_finish_info["num_networks"]
+    num_classes = input_finish_info["num_classes"]
+    num_batch = input_finish_info["num_batch"]
     ntks = -1
 
     # return (train_loader, val_loader)
@@ -204,8 +205,8 @@ def get_ntk(save_path, input_finish_info={}):
         return conds
 
     # loaddataset
-    train_loader, val_loader = load_dataset(save_path, num_batch)
-    
+    train_loader, val_loader = load_dataset(save_path)
+
     # transfer and init model
     networks = []
     for i in range(num_networks):
@@ -214,7 +215,7 @@ def get_ntk(save_path, input_finish_info={}):
         networks.append(torch_model) 
 
     # get ntk_n
-    ntks = get_ntk_n(loader=train_loader, networks=networks, train_mode=True, num_batch=num_batch, num_classes=num_classes)
+    ntks = get_ntk_n(loader=train_loader, networks=networks, num_classes=num_classes, num_batch=num_batch, train_mode=True)
 
     return ntks
 
@@ -483,7 +484,7 @@ def save_metrics(save_path, input_finish_info, ntks, rns):
 save_path = './tmp/metrics/ntk_rn'
 while True:
     input_finish_info = ray.get(wait_input.remote(save_path=save_path))
-    ntks = ray.get(get_ntk.remote(save_path=save_path,input_finish_info=input_finish_info))
+    ntks = ray.get(get_ntk.remote(save_path=save_path, input_finish_info=input_finish_info))
     rns = ray.get(get_rn.remote(save_path=save_path, input_finish_info=input_finish_info))
     finish = ray.get(save_metrics.remote(save_path=save_path, input_finish_info=input_finish_info, ntks=ntks, rns=rns))
 
