@@ -155,7 +155,7 @@ def plot_accuracy_gain(search_state_file, x_range=(100, 2000), y_range=(0.8, 1.0
 
 def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=2000,
                            x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, points_num=points_num):
-    point_lists = [load_search_state_file(file, filter_resources=y_key, points_num=points_num)[:take_n]
+    point_lists = [load_search_state_file(file, filter_resources=y_key, points_num=None)[:take_n]
                    for file in search_state_files]
 
     plt.rcParams["font.family"] = "Arial"
