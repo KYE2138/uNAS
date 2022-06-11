@@ -53,7 +53,7 @@ import csv
 # 開啟
 with open(f"{output_dir}/search_agingevosearch_state.csv", "w", newline="") as csvfile:
   wr = csv.writer(csvfile)
-  wr.writerow(["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency","ntk"])
+  wr.writerow(["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency","ntk","rn"])
   EvaluatedPoint_num = len(EvaluatedPoint)
   for i in range(0, EvaluatedPoint_num):
     val_error = EvaluatedPoint[i].val_error
