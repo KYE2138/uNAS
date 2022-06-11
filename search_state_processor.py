@@ -94,13 +94,17 @@ def output_csv(objectives):
         print(f"{obj[0]:.4f},{obj[1]},{obj[2]},{obj[3]}")
 
 
-def load_search_state_file(search_state_file, filter_resources=None):
+def load_search_state_file(search_state_file, filter_resources=None, points_num=None):
     is_bo = "agingevosearch" not in search_state_file
     with open(search_state_file, "rb") as f:
         if is_bo:
             wrapped_nns = [nn[0] for nn in pickle.load(f)["points"]]
         else:
             wrapped_nns = pickle.load(f)
+
+    #add points range
+    if points_num!=None:
+        wrapped_nns = wrapped_nns[:points_num]
 
     points = [(nn.test_error, nn.resource_features[0],
                nn.resource_features[1], nn.resource_features[2])
@@ -150,8 +154,8 @@ def plot_accuracy_gain(search_state_file, x_range=(100, 2000), y_range=(0.8, 1.0
 
 
 def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=2000,
-                           x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None):
-    point_lists = [load_search_state_file(file, filter_resources=y_key)[:take_n]
+                           x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, points_num=points_num):
+    point_lists = [load_search_state_file(file, filter_resources=y_key, points_num=points_num)[:take_n]
                    for file in search_state_files]
 
     plt.rcParams["font.family"] = "Arial"
@@ -328,8 +332,8 @@ if __name__ == '__main__':
     multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_ntk_200_block_10_layer_3_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_lessntk_200_block_10_layer_3 _agingevosearch_state.pickle",
+         #"artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_ntk_200_block_10_layer_3_agingevosearch_state.pickle",
+         #"artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_lessntk_200_block_10_layer_3 _agingevosearch_state.pickle",
         ],
         ["uNAS", "uNAS with ntk 1000 bounds", "uNAS with ntk 200 bounds", "uNAS with ntk less 200 bounds"],
         x_range=(0, 0.10), y_range=(0, 5000), y_key=1,
@@ -338,8 +342,8 @@ if __name__ == '__main__':
     multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_ntk_200_block_10_layer_3_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_lessntk_200_block_10_layer_3 _agingevosearch_state.pickle",
+         #"artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_ntk_200_block_10_layer_3_agingevosearch_state.pickle",
+         #"artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_lessntk_200_block_10_layer_3 _agingevosearch_state.pickle",
         ],
         ["uNAS", "uNAS with ntk 1000 bounds", "uNAS with ntk 200 bounds", "uNAS with ntk less 200 bounds"],
         x_range=(0, 0.10), y_range=(0, 5000), y_key=2,
@@ -349,8 +353,8 @@ if __name__ == '__main__':
     multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_ntk_200_block_10_layer_3_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_lessntk_200_block_10_layer_3 _agingevosearch_state.pickle",
+         #"artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_ntk_200_block_10_layer_3_agingevosearch_state.pickle",
+         #"artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_lessntk_200_block_10_layer_3 _agingevosearch_state.pickle",
         ],
         ["uNAS", "uNAS with ntk 1000 bounds", "uNAS with ntk 200 bounds", "uNAS with ntk less 200 bounds"],
         x_range=(0, 0.10), y_range=(0, 50000), y_key=3,
