@@ -69,7 +69,6 @@ class GPUTrainer:
         ntk_threshold = int(self.bound_config.ntk)*3
         # rns
         rn = np.mean(rns).astype('int64')
-        rn = int(rn)
         #max rn ~ 3000
         # 限制rn在1500以上
         rn = 4000-rn
