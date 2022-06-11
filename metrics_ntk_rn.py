@@ -463,7 +463,12 @@ def get_rn(save_path, input_finish_info):
                                             gpu=gpu, sample_batch=num_batch)              
         
         #num_linear_regions = float(lrc_model.forward_batch_sample()[0])
-        num_linear_regions = lrc_model.forward_batch_sample()
+        try:
+            num_linear_regions = lrc_model.forward_batch_sample()
+        except AttributeError:
+            num_linear_regions= [0,0,0]
+            print("Oops!  Linear_Region_Collector.forward_batch_sample() has AttributeError error, num_linear_regions = [0,0,0]")
+        
         del lrc_model
         torch.cuda.empty_cache()
         return num_linear_regions
