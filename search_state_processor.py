@@ -94,7 +94,7 @@ def output_csv(objectives):
         print(f"{obj[0]:.4f},{obj[1]},{obj[2]},{obj[3]}")
 
 
-def load_search_state_file(search_state_file, filter_resources=None, points_num=None):
+def load_search_state_file(search_state_file, filter_resources=None, num_points=None):
     is_bo = "agingevosearch" not in search_state_file
     with open(search_state_file, "rb") as f:
         if is_bo:
@@ -103,8 +103,8 @@ def load_search_state_file(search_state_file, filter_resources=None, points_num=
             wrapped_nns = pickle.load(f)
 
     #add points range
-    if points_num!=None:
-        wrapped_nns = wrapped_nns[:points_num]
+    if num_points!=None:
+        wrapped_nns = wrapped_nns[:num_points]
 
     points = [(nn.test_error, nn.resource_features[0],
                nn.resource_features[1], nn.resource_features[2])
@@ -154,8 +154,8 @@ def plot_accuracy_gain(search_state_file, x_range=(100, 2000), y_range=(0.8, 1.0
 
 
 def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=2000,
-                           x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, points_num=points_num):
-    point_lists = [load_search_state_file(file, filter_resources=y_key, points_num=None)[:take_n]
+                           x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
+    point_lists = [load_search_state_file(file, filter_resources=y_key, num_points=num_points)[:take_n]
                    for file in search_state_files]
 
     plt.rcParams["font.family"] = "Arial"
