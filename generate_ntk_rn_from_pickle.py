@@ -103,7 +103,7 @@ def main():
     num_classes = args.num_classes
     range_points = args.range_points
     range_points = list(map(int, range_points))
-    pdb.set_trace()
+    #pdb.set_trace()
     # 開啟
     with open(pickle_save_to_path, "w", newline="") as csvfile:
         wr = csv.writer(csvfile)
