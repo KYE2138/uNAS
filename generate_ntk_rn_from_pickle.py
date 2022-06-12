@@ -10,6 +10,9 @@ from architecture import Architecture
 from cnn import CnnSearchSpace
 from resource_models.models import model_size, peak_memory_usage
 
+import csv
+from metrics_file_ntk_rn import ModelMetricsFile
+
 def main():
     # 取得參數
     parser = argparse.ArgumentParser("uNAS Search")
@@ -21,8 +24,8 @@ def main():
     parser.add_argument("--save-every", type=int, default=5, help="After how many search steps to save the state")
     parser.add_argument("--seed", type=int, default=0, help="A seed for the global NumPy and TensorFlow random state")
     parser.add_argument("--metric-type", type=list, default=["ntk","rn"], help="Some metrics list by the pickle")
-    parser.add_argument("--input-shape", type=list, default=["ntk","rn"], help="Some metrics list by the pickle")
-    parser.add_argument("--num-classes", type=list, default=["ntk","rn"], help="Some metrics list by the pickle")
+    parser.add_argument("--input-shape", type=tuple, default=(32,32,3), help="A input shape of the model")
+    parser.add_argument("--num-classes", type=int, default=10, help="A num classes of the model")
     
     args = parser.parse_args()
     # 執行config_file(.py)內之code,configs 則是全域變數(以字典型態儲存)
@@ -86,9 +89,7 @@ def main():
             f.write(model_bytes)
     '''
 
-    import csv
-    #ntk
-    from metrics_file_ntk_rn import ModelMetricsFile
+    
     
     pickle_save_to_path = args.save_to
     metric_type = args.metric_type
@@ -133,10 +134,7 @@ def main():
             convert_to_tflite(cnn_arch, output_file=f"{output_dir}/speech_command_EvaluatedPoint[{i*100-1}]_point_arch.tflite")
             '''
 
-            #################### TEGNAS testntk #################### 
-
-
-
+            #################### TEGNAS testntk ####################
             EvaluatedPoint_list = [i, 1-val_error, 1-test_error]
             EvaluatedPoint_list.extend(resource_features)
             wr.writerow(EvaluatedPoint_list)
