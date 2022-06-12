@@ -97,6 +97,7 @@ def main():
     input_shape = args.input_shape
     num_classes = args.num_classes
     range_points = args.range_points
+    range_points = list(map(int, range_points))
     # 開啟
     with open(pickle_save_to_path, "w", newline="") as csvfile:
         wr = csv.writer(csvfile)
