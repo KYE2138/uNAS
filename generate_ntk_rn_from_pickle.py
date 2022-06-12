@@ -24,10 +24,11 @@ def main():
     parser.add_argument("--save_to", type=str, default=None, help="A search state file to save to")
     parser.add_argument("--save_every", type=int, default=5, help="After how many search steps to save the state")
     parser.add_argument("--seed", type=int, default=0, help="A seed for the global NumPy and TensorFlow random state")
-    parser.add_argument("--metric_type", type=list, default=["ntk","rn"], help="Some metrics list by the pickle")
-    parser.add_argument("--input_shape", type=tuple, default=(32,32,3), help="A input shape of the model")
+    parser.add_argument("--metric_type", type=str, nargs='+', default=["ntk","rn"], help="Some metrics list by the pickle")
+    parser.add_argument("--input_shape", type=int, nargs='+', default=[32,32,3], help="A input shape of the model")
     parser.add_argument("--num_classes", type=int, default=10, help="A num classes of the model")
-    parser.add_argument("--range_points", type=list, default=[0,-1], help="A range of points")
+    parser.add_argument("--range_points", type=int, nargs='+', default=[0,-1], help="A range of points")
+
     
     args = parser.parse_args()
     # 執行config_file(.py)內之code,configs 則是全域變數(以字典型態儲存)
