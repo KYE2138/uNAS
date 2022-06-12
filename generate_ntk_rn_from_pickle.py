@@ -12,7 +12,9 @@ from cnn import CnnSearchSpace
 from resource_models.models import model_size, peak_memory_usage
 
 import csv
+from model_trainer import ModelTrainer
 from metrics_file_ntk_rn import ModelMetricsFile
+
 
 def main():
     # 取得參數
@@ -38,7 +40,8 @@ def main():
     #configs.training_config.pruning
     #configs.search_config
     #configs.bound_config
-    #training_config = configs["training_config"]
+    training_config = configs["training_config"]
+    trainer = ModelTrainer(training_config)
 
     # Load pickle
     pickle_load_from_path = args.load_from
@@ -117,7 +120,7 @@ def main():
             # ntks & rns
             model = arch.to_keras_model(input_shape, num_classes)
             model_rn = arch.to_keras_model((2, 2, 1), num_classes)
-            ntks, rns= ModelMetricsFile(configs).get_metrics(model=model, model_rn=model_rn, num_batch=1, num_networks=3)
+            ntks, rns= ModelMetricsFile(trainer).get_metrics(model=model, model_rn=model_rn, num_batch=1, num_networks=3)
 
             if "ntk" in metric_type:
                 ntk = np.mean(ntks).astype('int64')
