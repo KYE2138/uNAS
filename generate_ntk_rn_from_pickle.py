@@ -112,6 +112,7 @@ def main():
         if range_points[1] == -1:
             range_points[1] = EvaluatedPoint_num
         for i in range(range_points[0], range_points[1]):
+            print (f'##########generate #{i}...##########')
             val_error = EvaluatedPoint[i].val_error
             test_error = EvaluatedPoint[i].test_error
             resource_features = EvaluatedPoint[i].resource_features
