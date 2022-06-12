@@ -117,7 +117,7 @@ def main():
             # ntks & rns
             model = arch.to_keras_model(input_shape, num_classes)
             model_rn = arch.to_keras_model((2, 2, 1), num_classes)
-            ntks, rns= ModelMetricsFile(self.trainer).get_metrics(model=model, model_rn=model_rn, num_batch=1, num_networks=3)
+            ntks, rns= ModelMetricsFile(configs).get_metrics(model=model, model_rn=model_rn, num_batch=1, num_networks=3)
 
             if "ntk" in metric_type:
                 ntk = np.mean(ntks).astype('int64')
