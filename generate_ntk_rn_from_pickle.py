@@ -19,13 +19,14 @@ def main():
     #configs/cnn_cifar10_struct_pru.py
     parser.add_argument("config_file", type=str, help="A config file describing the search parameters")
     parser.add_argument("--name", type=str, help="Experiment name (for disambiguation during state saving)")
-    parser.add_argument("--load-from", type=str, default=None, help="A search state file to resume from")
-    parser.add_argument("--save-to", type=str, default=None, help="A search state file to save to")
-    parser.add_argument("--save-every", type=int, default=5, help="After how many search steps to save the state")
+    parser.add_argument("--load_from", type=str, default=None, help="A search state file to resume from")
+    parser.add_argument("--save_to", type=str, default=None, help="A search state file to save to")
+    parser.add_argument("--save_every", type=int, default=5, help="After how many search steps to save the state")
     parser.add_argument("--seed", type=int, default=0, help="A seed for the global NumPy and TensorFlow random state")
-    parser.add_argument("--metric-type", type=list, default=["ntk","rn"], help="Some metrics list by the pickle")
-    parser.add_argument("--input-shape", type=tuple, default=(32,32,3), help="A input shape of the model")
-    parser.add_argument("--num-classes", type=int, default=10, help="A num classes of the model")
+    parser.add_argument("--metric_type", type=list, default=["ntk","rn"], help="Some metrics list by the pickle")
+    parser.add_argument("--input_shape", type=tuple, default=(32,32,3), help="A input shape of the model")
+    parser.add_argument("--num_classes", type=int, default=10, help="A num classes of the model")
+    parser.add_argument("--range_points", type=list, default=[0,-1], help="A range of points")
     
     args = parser.parse_args()
     # 執行config_file(.py)內之code,configs 則是全域變數(以字典型態儲存)
@@ -95,12 +96,15 @@ def main():
     metric_type = args.metric_type
     input_shape = args.input_shape
     num_classes = args.num_classes
+    range_points = args.range_points
     # 開啟
     with open(pickle_save_to_path, "w", newline="") as csvfile:
         wr = csv.writer(csvfile)
         wr.writerow(["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency", "ntk", "rn"])
         EvaluatedPoint_num = len(EvaluatedPoint)
-        for i in range(0, EvaluatedPoint_num):
+        if range_points[1] == -1:
+            range_points[1] = EvaluatedPoint_num
+        for i in range(range_points[0], range_points[1]):
             val_error = EvaluatedPoint[i].val_error
             test_error = EvaluatedPoint[i].test_error
             resource_features = EvaluatedPoint[i].resource_features
