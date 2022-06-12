@@ -367,7 +367,7 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
         ],
         ["uNAS", "uNAS with ntk 4000 bounds"],
-        x_range=(0.12, 0.30), y_range=(0, 150000), y_key=1,
+        x_range=(0.12, 0.30), y_range=(0, 150000), y_key=1, take_n=729,
         title="PMU vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/peak_mem_use_pareto_Cifar10.pdf")
 
@@ -376,7 +376,7 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
         ],
         ["uNAS", "uNAS with ntk 4000 bounds"],
-        x_range=(0.12, 0.30), y_range=(0, 150000), y_key=2,
+        x_range=(0.12, 0.30), y_range=(0, 150000), y_key=2, take_n=729,
         title="Model size vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/model_size_pareto_Cifar10.pdf")
 
@@ -385,7 +385,7 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
         ],
         ["uNAS", "uNAS with ntk 4000 bounds"],
-        x_range=(0.12, 0.30), y_range=(0, 50000000), y_key=3,
+        x_range=(0.12, 0.30), y_range=(0, 50000000), y_key=3, take_n=729,
         title="MACs vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/MACs_pareto_Cifar10.pdf")
 
