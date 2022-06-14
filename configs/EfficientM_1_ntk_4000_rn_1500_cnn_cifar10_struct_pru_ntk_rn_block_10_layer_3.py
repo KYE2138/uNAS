@@ -51,11 +51,11 @@ bound_config = BoundConfig(
     model_size_bound=50000,
     mac_bound=60000000,
     ntk=4000,
-    rn=1500
-    ntk_PMU = 0.015
-    ntk_MS = 0.007
-    ntk_MACs = 0.00008
-    rn_PMU = 0.0375
-    rn_MS = 0.021
+    rn=1500,
+    ntk_PMU = 0.015,
+    ntk_MS = 0.007,
+    ntk_MACs = 0.00008,
+    rn_PMU = 0.0375,
+    rn_MS = 0.021,
     rn_MACs = 0.00024
 )
