@@ -114,13 +114,23 @@ class GPUTrainer:
         positive_ntk = ntk
         if positive_ntk<0:
             positive_ntk=ntk_threshold+1
-        resource_features.append(positive_ntk/PMU)
-        resource_features.append(positive_ntk/MS)
-        resource_features.append(positive_ntk/MACs)
+        ntk_PMU=positive_ntk/PMU
+        ntk_MS=positive_ntk/MS
+        ntk_MACs=positive_ntk/MACs
+        resource_features.append(ntk_PMU)
+        resource_features.append(ntk_MS)
+        resource_features.append(ntk_MACs)
+        
+        rn_PMU=rn/PMU
+        rn_MS=rn/MS
+        rn_MACs=rn/MACs
+        resource_features.append(rn_PMU)
+        resource_features.append(rn_MS)
+        resource_features.append(rn_MACs)
+        
+        print(f'ntk_PMU = {ntk_PMU}, ntk_MS = {ntk_MS}, ntk_MACs = {ntk_MACs}')
+        print(f'rn_PMU = {rn_PMU}, rn_MS = {rn_MS}, rn_MACs = {rn_MACs}')
 
-        resource_features.append(rn/PMU)
-        resource_features.append(rn/MS)
-        resource_features.append(rn/MACs)
 
 
         #pdb.set_trace()
