@@ -66,3 +66,9 @@ class BoundConfig:
     mac_bound: Optional[int] = None
     ntk: Optional[int] = None
     rn: Optional[int] = None
+    ntk_PMU: Optional[float] = None
+    ntk_MS: Optional[float] = None
+    ntk_MACs: Optional[float] = None
+    rn_PMU: Optional[float] = None
+    rn_MS: Optional[float] = None
+    rn_MACs: Optional[float] = None

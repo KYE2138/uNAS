@@ -1,3 +1,4 @@
+from cgi import parse_multipart
 import ray
 import logging
 import pickle
@@ -105,6 +106,22 @@ class GPUTrainer:
         '''
         resource_features.append(ntk)
         resource_features.append(rn)
+        # get lagecy metrics
+        PMU=resource_features[0]
+        MS=resource_features[1]
+        MACs=resource_features[2]
+        # new metrics
+        positive_ntk = ntk
+        if positive_ntk<0:
+            positive_ntk=ntk_threshold+1
+        resource_features.append(positive_ntk/PMU)
+        resource_features.append(positive_ntk/MS)
+        resource_features.append(positive_ntk/MACs)
+
+        resource_features.append(rn/PMU)
+        resource_features.append(rn/MS)
+        resource_features.append(rn/MACs)
+
 
         #pdb.set_trace()
         
