@@ -26,7 +26,7 @@ def main():
     parser.add_argument("--save_to", type=str, default=None, help="A search state file to save to")
     parser.add_argument("--save_every", type=int, default=5, help="After how many search steps to save the state")
     parser.add_argument("--seed", type=int, default=0, help="A seed for the global NumPy and TensorFlow random state")
-    parser.add_argument("--generate_metric", type=str, nargs='+', default=["ntk", "rn"], help="Some metrics list to generate from the pickle")
+    parser.add_argument("--generate_metric", type=str, nargs='+', default=[], help="Some metrics list to generate from the pickle , like ["'ntk'", "'rn'"]")
     parser.add_argument("--metric_list", type=str, nargs='+', default=["id", "val_acc", "test_acc", "peak_memory_usage", "model_size", "inference_latency", "ntk", "rn"], help="Some metrics list from the pickle")
     parser.add_argument("--input_shape", type=int, nargs='+', default=[32,32,3], help="A input shape of the model")
     parser.add_argument("--num_classes", type=int, default=10, help="A num classes of the model")
@@ -105,7 +105,7 @@ def main():
     num_classes = args.num_classes
     range_points = args.range_points
     range_points = list(map(int, range_points))
-    #pdb.set_trace()
+    pdb.set_trace()
     # 開啟
     with open(pickle_save_to_path, "w", newline="") as csvfile:
         wr = csv.writer(csvfile)
