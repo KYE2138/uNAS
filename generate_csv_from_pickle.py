@@ -126,16 +126,16 @@ def main():
                 model_rn = arch.to_keras_model((2, 2, 1), num_classes)
                 ntks, rns= ModelMetricsFile(trainer).get_metrics(model=model, model_rn=model_rn, num_batch=1, num_networks=3)
 
-            if "ntk" in generate_metric:
-                ntk = np.mean(ntks).astype('int64')
-                resource_features.append(ntk)
+                if "ntk" in generate_metric:
+                    ntk = np.mean(ntks).astype('int64')
+                    resource_features.append(ntk)
 
-            if "rn" in generate_metric:
-                rn = np.mean(rns).astype('int64')
-                # max rn ~ 3000
-                # 限制rn在1500以上
-                rn = 4000-rn
-                resource_features.append(rn)
+                if "rn" in generate_metric:
+                    rn = np.mean(rns).astype('int64')
+                    # max rn ~ 3000
+                    # 限制rn在1500以上
+                    rn = 4000-rn
+                    resource_features.append(rn)
 
 
             '''
