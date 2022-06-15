@@ -127,9 +127,17 @@ class GPUTrainer:
         resource_features.append(rn_PMU)
         resource_features.append(rn_MS)
         resource_features.append(rn_MACs)
+
+        ntk_rn_PMU=ntk*rn*PMU
+        ntk_rn_MS=ntk*rn*MS
+        ntk_rn_MACs=ntk*rn*MACs
+        resource_features.append(ntk_rn_PMU)
+        resource_features.append(ntk_rn_MS)
+        resource_features.append(ntk_rn_MACs)
         
         print(f'ntk_PMU = {ntk_PMU}, ntk_MS = {ntk_MS}, ntk_MACs = {ntk_MACs}')
         print(f'rn_PMU = {rn_PMU}, rn_MS = {rn_MS}, rn_MACs = {rn_MACs}')
+        print(f'ntk_rn_PMU = {ntk_rn_PMU}, ntk_rn_MS = {ntk_rn_MS}, ntk_rn_MACs = {ntk_rn_MACs}')
 
 
 
@@ -197,7 +205,7 @@ class AgingEvoSearch:
             self.save_state(file.as_posix())
 
     def get_mo_fitness_fn(self):
-        lambdas = np.random.uniform(low=0.0, high=1.0, size=6)
+        lambdas = np.random.uniform(low=0.0, high=1.0, size=15)
 
         def normalise(x, l=0, u=1, cap=10.0):
             return min((x - l) / (u - l), cap)
