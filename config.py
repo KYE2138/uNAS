@@ -75,3 +75,4 @@ class BoundConfig:
     ntk_rn_PMU: Optional[int] = None
     ntk_rn_MS: Optional[int] = None
     ntk_rn_MACs: Optional[int] = None
+    ntk_rn: Optional[int] = None
