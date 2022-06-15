@@ -122,9 +122,9 @@ def main():
 
             # ntks & rns
             if "ntk" in generate_metric or "rn" in generate_metric:
-            model = arch.to_keras_model(input_shape, num_classes)
-            model_rn = arch.to_keras_model((2, 2, 1), num_classes)
-            ntks, rns= ModelMetricsFile(trainer).get_metrics(model=model, model_rn=model_rn, num_batch=1, num_networks=3)
+                model = arch.to_keras_model(input_shape, num_classes)
+                model_rn = arch.to_keras_model((2, 2, 1), num_classes)
+                ntks, rns= ModelMetricsFile(trainer).get_metrics(model=model, model_rn=model_rn, num_batch=1, num_networks=3)
 
             if "ntk" in generate_metric:
                 ntk = np.mean(ntks).astype('int64')
