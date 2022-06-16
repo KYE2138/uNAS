@@ -76,3 +76,9 @@ class BoundConfig:
     ntk_rn_MS: Optional[int] = None
     ntk_rn_MACs: Optional[int] = None
     ntk_rn: Optional[int] = None
+
+@dataclass
+class ThresholdConfig:
+    # 
+    ntk: Optional[int] = None
+    rn: Optional[int] = None

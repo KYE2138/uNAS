@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from typing import List, Union, Optional
 
 from architecture import Architecture
-from config import AgingEvoConfig, TrainingConfig, BoundConfig
+from config import AgingEvoConfig, TrainingConfig, BoundConfig, ThresholdConfig
 from model_trainer import ModelTrainer
 from resource_models.models import peak_memory_usage, model_size, inference_latency
 from utils import Scheduler, debug_mode
@@ -38,10 +38,11 @@ class EvaluatedPoint:
 
 @ray.remote(num_gpus=0 if debug_mode() else 1, num_cpus=1 if debug_mode() else 6)
 class GPUTrainer:
-    def __init__(self, search_space, trainer, bound_config):
+    def __init__(self, search_space, trainer, bound_config, threshold_config):
         self.trainer = trainer
         self.ss = search_space
         self.bound_config = bound_config
+        self.threshold = threshold_config
         logging.basicConfig(level=logging.INFO,
                             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
@@ -53,6 +54,7 @@ class GPUTrainer:
 
         data = self.trainer.dataset
         arch = point.arch
+        threshold = self.threshold
         print (f'model input_shape:{data.input_shape}')
         print (f'model_rn input_shape:(2, 2, 1)')
         model = self.ss.to_keras_model(arch, data.input_shape, data.num_classes)
@@ -67,15 +69,16 @@ class GPUTrainer:
 
         ntk = np.mean(ntks).astype('int64')
         # ntk_threshold是bound三倍
-        ntk_threshold = int(self.bound_config.ntk)*3
+        ntk_threshold = threshold.ntk
         # rns
         rn = np.mean(rns).astype('int64')
         #max rn ~ 3000
         # 限制rn在1500以上
         rn = 4000-rn
+        rn_threshold = threshold.rn
         # rn要在2500以下
         #pdb.set_trace()
-        if ntk<0 or ntk>ntk_threshold or rn>=2500:
+        if ntk<0 or ntk>ntk_threshold or rn>=rn_threshold:
             print(f'ntks = {ntks}, ntk = {ntk}')
             print(f'rns = {rns}, rn = {rn}')
             print(f'epochs = 1')
@@ -159,7 +162,9 @@ class AgingEvoSearch:
                  experiment_name: str,
                  search_config: AgingEvoConfig,
                  training_config: TrainingConfig,
-                 bound_config: BoundConfig):
+                 bound_config: BoundConfig,
+                 threshold_config:ThresholdConfig
+                 ):
         self.log = logging.getLogger(name=f"AgingEvoSearch [{experiment_name}]")
         self.config = search_config
         #引用model_trainer.py內的ModelTrainer Class
@@ -168,6 +173,7 @@ class AgingEvoSearch:
         self.root_dir.mkdir(parents=True, exist_ok=True)
         self.experiment_name = experiment_name
         self.bound_config = bound_config
+        self.threshold_config = threshold_config
         if training_config.pruning and not training_config.pruning.structured:
             self.log.warning("For unstructured pruning, we can only meaningfully use the model "
                              "size resource metric.")
@@ -180,7 +186,18 @@ class AgingEvoSearch:
                                   bound_config.peak_mem_bound,
                                   bound_config.model_size_bound,
                                   bound_config.mac_bound,
-                                  bound_config.ntk]
+                                  bound_config.rn,
+                                  bound_config.ntk,
+                                  bound_config.ntk_PMU,
+                                  bound_config.ntk_MS,
+                                  bound_config.ntk_MACs,
+                                  bound_config.rn_PMU,
+                                  bound_config.rn_MS,
+                                  bound_config.rn_MACs,
+                                  bound_config.ntk_rn_PMU,
+                                  bound_config.ntk_rn_MS,
+                                  bound_config.ntk_rn_MACs,
+                                  bound_config.ntk_rn]
 
         self.history: List[EvaluatedPoint] = []
         self.population: List[EvaluatedPoint] = []
@@ -271,10 +288,11 @@ class AgingEvoSearch:
         trainer = ray.put(self.trainer)
         ss = ray.put(self.config.search_space)
         bound = ray.put(self.bound_config)
+        threshold = ray.put(self.threshold_config)
         #utils.py內的Scheduler class
         #Create some GpuTrainer actors
         #建立一個list，每個元素內，建立一個GpuTrainer actors，再傳入Scheduler Class做初始化
-        scheduler = Scheduler([GPUTrainer.remote(ss, trainer, bound)
+        scheduler = Scheduler([GPUTrainer.remote(ss, trainer, bound, threshold)
                                for _ in range(self.max_parallel_evaluations)])
         self.log.info(f"Searching with {self.max_parallel_evaluations} workers.")
 
