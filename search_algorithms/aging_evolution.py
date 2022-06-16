@@ -113,7 +113,7 @@ class GPUTrainer:
         # new metrics
         positive_ntk = ntk
         if positive_ntk<0:
-            positive_ntk=ntk_threshold*5
+            positive_ntk=ntk_threshold*10
         ntk_PMU=positive_ntk*PMU
         ntk_MS=positive_ntk*MS
         ntk_MACs=positive_ntk*MACs
