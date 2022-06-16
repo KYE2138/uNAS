@@ -89,7 +89,8 @@ def main():
     search = algo(experiment_name=args.name or "search",
                   search_config=configs["search_config"],
                   training_config=configs["training_config"],
-                  bound_config=configs["bound_config"])
+                  bound_config=configs["bound_config"],
+                  threshold_config=configs["threshold_config"])
     # 開始搜尋, search為uNAS/search_algorithms下之.py中的class的method
     if args.load_from and not os.path.exists(args.load_from):
         log.warning("Search state file to load from is not found, the search will start from scratch.")
