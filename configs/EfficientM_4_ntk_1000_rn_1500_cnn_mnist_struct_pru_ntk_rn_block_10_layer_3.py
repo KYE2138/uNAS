@@ -17,7 +17,8 @@ training_config = TrainingConfig(
 
 search_config = AgingEvoConfig(
     search_space=CnnSearchSpace(),
-    checkpoint_dir="artifacts/cnn_mnist"
+    checkpoint_dir="artifacts/cnn_mnist",
+    rounds=100,
 )
 
 bound_config = BoundConfig(
