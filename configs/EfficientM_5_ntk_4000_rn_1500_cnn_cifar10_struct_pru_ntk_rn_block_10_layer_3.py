@@ -66,7 +66,7 @@ bound_config = BoundConfig(
 
 bound_config = ThresholdConfig(
     # bound_config.ntk * 3
-    ntk = 12000
+    ntk = 12000,
     # 4000 - bound_config.rn
     rn = 2500
 )
