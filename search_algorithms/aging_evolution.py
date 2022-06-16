@@ -128,14 +128,14 @@ class GPUTrainer:
         resource_features.append(rn_MS)
         resource_features.append(rn_MACs)
 
-        ntk_rn_PMU=ntk*rn*PMU
-        ntk_rn_MS=ntk*rn*MS
-        ntk_rn_MACs=ntk*rn*MACs
+        ntk_rn_PMU=positive_ntk*rn*PMU
+        ntk_rn_MS=positive_ntk*rn*MS
+        ntk_rn_MACs=positive_ntk*rn*MACs
         resource_features.append(ntk_rn_PMU)
         resource_features.append(ntk_rn_MS)
         resource_features.append(ntk_rn_MACs)
 
-        ntk_rn=ntk*rn
+        ntk_rn=positive_ntk*rn
         resource_features.append(ntk_rn)
         
         print(f'ntk_PMU = {ntk_PMU}, ntk_MS = {ntk_MS}, ntk_MACs = {ntk_MACs}')
