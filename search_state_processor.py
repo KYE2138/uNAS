@@ -337,7 +337,7 @@ if __name__ == '__main__':
         "artifacts/cnn_mnist/ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
         ],
         ["uNAS", "ntk 1000", "EfficientM_5","M_1","ntk 1000 rn 1500"],
-        x_range=(0, 0.10), y_range=(0, 5000), y_key=1, take_n=200,
+        x_range=(0, 0.10), y_range=(0, 5000), y_key=1,
         title="PMU vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/peak_mem_use_pareto_MNIST.pdf")
     multiple_pareto_fronts(
@@ -348,7 +348,7 @@ if __name__ == '__main__':
         "artifacts/cnn_mnist/ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
         ],
         ["uNAS", "ntk 1000", "EfficientM_5","M_1","ntk 1000 rn 1500"],
-        x_range=(0, 0.10), y_range=(0, 5000), y_key=2, take_n=200,
+        x_range=(0, 0.10), y_range=(0, 5000), y_key=2,
         title="Model size vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/model_size_pareto_MNIST.pdf")
 
@@ -360,7 +360,7 @@ if __name__ == '__main__':
         "artifacts/cnn_mnist/ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
         ],
         ["uNAS", "ntk 1000", "EfficientM_5","M_1","ntk 1000 rn 1500"],
-        x_range=(0, 0.10), y_range=(0, 50000), y_key=3, take_n=200,
+        x_range=(0, 0.10), y_range=(0, 50000), y_key=3,
         title="MACs vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/MACs_pareto_MNIST.pdf")
     
