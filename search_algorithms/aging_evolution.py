@@ -140,11 +140,20 @@ class GPUTrainer:
 
         ntk_rn=positive_ntk*rn
         resource_features.append(ntk_rn)
+
+        orn = 4000-rn
+        PMU_d_orn=PMU/orn
+        MS_d_orn=MS/orn
+        MACs_d_orn=MACs/orn
+        resource_features.append(PMU_d_orn)
+        resource_features.append(MS_d_orn)
+        resource_features.append(MACs_d_orn)
         
         print(f'ntk_PMU = {ntk_PMU}, ntk_MS = {ntk_MS}, ntk_MACs = {ntk_MACs}')
         print(f'rn_PMU = {rn_PMU}, rn_MS = {rn_MS}, rn_MACs = {rn_MACs}')
         print(f'ntk_rn_PMU = {ntk_rn_PMU}, ntk_rn_MS = {ntk_rn_MS}, ntk_rn_MACs = {ntk_rn_MACs}')
         print(f'ntk_rn = {ntk_rn}')
+        print(f'PMU_d_orn = {PMU_d_orn}, MS_d_orn = {MS_d_orn}, MACs_d_orn = {MACs_d_orn}')
 
 
 
@@ -226,7 +235,7 @@ class AgingEvoSearch:
             self.save_state(file.as_posix())
 
     def get_mo_fitness_fn(self):
-        lambdas = np.random.uniform(low=0.0, high=1.0, size=16)
+        lambdas = np.random.uniform(low=0.0, high=1.0, size=19)
 
         def normalise(x, l=0, u=1, cap=10.0):
             return min((x - l) / (u - l), cap)
