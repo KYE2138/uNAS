@@ -206,7 +206,10 @@ class AgingEvoSearch:
                                   bound_config.ntk_rn_PMU,
                                   bound_config.ntk_rn_MS,
                                   bound_config.ntk_rn_MACs,
-                                  bound_config.ntk_rn]
+                                  bound_config.ntk_rn,
+                                  bound_config.PMU_d_orn,
+                                  bound_config.MS_d_orn,
+                                  bound_config.MACs_d_orn]
 
         self.history: List[EvaluatedPoint] = []
         self.population: List[EvaluatedPoint] = []
