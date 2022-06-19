@@ -404,5 +404,5 @@ if __name__ == '__main__':
 
     plot_accuracy_gain(search_state_file="artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state_accuracy_gain.pdf")
     plot_accuracy_gain(search_state_file="artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state_accuracy_gain.pdf")
-    plot_accuracy_gain(search_state_file="M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,200),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state_accuracy_gain.pdf")
+    plot_accuracy_gain(search_state_file="M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,200),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pdf")
 
