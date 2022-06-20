@@ -366,10 +366,10 @@ if __name__ == '__main__':
         title="MACs vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/MACs_pareto_MNIST.pdf")
     
-    plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.95,0.999),output_file="artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state_accuracy_gain.pdf")
-    plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",x_range=(100,729),y_range=(0.95,0.999),output_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000_accuracy_gain.pdf")
-    plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.95,0.999),output_file="artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.pdf")
-    plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/M_2_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.95,0.999),output_file="artifacts/cnn_mnist/M_2_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.pdf")
+    plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state_accuracy_gain.pdf")
+    plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",x_range=(100,729),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000_accuracy_gain.pdf")
+    plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.pdf")
+    plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/M_2_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/M_2_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.pdf")
 
 
 
