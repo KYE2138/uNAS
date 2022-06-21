@@ -335,9 +335,10 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/EfficientM_5_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         "artifacts/cnn_mnist/M_2_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         "artifacts/cnn_mnist/ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
-        "artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
+        "artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+        "artifacts/cnn_mnist/EfficientM_7_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
         ],
-        ["uNAS", "ntk 1000", "EfficientM_5","M_2","ntk 1000 rn 1500","EfficientM_6"],
+        ["uNAS", "ntk 1000", "EfficientM_5","M_2","ntk 1000 rn 1500","EfficientM_6","EfficientM_7"],
         x_range=(0, 0.10), y_range=(0, 5000), y_key=1,
         title="PMU vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/peak_mem_use_pareto_MNIST.pdf")
@@ -347,9 +348,10 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/EfficientM_5_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         "artifacts/cnn_mnist/M_2_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         "artifacts/cnn_mnist/ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
-        "artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
+        "artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+        "artifacts/cnn_mnist/EfficientM_7_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
         ],
-        ["uNAS", "ntk 1000", "EfficientM_5","M_2","ntk 1000 rn 1500","EfficientM_6"],
+        ["uNAS", "ntk 1000", "EfficientM_5","M_2","ntk 1000 rn 1500","EfficientM_6","EfficientM_7"],
         x_range=(0, 0.10), y_range=(0, 5000), y_key=2,
         title="Model size vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/model_size_pareto_MNIST.pdf")
@@ -359,9 +361,10 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/EfficientM_5_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         "artifacts/cnn_mnist/M_2_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         "artifacts/cnn_mnist/ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
-        "artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
+        "artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+        "artifacts/cnn_mnist/EfficientM_7_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
         ],
-        ["uNAS", "ntk 1000", "EfficientM_5","M_2","ntk 1000 rn 1500","EfficientM_6"],
+        ["uNAS", "ntk 1000", "EfficientM_5","M_2","ntk 1000 rn 1500","EfficientM_6","EfficientM_7"],
         x_range=(0, 0.10), y_range=(0, 50000), y_key=3,
         title="MACs vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/MACs_pareto_MNIST.pdf")
@@ -370,6 +373,7 @@ if __name__ == '__main__':
     plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",x_range=(100,729),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000_accuracy_gain.pdf")
     plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/EfficientM_6_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.pdf")
     plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/M_2_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/M_2_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.pdf")
+    plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/EfficientM_7_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/EfficientM_7_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.pdf")
 
 
 
@@ -378,9 +382,11 @@ if __name__ == '__main__':
         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/EfficientM_5_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
-         "artifacts/cnn_cifar10/M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
+         "artifacts/cnn_cifar10/M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/EfficientM_7_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/M_3_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
         ],
-        ["uNAS", "uNAS with ntk 4000 bounds","EfficientM_5","M_2"],
+        ["uNAS", "uNAS with ntk 4000 bounds","EfficientM_5","EfficientM_7","M_2","M_3"],
         x_range=(0.12, 0.30), y_range=(0, 150000), y_key=1, take_n=730,
         title="PMU vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/peak_mem_use_pareto_Cifar10.pdf")
@@ -389,9 +395,11 @@ if __name__ == '__main__':
        ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/EfficientM_5_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
-         "artifacts/cnn_cifar10/M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
+         "artifacts/cnn_cifar10/M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/EfficientM_7_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/M_3_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
         ],
-        ["uNAS", "uNAS with ntk 4000 bounds","EfficientM_5","M_2"],
+        ["uNAS", "uNAS with ntk 4000 bounds","EfficientM_5","EfficientM_7","M_2","M_3"],
         x_range=(0.12, 0.30), y_range=(0, 150000), y_key=2, take_n=730,
         title="Model size vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/model_size_pareto_Cifar10.pdf")
@@ -400,9 +408,11 @@ if __name__ == '__main__':
        ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/EfficientM_5_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
-         "artifacts/cnn_cifar10/M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
+         "artifacts/cnn_cifar10/M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/EfficientM_7_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/M_3_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
         ],
-        ["uNAS", "uNAS with ntk 4000 bounds","EfficientM_5","M_2"],
+        ["uNAS", "uNAS with ntk 4000 bounds","EfficientM_5","EfficientM_7","M_2","M_3"],
         x_range=(0.12, 0.30), y_range=(0, 50000000), y_key=3, take_n=730,
         title="MACs vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/MACs_pareto_Cifar10.pdf")
@@ -410,4 +420,6 @@ if __name__ == '__main__':
     plot_accuracy_gain(search_state_file="artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_agingevosearch_state_accuracy_gain.pdf")
     plot_accuracy_gain(search_state_file="artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",x_range=(100,729),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state_accuracy_gain.pdf")
     plot_accuracy_gain(search_state_file="artifacts/cnn_cifar10/M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,200),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/M_2_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pdf")
+    plot_accuracy_gain(search_state_file="artifacts/cnn_cifar10/EfficientM_7_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,200),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/EfficientM_7_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pdf")
+    plot_accuracy_gain(search_state_file="artifacts/cnn_cifar10/M_3_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,200),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/M_3_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pdf")
 
