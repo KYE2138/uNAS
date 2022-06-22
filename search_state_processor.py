@@ -310,7 +310,7 @@ if __name__ == '__main__':
                        title="μNAS on MNIST w/ ntk",
                        output_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pdf")
     '''
-
+    
     # multiple_pareto_fronts(
     #     ["artifacts/cnn_mnist/plain_final_agingevosearch_state.pickle",
     #      "artifacts/cnn_mnist/plain_final_bo_search_state.pickle",
@@ -328,6 +328,7 @@ if __name__ == '__main__':
     #     title="Model size vs error rate Pareto fronts for Chars74K",
     #     output_file="pareto_chars74k.pdf")
     #
+
     ## MNIST
     multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
