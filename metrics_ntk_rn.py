@@ -94,7 +94,7 @@ def get_ntk(save_path, input_finish_info={}):
     def transfer_init_model(save_path, timestamp):
         #################### model ####################
         # load onnx_model
-        onnx_model_path = onnx_model_path = f'{save_path}/model_{timestamp}.onnx'
+        onnx_model_path = f'{save_path}/model_{timestamp}.onnx'
         onnx_model = onnx.load(onnx_model_path)
 
         # onnx2torch
@@ -141,7 +141,7 @@ def get_ntk(save_path, input_finish_info={}):
     # return (conds)
     def get_ntk_n(loader, networks, train_mode=True, num_batch=1, num_classes=10): 
         print (f'num_batch={num_batch}')
-        print (f'num_classes={num_classes}')       
+        print (f'num_classes={num_classes}')      
         #################### ntk ####################
         device = torch.cuda.current_device()
         # if recalbn > 0:
@@ -209,6 +209,7 @@ def get_ntk(save_path, input_finish_info={}):
         for ntk in ntks:
             eigenvalues, _ = torch.symeig(ntk)  # ascending
             conds.append(np.nan_to_num((eigenvalues[-1] / eigenvalues[0]).item(), copy=True, nan=100000.0))
+
         return conds
 
     # loaddataset
@@ -223,6 +224,10 @@ def get_ntk(save_path, input_finish_info={}):
 
     # get ntk_n
     ntks = get_ntk_n(loader=train_loader, networks=networks, num_classes=num_classes, num_batch=num_batch, train_mode=True)
+
+    #del .onnx
+    onnx_model_path = f'{save_path}/model_{timestamp}.onnx'
+    os.remove(onnx_model_path)
 
     return ntks
 
@@ -267,7 +272,7 @@ def get_rn(save_path, input_finish_info):
     def transfer_init_model_rn(save_path, timestamp):
         #################### model ####################
         # load onnx_model
-        onnx_model_path = onnx_model_path = f'{save_path}/model_rn_{timestamp}.onnx'
+        onnx_model_path = f'{save_path}/model_rn_{timestamp}.onnx'
         onnx_model = onnx.load(onnx_model_path)
 
         # onnx2torch
@@ -492,6 +497,11 @@ def get_rn(save_path, input_finish_info):
 
     rns = compute_RN_score(model=networks, loader=train_loader, num_batch=num_batch)
     #pdb.set_trace()
+    
+    #del .onnx
+    onnx_model_path = f'{save_path}/model_rn_{timestamp}.onnx'
+    os.remove(onnx_model_path)
+
     return rns
 
 @ray.remote(num_gpus=1, max_calls=1)
