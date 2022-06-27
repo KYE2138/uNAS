@@ -34,7 +34,7 @@ def wait_input(save_path):
                 filename = full_filename
 
     #check input_finish_info.pickle exsit
-    input_finish_info_save_path = f'{save_path}/{filename}}.pickle'
+    input_finish_info_save_path = f'{save_path}/{filename}.pickle'
     while not os.path.isfile(input_finish_info_save_path):
         time.sleep(10)
         # check the timestamp
