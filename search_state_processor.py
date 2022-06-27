@@ -335,7 +335,7 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
         ["uNAS", "ntk 1000"],
-        x_range=(0, 0.10), y_range=(0, 10000), y_key=1,
+        x_range=(0, 0.10), y_range=(0, 2000), y_key=1,
         title="PMU vs error rate Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/peak_mem_use_pareto_MNIST.pdf")
     multiple_pareto_fronts(
