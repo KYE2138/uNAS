@@ -32,7 +32,7 @@ def wait_input(save_path):
         for full_filename in save_path_list:
             if "input_finish_info" in full_filename:
                 filename = full_filename
-
+    pdb.set_trace()
     #check input_finish_info.pickle exsit
     input_finish_info_save_path = f'{save_path}/{filename}.pickle'
     while not os.path.isfile(input_finish_info_save_path):
