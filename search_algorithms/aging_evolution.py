@@ -36,7 +36,7 @@ class EvaluatedPoint:
     resource_features: List[Union[int, float]]
 
 
-@ray.remote(num_gpus=0 if debug_mode() else 2, num_cpus=1 if debug_mode() else 6)
+@ray.remote(num_gpus=0 if debug_mode() else 1, num_cpus=1 if debug_mode() else 6)
 class GPUTrainer:
     def __init__(self, search_space, trainer, bound_config, threshold_config):
         self.trainer = trainer
@@ -296,7 +296,7 @@ class AgingEvoSearch:
             self.load_state(load_from)
 
         ray.init(local_mode=debug_mode())
-        
+
         trainer = ray.put(self.trainer)
         ss = ray.put(self.config.search_space)
         bound = ray.put(self.bound_config)
