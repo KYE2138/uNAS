@@ -25,8 +25,16 @@ ray.init(num_cpus=2, num_gpus=1)
 
 @ray.remote(num_gpus=1, max_calls=1)
 def wait_input(save_path):
+    #get filename
+    filename = None
+    while filename==None:
+        save_path_list = os.path.listdir(save_path)
+        for full_filename in save_path_list:
+            if "input_finish_info" in full_filename:
+                filename = full_filename
+
     #check input_finish_info.pickle exsit
-    input_finish_info_save_path = f'{save_path}/input_finish_info.pickle'
+    input_finish_info_save_path = f'{save_path}/{filename}}.pickle'
     while not os.path.isfile(input_finish_info_save_path):
         time.sleep(10)
         # check the timestamp
@@ -84,10 +92,10 @@ def get_ntk(save_path, input_finish_info={}):
         return train_loader, val_loader
 
     # return model (pytorch)
-    def transfer_init_model(save_path):
+    def transfer_init_model(save_path, timestamp):
         #################### model ####################
         # load onnx_model
-        onnx_model_path = onnx_model_path = f'{save_path}/model.onnx'
+        onnx_model_path = onnx_model_path = f'{save_path}/model_{timestamp}.onnx'
         onnx_model = onnx.load(onnx_model_path)
 
         # onnx2torch
@@ -211,7 +219,7 @@ def get_ntk(save_path, input_finish_info={}):
     networks = []
     for i in range(num_networks):
         # transfer and init model
-        torch_model = transfer_init_model(save_path)
+        torch_model = transfer_init_model(save_path, timestamp)
         networks.append(torch_model) 
 
     # get ntk_n
@@ -257,10 +265,10 @@ def get_rn(save_path, input_finish_info):
         return train_loader, val_loader
 
     # return model (pytorch)
-    def transfer_init_model_rn(save_path):
+    def transfer_init_model_rn(save_path, timestamp):
         #################### model ####################
         # load onnx_model
-        onnx_model_path = onnx_model_path = f'{save_path}/model_rn.onnx'
+        onnx_model_path = onnx_model_path = f'{save_path}/model_rn_{timestamp}.onnx'
         onnx_model = onnx.load(onnx_model_path)
 
         # onnx2torch
@@ -480,7 +488,7 @@ def get_rn(save_path, input_finish_info):
     networks = []
     for i in range(num_networks):
         # transfer and init model
-        torch_model = transfer_init_model_rn(save_path)
+        torch_model = transfer_init_model_rn(save_path, timestamp)
         networks.append(torch_model) 
 
     rns = compute_RN_score(model=networks, loader=train_loader, num_batch=num_batch)
@@ -492,7 +500,7 @@ def save_metrics(save_path, input_finish_info, ntks, rns):
     timestamp = input_finish_info["timestamp"]
     metrics_finish_info = {"ntks":ntks, "rns":rns, "timestamp":timestamp}
     # save metrics_finish_info as metrics_finish_info.pickle
-    metrics_finish_info_save_path = f'{save_path}/metrics_finish_info.pickle'
+    metrics_finish_info_save_path = f'{save_path}/metrics_finish_info_{timestamp}.pickle'
     with open(metrics_finish_info_save_path, 'wb') as f:
         pickle.dump(metrics_finish_info, f)
     

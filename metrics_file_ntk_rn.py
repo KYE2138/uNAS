@@ -68,7 +68,7 @@ class ModelMetricsFile:
             print (f"save_path is already exist:{save_path}")
 
 
-        def save_dataset(save_path, dataset, batch_size, num_batch):
+        def save_dataset(save_path, dataset, batch_size, num_batch, timestamp):
             #################### dataset ####################
             #check loader
             train_loader_save_path = f'{save_path}/train_loader.pickle'
@@ -131,7 +131,7 @@ class ModelMetricsFile:
                 del val_input, val_target
                 gc.collect()
 
-        def save_model(save_path, input_shape, model: tf.keras.Model):
+        def save_model(save_path, input_shape, model: tf.keras.Model, timestamp):
             #################### model ####################
             # (load) model
             keras_model = model
@@ -148,14 +148,14 @@ class ModelMetricsFile:
             onnx_model = model_proto
             
             # Save the ONNX model
-            onnx_model_path = f'{save_path}/model.onnx'
+            onnx_model_path = f'{save_path}/model_{timestamp}.onnx'
             onnx.save(onnx_model, onnx_model_path)
             
             #clear the parameter
             del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
             gc.collect()
         
-        def save_model_rn(save_path, input_shape, model_rn=model_rn):
+        def save_model_rn(save_path, input_shape, model_rn=model_rn, timestamp):
             #################### model ####################
             # (load) model
             keras_model = model_rn
@@ -172,32 +172,31 @@ class ModelMetricsFile:
             onnx_model = model_proto
             
             # Save the ONNX model
-            onnx_model_path = f'{save_path}/model_rn.onnx'
+            onnx_model_path = f'{save_path}/model_rn_{timestamp}.onnx'
             onnx.save(onnx_model, onnx_model_path)
             
             #clear the parameter
             del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model_rn
             gc.collect()
 
-        def wait_metrics(save_path, num_classes, num_batch, num_networks):
+        def wait_metrics(save_path, num_classes, num_batch, num_networks, timestamp):
             
             # input_finish_info
-            timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
             print (f'num_batch={num_batch}')
             print (f'num_classes={num_classes}')
             print (f'num_networks={num_networks}')
             print (f'timestamp={timestamp}')
             input_finish_info = {"num_batch":num_batch, "num_classes":num_classes, "num_networks":num_networks,"timestamp":timestamp}
             # save input_finish_info as input_finish_info.pickle
-            input_finish_info_save_path = f'{save_path}/input_finish_info.pickle'
+            input_finish_info_save_path = f'{save_path}/input_finish_info_{timestamp}.pickle'
             with open(input_finish_info_save_path, 'wb') as f:
                 pickle.dump(input_finish_info, f)
 
 
             #check metrics_finish_info.pickle exsit
-            metrics_finish_info_save_path = f'{save_path}/metrics_finish_info.pickle'
+            metrics_finish_info_save_path = f'{save_path}/metrics_finish_info_{timestamp}.pickle'
             while not os.path.isfile(metrics_finish_info_save_path):
-                print (f'wait for metrics_finish_info')
+                print (f'wait for metrics_finish_info_{timestamp}')
                 time.sleep(5)
             
             # check the timestamp
@@ -207,10 +206,10 @@ class ModelMetricsFile:
                 with open(metrics_finish_info_save_path, 'rb') as f:
                     metrics_finish_info = pickle.load(f)
                 if timestamp != metrics_finish_info["timestamp"]:
-                    print (f'the timestamp of metrics_finish_info is not right, wait for metrics_finish_info.')
+                    print (f'the timestamp of metrics_finish_info is not right, wait for metrics_finish_info_{timestamp}.')
                     time.sleep(5)
                 elif timestamp == metrics_finish_info["timestamp"]:
-                    print (f'find metrics_finish_info')
+                    print (f'find metrics_finish_info_{timestamp}')
                     break
                 
             time.sleep(5)
@@ -221,16 +220,20 @@ class ModelMetricsFile:
 
             return ntks,rns
 
+
+        # timestamp
+        timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
+
         # save dataset
-        save_dataset(save_path=save_path , dataset=dataset, batch_size=batch_size, num_batch=num_batch)
+        save_dataset(save_path=save_path , dataset=dataset, batch_size=batch_size, num_batch=num_batch, timestamp)
 
         # save model
-        save_model(save_path=save_path, input_shape=input_shape, model=model)
-        save_model_rn(save_path=save_path, input_shape=input_shape, model_rn=model_rn)
+        save_model(save_path=save_path, input_shape=input_shape, model=model, timestamp)
+        save_model_rn(save_path=save_path, input_shape=input_shape, model_rn=model_rn, timestamp)
         
         
         # wait ntk
-        ntks, rns = wait_metrics(save_path, num_classes=num_classes, num_batch=num_batch, num_networks=num_networks)
+        ntks, rns = wait_metrics(save_path, num_classes=num_classes, num_batch=num_batch, num_networks=num_networks, timestamp)
 
         return ntks, rns
 
