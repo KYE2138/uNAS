@@ -223,6 +223,8 @@ class ModelMetricsFile:
 
         # timestamp
         timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
+        pid = os.getpid()
+        timestamp = f"{timestamp}_{pid}"
 
         # save dataset
         save_dataset(save_path=save_path , dataset=dataset, batch_size=batch_size, num_batch=num_batch, timestamp=timestamp)
