@@ -155,7 +155,7 @@ class ModelMetricsFile:
             del onnx_model, model_proto, external_tensor_storage, keras_model_spec, keras_model, model
             gc.collect()
         
-        def save_model_rn(save_path, input_shape, model_rn=model_rn, timestamp):
+        def save_model_rn(save_path, input_shape, model_rn, timestamp):
             #################### model ####################
             # (load) model
             keras_model = model_rn
