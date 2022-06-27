@@ -296,7 +296,7 @@ class AgingEvoSearch:
             self.load_state(load_from)
 
         ray.init(local_mode=debug_mode())
-
+        
         trainer = ray.put(self.trainer)
         ss = ray.put(self.config.search_space)
         bound = ray.put(self.bound_config)

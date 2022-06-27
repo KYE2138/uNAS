@@ -32,7 +32,7 @@ search_config = AgingEvoConfig(
     search_space=CnnSearchSpace(dropout=0.15),
     rounds=800,
     checkpoint_dir="artifacts/cnn_cifar10",
-    max_parallel_evaluations = 1,
+    #max_parallel_evaluations = 1,
     #population_size = 10,
     #sample_size = 5
 )
