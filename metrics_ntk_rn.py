@@ -32,13 +32,16 @@ def wait_input(save_path):
         for full_filename in save_path_list:
             if "input_finish_info" in full_filename:
                 filename = full_filename
-    pdb.set_trace()
-    #check input_finish_info.pickle exsit
-    input_finish_info_save_path = f'{save_path}/{filename}'
-    while not os.path.isfile(input_finish_info_save_path):
         time.sleep(10)
         # check the timestamp
         print (f'wait for input_finish_info')
+    pdb.set_trace()
+    #check input_finish_info.pickle exsit
+    input_finish_info_save_path = f'{save_path}/{filename}'
+'''    while not os.path.isfile(input_finish_info_save_path):
+        time.sleep(10)
+        # check the timestamp
+        print (f'wait for input_finish_info')'''
     
     print (f'find input_finish_info')
     time.sleep(5)
