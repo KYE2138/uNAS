@@ -225,15 +225,15 @@ class ModelMetricsFile:
         timestamp = "{:}".format(time.strftime('%h-%d-%C_%H-%M-%s', time.localtime(time.time())))
 
         # save dataset
-        save_dataset(save_path=save_path , dataset=dataset, batch_size=batch_size, num_batch=num_batch, timestamp)
+        save_dataset(save_path=save_path , dataset=dataset, batch_size=batch_size, num_batch=num_batch, timestamp=timestamp)
 
         # save model
-        save_model(save_path=save_path, input_shape=input_shape, model=model, timestamp)
-        save_model_rn(save_path=save_path, input_shape=input_shape, model_rn=model_rn, timestamp)
+        save_model(save_path=save_path, input_shape=input_shape, model=model, timestamp=timestamp)
+        save_model_rn(save_path=save_path, input_shape=input_shape, model_rn=model_rn, timestamp=timestamp)
         
         
         # wait ntk
-        ntks, rns = wait_metrics(save_path, num_classes=num_classes, num_batch=num_batch, num_networks=num_networks, timestamp)
+        ntks, rns = wait_metrics(save_path, num_classes=num_classes, num_batch=num_batch, num_networks=num_networks, timestamp=timestamp)
 
         return ntks, rns
 

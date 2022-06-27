@@ -213,13 +213,13 @@ def get_ntk(save_path, input_finish_info={}):
         return conds
 
     # loaddataset
-    train_loader, val_loader = load_dataset(save_path)
+    train_loader, val_loader = load_dataset(save_path=save_path)
 
     # transfer and init model
     networks = []
     for i in range(num_networks):
         # transfer and init model
-        torch_model = transfer_init_model(save_path, timestamp)
+        torch_model = transfer_init_model(save_path=save_path, timestamp=timestamp)
         networks.append(torch_model) 
 
     # get ntk_n
