@@ -387,7 +387,7 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "uNAS with ntk 4000 bounds"],
-        x_range=(0.11, 0.30), y_range=(0, 1000000), y_key=2, take_n=730,
+        x_range=(0.11, 0.30), y_range=(0, 200000), y_key=2, take_n=730,
         title="Model size vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/model_size_pareto_Cifar10.pdf")
 
