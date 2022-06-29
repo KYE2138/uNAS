@@ -198,7 +198,7 @@ def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=200
         ax.step(err[is_eff], res[is_eff], where="post", alpha=0.7)
         #sample best point
         x_err, y_res = sample_best_point(points)
-        ax.plot(x_err,y_res,color="red")
+        ax.plot(x_err,y_res,'o',color="red")
 
     ax.xaxis.grid(True, which='both', linewidth=0.5, linestyle=":")
     ax.yaxis.grid(True, which='major', linewidth=0.5, linestyle=":")
