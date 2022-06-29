@@ -27,7 +27,7 @@ def is_pareto_efficient(points):
         if is_efficient[i]:
             is_efficient[is_efficient] = np.any(points[is_efficient] < c, axis=1)
             is_efficient[i] = True
-        pdb.set_trace()
+        #pdb.set_trace()
     return is_efficient
 
 
