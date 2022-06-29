@@ -188,20 +188,18 @@ def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=200
         r, g, b = to_rgb(color)
         color = [(r, g, b, a) for a in alpha]
         ax.scatter(x, y, marker="D", s=10, label=label, color=color)
-        #sample best point
-        x_err, y_res = sample_best_point(points)
-        ax.plot(x_err,y_res,'*',color=color)
+        return color
 
     for points, desc, color in zip(point_lists, descriptions, colors):
         points.sort(key=lambda x: x[0])
         is_eff = is_pareto_efficient(points)
         err = np.array([o[0] for o in points])
         res = np.array([o[1] for o in points])
-        scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_eff), color=color)
+        used_color = scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_eff), color=color)
         ax.step(err[is_eff], res[is_eff], where="post", alpha=0.7)
         #sample best point
-        #x_err, y_res = sample_best_point(points)
-        #ax.plot(x_err,y_res,'^',color="red")
+        x_err, y_res = sample_best_point(points)
+        ax.plot(x_err,y_res,'^',color=used_color)
 
     ax.xaxis.grid(True, which='both', linewidth=0.5, linestyle=":")
     ax.yaxis.grid(True, which='major', linewidth=0.5, linestyle=":")
