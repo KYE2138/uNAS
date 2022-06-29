@@ -160,7 +160,7 @@ def sample_best_point(points):
 
     x_err = 0.15
     y_res = 50000
-    #pdb.set_trace()
+    pdb.set_trace()
     return x_err, y_res
 
 
