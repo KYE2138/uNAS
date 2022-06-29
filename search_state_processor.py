@@ -216,12 +216,13 @@ def is_best_model_point(points, y_key):
         is_best_points[i][0] = points[i][0]
         y_key_sum = 0
         for key in y_key:
+            #func
             y_key_sum = y_key_sum + points[i][key]
         is_best_points[i][1] = y_key_sum
     
     for i, c in enumerate(is_best_points):
         if is_best[i]:
-            is_best[is_best] = np.any(points[is_best] < c, axis=1)
+            is_best[is_best] = np.any(is_best_points[is_best] < c, axis=1)
             is_best[i] = True
     return is_best 
 
