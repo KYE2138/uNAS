@@ -21,14 +21,13 @@ def compute_x_ticks(x_min, x_max):
 
 def is_pareto_efficient(points):
     points = np.asarray(points)
-    #points.shape = (1070, 2)
-    print (f"points.shape={points.shape}")
+    
     is_efficient = np.ones(points.shape[0], dtype=np.bool)
-    #is_efficient.shape = (1070,)
     for i, c in enumerate(points):
         if is_efficient[i]:
             is_efficient[is_efficient] = np.any(points[is_efficient] < c, axis=1)
             is_efficient[i] = True
+        pdb.set_trace()
     return is_efficient
 
 
@@ -156,13 +155,6 @@ def plot_accuracy_gain(search_state_file, x_range=(100, 2000), y_range=(0.8, 1.0
     else:
         plt.show()
 
-def sample_best_point(points):
-
-    x_err = 0.15
-    y_res = 50000
-    pdb.set_trace()
-    return x_err, y_res
-
 
 def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=2000,
                            x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
@@ -188,18 +180,74 @@ def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=200
         r, g, b = to_rgb(color)
         color = [(r, g, b, a) for a in alpha]
         ax.scatter(x, y, marker="D", s=10, label=label, color=color)
-        return color[0]
 
     for points, desc, color in zip(point_lists, descriptions, colors):
         points.sort(key=lambda x: x[0])
         is_eff = is_pareto_efficient(points)
         err = np.array([o[0] for o in points])
         res = np.array([o[1] for o in points])
-        used_color = scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_eff), color=color)
+        scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_eff), color=color)
         ax.step(err[is_eff], res[is_eff], where="post", alpha=0.7)
-        #sample best point
-        x_err, y_res = sample_best_point(points)
-        ax.plot(x_err,y_res,'^',color=used_color)
+
+    ax.xaxis.grid(True, which='both', linewidth=0.5, linestyle=":")
+    ax.yaxis.grid(True, which='major', linewidth=0.5, linestyle=":")
+    ax.set_xlabel("Error rate")
+    ax.set_ylabel(["Error rate", "Peak memory usage", "Model size", "MACs"][y_key])
+    if title:
+        ax.set_title(title)
+
+    ax.legend()
+    for i, c in enumerate(colors):
+        ax.legend_.legendHandles[i].set_facecolor(c)
+
+    plt.tight_layout()
+    if output_file:
+        fig.savefig(output_file, dpi=fig.dpi)
+    else:
+        plt.show()
+
+def is_best_model_point(points, y_key):
+    points = np.asarray(points)
+    # (num_point, num_key)
+    is_efficient = np.ones(points.shape[0], dtype=np.bool)
+    for i, c in enumerate(points):
+        if is_efficient[i]:
+            is_efficient[is_efficient] = np.any(points[is_efficient] < c, axis=1)
+            is_efficient[i] = True
+    return is_efficient 
+
+def multiple_best_model_point_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000,
+                           x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
+    point_lists = [load_search_state_file(file, filter_resources=None, num_points=num_points)[:take_n]
+                   for file in search_state_files]
+
+    plt.rcParams["font.family"] = "Arial"
+    fig = plt.figure(figsize=[5.4, 3.0], dpi=300)
+    ax = fig.add_subplot()
+
+    x_min, x_max = x_range
+    x_minor_ticks, x_major_ticks = compute_x_ticks(x_min, x_max)
+    y_min, y_max = y_range
+
+    ax.set_xlim([x_min, x_max])
+    ax.set_ylim([y_min, y_max])
+    ax.set_xticks(x_minor_ticks, minor=True)
+    ax.set_xticks(x_major_ticks, minor=False)
+
+    colors = [f"C{i}" for i in range(len(point_lists))]
+
+    def scatter(x, y, color, alpha, label):
+        r, g, b = to_rgb(color)
+        color = [(r, g, b, a) for a in alpha]
+        ax.scatter(x, y, marker="D", s=10, label=label, color=color)
+
+    for points, desc, color in zip(point_lists, descriptions, colors):
+        points.sort(key=lambda x: x[0])
+        is_best = is_best_model_point(points, y_key)
+        err = np.array([o[0] for o in points])
+        res = np.array([o[1] for o in points])
+        #scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_eff), color=color)
+        ax.step(err[is_eff], res[is_eff], where="post", alpha=0.7)
 
     ax.xaxis.grid(True, which='both', linewidth=0.5, linestyle=":")
     ax.yaxis.grid(True, which='major', linewidth=0.5, linestyle=":")
