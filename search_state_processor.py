@@ -486,6 +486,6 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/oM_1_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
          ],
         ["uNAS", "uNAS with ntk 4000 bounds", "M_6", "oM_1"],
-        x_range=(0.11, 0.30), y_range=(0, 10000000), y_key=[1,2,3], take_n=1000,
+        x_range=(0.11, 0.30), y_range=(0, 1000000), y_key=[1,2,3], take_n=1000,
         title="Best model of PMU, Model size , MACs",
         output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10.pdf")
