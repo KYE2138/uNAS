@@ -262,7 +262,7 @@ def multiple_best_model_point_pareto_fronts(search_state_files, descriptions, y_
     ax.xaxis.grid(True, which='both', linewidth=0.5, linestyle=":")
     ax.yaxis.grid(True, which='major', linewidth=0.5, linestyle=":")
     ax.set_xlabel("Error rate")
-    ax.set_ylabel(["Error rate", "Peak memory usage", "Model size", "MACs"][y_key])
+    #ax.set_ylabel(["Error rate", "Peak memory usage", "Model size", "MACs"][y_key])
     if title:
         ax.set_title(title)
 
