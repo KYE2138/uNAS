@@ -22,8 +22,9 @@ def compute_x_ticks(x_min, x_max):
 def is_pareto_efficient(points):
     points = np.asarray(points)
     #points.shape = (1070, 2)
-    print (f"points.shape={points}")
+    print (f"points.shape={points.shape}")
     is_efficient = np.ones(points.shape[0], dtype=np.bool)
+    #is_efficient.shape = (1070,)
     pdb.set_trace()
     for i, c in enumerate(points):
         if is_efficient[i]:
@@ -157,6 +158,13 @@ def plot_accuracy_gain(search_state_file, x_range=(100, 2000), y_range=(0.8, 1.0
     else:
         plt.show()
 
+def sample_best_point(points):
+
+    x_err = 0.15
+    y_res = 50000
+    pdb.set_trace()
+    return x_err, y_res
+
 
 def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=2000,
                            x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
@@ -190,6 +198,9 @@ def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=200
         res = np.array([o[1] for o in points])
         scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_eff), color=color)
         ax.step(err[is_eff], res[is_eff], where="post", alpha=0.7)
+        #sample best point
+        x_err, y_res = sample_best_point(points)
+        ax.plot(x_err,y_res,color="red")
 
     ax.xaxis.grid(True, which='both', linewidth=0.5, linestyle=":")
     ax.yaxis.grid(True, which='major', linewidth=0.5, linestyle=":")
