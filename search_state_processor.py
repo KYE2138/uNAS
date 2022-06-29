@@ -227,7 +227,7 @@ def is_best_model_point(points, y_key):
             is_best[i] = True
     return is_best 
 
-def multiple_best_model_point_pareto_fronts(search_state_files, descriptions, y_key=[2,3,4], take_n=2000,
+def multiple_best_model_point_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000,
                            x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
     point_lists = [load_search_state_file(file, filter_resources=None, num_points=num_points)[:take_n]
                    for file in search_state_files]
@@ -487,6 +487,6 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/oM_1_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
          ],
         ["uNAS", "uNAS with ntk 4000 bounds", "M_6", "oM_1"],
-        x_range=(0.11, 0.30), y_range=(0, 10000000), y_key=[2,3,4], take_n=1000,
+        x_range=(0.11, 0.30), y_range=(0, 10000000), y_key=[1,2,3], take_n=1000,
         title="Best model of PMU, Model size , MACs",
         output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10.pdf")
