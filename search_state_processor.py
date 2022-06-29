@@ -256,8 +256,8 @@ def multiple_best_model_point_pareto_fronts(search_state_files, descriptions, y_
         is_best = is_best_model_point(points, y_key)
         err = np.array([o[0] for o in points])
         res = np.array([o[1] for o in points])
-        scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_eff), color=color)
-        ax.step(err[is_eff], res[is_eff], where="post", alpha=0.7)
+        scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_best), color=color)
+        ax.step(err[is_best], res[is_best], where="post", alpha=0.7)
 
     ax.xaxis.grid(True, which='both', linewidth=0.5, linestyle=":")
     ax.yaxis.grid(True, which='major', linewidth=0.5, linestyle=":")
