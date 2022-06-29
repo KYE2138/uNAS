@@ -7,6 +7,7 @@ import numpy as np
 from collections import defaultdict
 from matplotlib.colors import to_rgb
 
+import pdb
 
 def compute_x_ticks(x_min, x_max):
     minor_ticks = np.concatenate([np.linspace(0.0, 0.1, 11), np.linspace(0.2, 1.0, 17)])
@@ -20,6 +21,7 @@ def compute_x_ticks(x_min, x_max):
 
 def is_pareto_efficient(points):
     points = np.asarray(points)
+    pdb.set_trace()
     is_efficient = np.ones(points.shape[0], dtype=np.bool)
     for i, c in enumerate(points):
         if is_efficient[i]:
@@ -310,6 +312,7 @@ if __name__ == '__main__':
                        title="μNAS on MNIST w/ ntk",
                        output_file="artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pdf")
     '''
+    
     
     # multiple_pareto_fronts(
     #     ["artifacts/cnn_mnist/plain_final_agingevosearch_state.pickle",
