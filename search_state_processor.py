@@ -21,12 +21,15 @@ def compute_x_ticks(x_min, x_max):
 
 def is_pareto_efficient(points):
     points = np.asarray(points)
-    pdb.set_trace()
+    #points.shape = (1070, 2)
+    print (f"points.shape={points}")
     is_efficient = np.ones(points.shape[0], dtype=np.bool)
+    pdb.set_trace()
     for i, c in enumerate(points):
         if is_efficient[i]:
             is_efficient[is_efficient] = np.any(points[is_efficient] < c, axis=1)
             is_efficient[i] = True
+    pdb.set_trace()
     return is_efficient
 
 
