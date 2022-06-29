@@ -206,11 +206,21 @@ def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=200
     else:
         plt.show()
 
-def is_best_model_point(is_best_points, y_key):
-    is_best_points = np.asarray(is_best_points)
+def is_best_model_point(points, y_key):
+    points = np.asarray(points)
     # (num_point, num_key)
-   
-    is_best = np.ones(is_best_points.shape[0], dtype=np.bool)
+    is_best = np.ones(points.shape[0], dtype=np.bool)
+    #apply best func
+    is_best_points = np.ones((points.shape[0],2), dtype=np.bool)
+    for i, c in enumerate(points):
+        is_best_points[i][0] = points[i][0]
+        y_key_sum = 0
+        for key in y_key:
+            #func
+            y_key_sum = y_key_sum + points[i][key]
+        #pdb.set_trace()
+        is_best_points[i][1] = y_key_sum
+    
     for i, c in enumerate(is_best_points):
         if is_best[i]:
             is_best[is_best] = np.any(is_best_points[is_best] < c, axis=1)
@@ -244,27 +254,10 @@ def multiple_best_model_point_pareto_fronts(search_state_files, descriptions, y_
 
     for points, desc, color in zip(point_lists, descriptions, colors):
         points.sort(key=lambda x: x[0])
-
-        points = np.asarray(points)
-        # (num_point, num_key)
-        
-        #apply best func
-        is_best_points = np.ones((points.shape[0],2), dtype=np.bool)
-        for i, c in enumerate(points):
-            is_best_points[i][0] = points[i][0]
-            y_key_sum = 0
-            for key in y_key:
-                #func
-                y_key_sum = y_key_sum + points[i][key]
-            #pdb.set_trace()
-            is_best_points[i][1] = y_key_sum
-
-        points = is_best_points.tolist()
-
         is_best = is_best_model_point(points, y_key)
         err = np.array([o[0] for o in points])
         res = np.array([o[1] for o in points])
-        #scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_best), color=color)
+        scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_best), color=color)
         ax.step(err[is_best], res[is_best], where="post", alpha=0.7)
 
     ax.xaxis.grid(True, which='both', linewidth=0.5, linestyle=":")
@@ -494,6 +487,6 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/oM_1_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
          ],
         ["uNAS", "uNAS with ntk 4000 bounds", "M_6", "oM_1"],
-        x_range=(0.11, 0.30), y_range=(0, 200000), y_key=[1,2,3], take_n=1000,
+        x_range=(0.11, 0.30), y_range=(0, 20000), y_key=[1,2,3], take_n=1000,
         title="Best model of PMU, Model size , MACs",
         output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10.pdf")
