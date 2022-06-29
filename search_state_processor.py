@@ -25,12 +25,10 @@ def is_pareto_efficient(points):
     print (f"points.shape={points.shape}")
     is_efficient = np.ones(points.shape[0], dtype=np.bool)
     #is_efficient.shape = (1070,)
-    pdb.set_trace()
     for i, c in enumerate(points):
         if is_efficient[i]:
             is_efficient[is_efficient] = np.any(points[is_efficient] < c, axis=1)
             is_efficient[i] = True
-    pdb.set_trace()
     return is_efficient
 
 
