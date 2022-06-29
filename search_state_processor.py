@@ -188,7 +188,7 @@ def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=200
         r, g, b = to_rgb(color)
         color = [(r, g, b, a) for a in alpha]
         ax.scatter(x, y, marker="D", s=10, label=label, color=color)
-        return color
+        return color[0]
 
     for points, desc, color in zip(point_lists, descriptions, colors):
         points.sort(key=lambda x: x[0])
