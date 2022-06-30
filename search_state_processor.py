@@ -22,7 +22,7 @@ def compute_x_ticks(x_min, x_max):
 def is_pareto_efficient(points):
     points = np.asarray(points)
     #(1070,2)
-    is_efficient = np.ones(points.shape[0])
+    is_efficient = np.ones(points.shape[0], dtype=np.bool)
     for i, c in enumerate(points):
         if is_efficient[i]:
             is_efficient[is_efficient] = np.any(points[is_efficient] < c, axis=1)
