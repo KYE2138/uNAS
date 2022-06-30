@@ -448,7 +448,7 @@ if __name__ == '__main__':
         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
-        ["uNAS", "uNAS 4000"],
+        ["uNAS", "ntk 4000"],
         x_range=(0.11, 0.30), y_range=(0, 50000), y_key=1, take_n=1000,
         title="PMU vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/peak_mem_use_pareto_Cifar10.png")
@@ -457,7 +457,7 @@ if __name__ == '__main__':
         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
-        ["uNAS", "uNAS 4000"],
+        ["uNAS", "ntk 4000"],
         x_range=(0.11, 0.30), y_range=(0, 50000), y_key=2, take_n=1000,
         title="Model size vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/model_size_pareto_Cifar10.png")
@@ -466,7 +466,7 @@ if __name__ == '__main__':
         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
-        ["uNAS", "uNAS 4000"],
+        ["uNAS", "ntk 4000"],
         x_range=(0.11, 0.30), y_range=(0, 10000000), y_key=3, take_n=1000,
         title="MACs vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/MACs_pareto_Cifar10.png")
@@ -565,7 +565,7 @@ if __name__ == '__main__':
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
-        ["uNAS", "uNAS with ntk 4000 bounds"],
+        ["uNAS", "ntk 4000"],
         x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,2,3], take_n=1000,
         title="Best model of Cifar10",
         output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_PMU_MS_MACs.png")
@@ -574,7 +574,7 @@ if __name__ == '__main__':
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
-        ["uNAS", "uNAS with ntk 4000 bounds"],
+        ["uNAS", "ntk 4000"],
         x_range=(0.11, 0.40), y_range=(0, 250000), y_key=[1,2], take_n=1000,
         title="Best model of Cifar10",
         output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_PMU_MS.png")
@@ -583,7 +583,7 @@ if __name__ == '__main__':
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
-        ["uNAS", "uNAS with ntk 4000 bounds"],
+        ["uNAS", "ntk 4000"],
         x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,3], take_n=1000,
         title="Best model of Cifar10",
         output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_PMU_MACs.png")
@@ -592,7 +592,7 @@ if __name__ == '__main__':
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
-        ["uNAS", "uNAS with ntk 4000 bounds"],
+        ["uNAS", "ntk 4000"],
         x_range=(0.11, 0.40), y_range=(0, 10000000), y_key=[2,3], take_n=1000,
         title="Best model of Cifar10",
         output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_MS_MACs.png")
