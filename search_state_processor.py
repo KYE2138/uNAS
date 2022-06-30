@@ -508,7 +508,7 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
         ["uNAS", "ntk 1000"],
-        x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,2], take_n=1000,
+        x_range=(0, 0.10), y_range=(0, 20000), y_key=[1,2], take_n=1000,
         title="Best model of MNIST",
         output_file="artifacts/cnn_mnist/Best_model_pareto_MNIST_PMU_MS.pdf")
 
