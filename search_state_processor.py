@@ -264,7 +264,7 @@ def multiple_best_model_points_pareto_fronts(search_state_files, descriptions, y
     #ax.set_ylabel(["Error rate", "Peak memory usage", "Model size", "MACs"][y_key])
     y_label = "Sum of "
     for i, item in enumerate(y_key):
-        if i = 0:
+        if i == 0:
             y_label = y_label + f"{item}"
         else:
             y_label = y_label + f",{item}"
