@@ -81,7 +81,7 @@ class GPUTrainer:
         if threshold.rn!=None:
             rn_threshold = threshold.rn
         else:
-            rn_threshold = 0
+            rn_threshold = 4001
         # rn要在2500以下
         #pdb.set_trace()
         if ntk>ntk_threshold or rn>=rn_threshold:
