@@ -495,10 +495,38 @@ if __name__ == '__main__':
     multiple_best_model_points_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
-         "artifacts/cnn_cifar10/M_6_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
-         "artifacts/cnn_cifar10/oM_1_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
          ],
-        ["uNAS", "uNAS with ntk 4000 bounds", "M_6", "oM_1"],
+        ["uNAS", "uNAS with ntk 4000 bounds"],
         x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,2,3], take_n=1000,
         title="Best model by sum of (PMU, MS, MACs)",
-        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10.pdf")
+        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_PMU_MS_MACs.pdf")
+    
+    multiple_best_model_points_pareto_fronts(
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
+         ],
+        ["uNAS", "uNAS with ntk 4000 bounds"],
+        x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,2], take_n=1000,
+        title="Best model by sum of (PMU, MS, MACs)",
+        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_PMU_MS.pdf")
+    
+    multiple_best_model_points_pareto_fronts(
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
+         ],
+        ["uNAS", "uNAS with ntk 4000 bounds"],
+        x_range=(0.11, 0.40), y_range=(0, 300000), y_key=[1,3], take_n=1000,
+        title="Best model by sum of (PMU, MS, MACs)",
+        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_PMU_MACs.pdf")
+    
+    multiple_best_model_points_pareto_fronts(
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
+         ],
+        ["uNAS", "uNAS with ntk 4000 bounds"],
+        x_range=(0.11, 0.40), y_range=(0, 200000), y_key=[2,3], take_n=1000,
+        title="Best model by sum of (PMU, MS, MACs)",
+        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_MS_MACs.pdf")
+
+
+   
