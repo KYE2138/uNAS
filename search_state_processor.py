@@ -277,7 +277,7 @@ def best_func(points, y_key):
         best_model_points.append([points[idx][0], best_func_output_list[idx]])
     return best_model_points
 
-def multiple_best_model_points_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000,
+def multi_metrics_multiple_points_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000,
                            x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
     point_lists = [load_search_state_file(file, filter_resources=None, num_points=num_points)[:take_n]
                    for file in search_state_files]
@@ -577,82 +577,82 @@ if __name__ == '__main__':
     plot_accuracy_gain(search_state_file="artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_b64_agingevosearch_state.pickle",x_range=(100,1200),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_b64_agingevosearch_state.png")
 
 
-    ###### multiple_best_model_points_pareto_fronts
+    ###### multi_metrics_multiple_points_pareto_fronts
     #MNIST
-    multiple_best_model_points_pareto_fronts(
+    multi_metrics_multiple_points_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,2,3], take_n=1000,
-        title="Best model of MNIST",
-        output_file="artifacts/cnn_mnist/Best_model_pareto_MNIST_PMU_MS_MACs.png")
+        title="Sum of PMU,MS,MACs MNIST",
+        output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
     
-    multiple_best_model_points_pareto_fronts(
+    multi_metrics_multiple_points_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 20000), y_key=[1,2], take_n=1000,
-        title="Best model of MNIST",
-        output_file="artifacts/cnn_mnist/Best_model_pareto_MNIST_PMU_MS.png")
+        title="Sum of PMU,MS MNIST",
+        output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_PMU_MS.png")
 
-    multiple_best_model_points_pareto_fronts(
+    multi_metrics_multiple_points_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,3], take_n=1000,
-        title="Best model of MNIST",
-        output_file="artifacts/cnn_mnist/Best_model_pareto_MNIST_PMU_MACs.png")
+        title="Sum of PMU,MACs MNIST",
+        output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_PMU_MACs.png")
     
-    multiple_best_model_points_pareto_fronts(
+    multi_metrics_multiple_points_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
-        ["uNAS", "uNAS with Ntk"],
+        ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[2,3], take_n=1000,
-        title="Best model of MNIST",
-        output_file="artifacts/cnn_mnist/Best_model_pareto_MNIST_MS_MACs.png")
+        title="Sum of MS,MACs MNIST",
+        output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_MS_MACs.png")
 
 
 
     #Cifar10
-    multiple_best_model_points_pareto_fronts(
+    multi_metrics_multiple_points_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
         x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,2,3], take_n=1000,
-        title="Best model of Cifar10",
-        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_PMU_MS_MACs.png")
+        title="Sum of PMU,MS,MACs Cifar10",
+        output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_PMU_MS_MACs.png")
     
-    multiple_best_model_points_pareto_fronts(
+    multi_metrics_multiple_points_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
         x_range=(0.11, 0.40), y_range=(0, 250000), y_key=[1,2], take_n=1000,
-        title="Best model of Cifar10",
-        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_PMU_MS.png")
+        title="Sum of PMU,MS Cifar10",
+        output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_PMU_MS.png")
     
-    multiple_best_model_points_pareto_fronts(
+    multi_metrics_multiple_points_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
         x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,3], take_n=1000,
-        title="Best model of Cifar10",
-        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_PMU_MACs.png")
+        title="Sum of PMU,MS Cifar10",
+        output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_PMU_MACs.png")
     
-    multiple_best_model_points_pareto_fronts(
+    multi_metrics_multiple_points_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "uNAS with Ntk"],
         x_range=(0.11, 0.40), y_range=(0, 10000000), y_key=[2,3], take_n=1000,
-        title="Best model of Cifar10",
-        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_MS_MACs.png")
+        title="Sum of MS,MACs Cifar10",
+        output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_MS_MACs.png")
 
     ######multi_steps_multiple_pareto_fronts
     #MNIST
