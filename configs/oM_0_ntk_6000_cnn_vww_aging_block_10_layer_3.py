@@ -20,7 +20,7 @@ search_config = AgingEvoConfig(
     search_space=CnnSearchSpace(),
     rounds=2000,
     checkpoint_dir="artifacts/cnn_vww",
-    max_parallel_evaluations = 3
+    max_parallel_evaluations = 2
 )
 
 bound_config = BoundConfig(
