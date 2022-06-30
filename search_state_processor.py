@@ -494,6 +494,16 @@ if __name__ == '__main__':
 
 
     #MNIST
+    #test
+    multiple_best_model_points_pareto_fronts(
+         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+        ],
+        ["uNAS", "ntk 1000"],
+        x_range=(0, 0.10), y_range=(0, 2000), y_key=[1], take_n=1000,
+        title="Best model of MNIST",
+        output_file="artifacts/cnn_mnist/Best_model_pareto_MNIST_PMU_test.pdf")
+
     multiple_best_model_points_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
