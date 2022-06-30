@@ -506,7 +506,7 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "uNAS with ntk 4000 bounds"],
-        x_range=(0.11, 0.40), y_range=(0, 1000000), y_key=[1,2], take_n=1000,
+        x_range=(0.11, 0.40), y_range=(0, 250000), y_key=[1,2], take_n=1000,
         title="Best model by sum of (PMU, MS)",
         output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10_PMU_MS.pdf")
     
