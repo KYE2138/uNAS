@@ -1,7 +1,7 @@
 import tensorflow_addons as tfa
 from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping
 
-from config import TrainingConfig, AgingEvoConfig, BoundConfig, PruningConfig
+from config import TrainingConfig, AgingEvoConfig, BoundConfig, PruningConfig, ThresholdConfig
 from dataset import VisualWakeWords_32
 from cnn import CnnSearchSpace
 from search_algorithms import AgingEvoSearch
@@ -28,5 +28,26 @@ bound_config = BoundConfig(
     peak_mem_bound=250000,
     model_size_bound=700000,
     mac_bound=80000000,
-    ntk=6000
+    ntk=6000,
+    #rn=1500,
+    #ntk_PMU = 200000000,
+    #ntk_MS = 200000000,
+    #ntk_MACs = 240000000000,
+    #rn_PMU = 75000000,
+    #rn_MS = 75000000,
+    #rn_MACs = 90000000000
+    #ntk_rn_PMU = 300000000000,
+    #ntk_rn_MS = 300000000000,
+    #ntk_rn_MACs = 360000000000000,
+    #ntk_rn = 6000000,
+    #PMU_d_orn = 30,
+    #MS_d_orn = 60,
+    #MACs_d_orn = 8000
+)
+
+threshold_config = ThresholdConfig(
+    # bound_config.ntk * 3
+    ntk = 18000,
+    # 4000 - bound_config.rn
+    rn = 2500
 )
