@@ -217,7 +217,7 @@ def best_func(points, y_key):
     best_func_output_list = np.sum(points, where=func_input_index, axis=1)
     best_model_points = []
     for idx, entry in enumerate(points):
-        best_model_points.append([entry[idx], best_func_output_list[idx]])
+        best_model_points.append([points[idx][0], best_func_output_list[idx]])
     return best_model_points
 
 def multiple_best_model_points_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000,
