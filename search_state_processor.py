@@ -207,7 +207,7 @@ def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=200
         plt.show()
 
 def best_func(points, y_key):
-
+    points = np.asarray(points)
     func_input_index = np.zeros(points.shape[1], dtype=np.bool)
     #y_key = [1, 2, 3]
     #func_input_index = [0, True, True, True]
