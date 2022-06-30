@@ -17,7 +17,7 @@ training_config = TrainingConfig(
 )
 
 search_config = AgingEvoConfig(
-    search_space=CnnSearchSpace(),
+    search_space=CnnSearchSpace(dropout=0.15),
     rounds=2000,
     checkpoint_dir="artifacts/cnn_vww",
     max_parallel_evaluations = 2
