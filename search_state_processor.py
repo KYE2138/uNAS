@@ -341,6 +341,77 @@ def multi_metrics_multiple_points_pareto_fronts(search_state_files, descriptions
     else:
         plt.show()
 
+def multi_steps_multi_metrics_multiple_points_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000, every_n=100,
+                           x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
+    
+    point_lists = []
+    descriptions_all = []
+    for file_index,file in enumerate(search_state_files):
+        for every_n_i in  range(take_n//every_n):
+            steps = (every_n_i+1) * every_n
+            point_lists_temp = load_search_state_file(file, filter_resources=None, num_points=num_points)[:steps]       
+            point_lists.append(point_lists_temp)
+            descriptions_all.append(f"{descriptions[file_index]} #{steps}")
+    descriptions = descriptions_all
+    
+    plt.rcParams["font.family"] = "Arial"
+    fig = plt.figure(figsize=[5.4, 3.0], dpi=300)
+    ax = fig.add_subplot()
+
+    x_min, x_max = x_range
+    x_minor_ticks, x_major_ticks = compute_x_ticks(x_min, x_max)
+    y_min, y_max = y_range
+
+    ax.set_xlim([x_min, x_max])
+    ax.set_ylim([y_min, y_max])
+    ax.set_xticks(x_minor_ticks, minor=True)
+    ax.set_xticks(x_major_ticks, minor=False)
+
+    colors = [f"C{i}" for i in range(len(point_lists))]
+
+    def scatter(x, y, color, alpha, label):
+        r, g, b = to_rgb(color)
+        color = [(r, g, b, a) for a in alpha]
+        ax.scatter(x, y, marker="D", s=10, label=label, color=color)
+
+    for points, desc, color in zip(point_lists, descriptions, colors):
+        points.sort(key=lambda x: x[0])
+        #apply best_func
+        #points = (num_error, num_key0, ...)
+        #best_model_points = (num_error, num_best_func() )
+        best_model_points = best_func(points, y_key)
+
+        is_eff = is_pareto_efficient(best_model_points)
+        err = np.array([o[0] for o in best_model_points])
+        res = np.array([o[1] for o in best_model_points])
+        scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_eff), color=color)
+        ax.step(err[is_eff], res[is_eff], where="post", alpha=0.7)
+
+    ax.xaxis.grid(True, which='both', linewidth=0.5, linestyle=":")
+    ax.yaxis.grid(True, which='major', linewidth=0.5, linestyle=":")
+    ax.set_xlabel("Error rate")
+    #ax.set_ylabel(["Error rate", "Peak memory usage", "Model size", "MACs"][y_key])
+    y_label = "Sum of "
+    y_label_list = ["ER", "PMU", "MS", "MACs"]
+    for i, item in enumerate(y_key):
+        if i == 0:
+            y_label = y_label + f"{y_label_list[item]}"
+        else:
+            y_label = y_label + f",{y_label_list[item]}"
+    ax.set_ylabel(y_label)
+    
+    if title:
+        ax.set_title(title)
+
+    ax.legend()
+    for i, c in enumerate(colors):
+        ax.legend_.legendHandles[i].set_facecolor(c)
+
+    plt.tight_layout()
+    if output_file:
+        fig.savefig(output_file, dpi=fig.dpi)
+    else:
+        plt.show()
 
 def process(output_mode, search_state_file):
     objs = load_search_state_file(search_state_file)
@@ -585,7 +656,7 @@ if __name__ == '__main__':
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,2,3], take_n=1000,
-        title="Sum of PMU,MS,MACs MNIST",
+        title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
     
     multi_metrics_multiple_points_pareto_fronts(
@@ -594,7 +665,7 @@ if __name__ == '__main__':
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 20000), y_key=[1,2], take_n=1000,
-        title="Sum of PMU,MS MNIST",
+        title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_PMU_MS.png")
 
     multi_metrics_multiple_points_pareto_fronts(
@@ -603,7 +674,7 @@ if __name__ == '__main__':
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,3], take_n=1000,
-        title="Sum of PMU,MACs MNIST",
+        title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_PMU_MACs.png")
     
     multi_metrics_multiple_points_pareto_fronts(
@@ -612,7 +683,7 @@ if __name__ == '__main__':
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[2,3], take_n=1000,
-        title="Sum of MS,MACs MNIST",
+        title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_MS_MACs.png")
 
 
@@ -624,7 +695,7 @@ if __name__ == '__main__':
          ],
         ["uNAS", "Ntk"],
         x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,2,3], take_n=1000,
-        title="Sum of PMU,MS,MACs Cifar10",
+        title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_PMU_MS_MACs.png")
     
     multi_metrics_multiple_points_pareto_fronts(
@@ -633,7 +704,7 @@ if __name__ == '__main__':
          ],
         ["uNAS", "Ntk"],
         x_range=(0.11, 0.40), y_range=(0, 250000), y_key=[1,2], take_n=1000,
-        title="Sum of PMU,MS Cifar10",
+        title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_PMU_MS.png")
     
     multi_metrics_multiple_points_pareto_fronts(
@@ -642,7 +713,7 @@ if __name__ == '__main__':
          ],
         ["uNAS", "Ntk"],
         x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,3], take_n=1000,
-        title="Sum of PMU,MS Cifar10",
+        title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_PMU_MACs.png")
     
     multi_metrics_multiple_points_pareto_fronts(
@@ -651,7 +722,7 @@ if __name__ == '__main__':
          ],
         ["uNAS", "uNAS with Ntk"],
         x_range=(0.11, 0.40), y_range=(0, 10000000), y_key=[2,3], take_n=1000,
-        title="Sum of MS,MACs Cifar10",
+        title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_MS_MACs.png")
 
     ######multi_steps_multiple_pareto_fronts
@@ -663,7 +734,7 @@ if __name__ == '__main__':
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 2000), y_key=1, take_n=1000, every_n=500,
         title="PMU vs error rate Pareto fronts for MNIST",
-        output_file="artifacts/cnn_mnist/peak_mem_use_pareto_MNIST_multi_steps.png")
+        output_file="artifacts/cnn_mnist/multi_steps_peak_mem_use_pareto_MNIST_.png")
     
     multi_steps_multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
@@ -672,7 +743,7 @@ if __name__ == '__main__':
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 10000), y_key=2, take_n=1000, every_n=500,
         title="Model size vs error rate Pareto fronts for MNIST",
-        output_file="artifacts/cnn_mnist/model_size_pareto_MNIST_multi_steps.png")
+        output_file="artifacts/cnn_mnist/multi_steps_model_size_pareto_MNIST.png")
 
     multi_steps_multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
@@ -681,7 +752,7 @@ if __name__ == '__main__':
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=3, take_n=1000, every_n=500,
         title="MACs vs error rate Pareto fronts for MNIST",
-        output_file="artifacts/cnn_mnist/MACs_pareto_MNIST_multi_steps.png")
+        output_file="artifacts/cnn_mnist/multi_steps_MACs_pareto_MNIST.png")
     
     #Cifar10
     multi_steps_multiple_pareto_fronts(
@@ -691,7 +762,7 @@ if __name__ == '__main__':
         ["uNAS", "Ntk"],
         x_range=(0.11, 0.30), y_range=(0, 50000), y_key=1, take_n=1000, every_n=500,
         title="PMU vs error rate Pareto fronts for Cifar10",
-        output_file="artifacts/cnn_cifar10/peak_mem_use_pareto_Cifar10_multi_steps.png")
+        output_file="artifacts/cnn_cifar10/multi_steps_peak_mem_use_pareto_Cifar10.png")
     
     multi_steps_multiple_pareto_fronts(
         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
@@ -700,7 +771,7 @@ if __name__ == '__main__':
         ["uNAS", "Ntk"],
         x_range=(0.11, 0.30), y_range=(0, 100000), y_key=2, take_n=1000, every_n=500,
         title="Model size vs error rate Pareto fronts for Cifar10",
-        output_file="artifacts/cnn_cifar10/model_size_pareto_Cifar10_multi_steps.png")
+        output_file="artifacts/cnn_cifar10/multi_steps_model_size_pareto_Cifar10.png")
 
     multi_steps_multiple_pareto_fronts(
         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
@@ -709,4 +780,81 @@ if __name__ == '__main__':
         ["uNAS", "Ntk"],
         x_range=(0.11, 0.30), y_range=(0, 10000000), y_key=3, take_n=1000, every_n=500,
         title="MACs vs error rate Pareto fronts for Cifar10",
-        output_file="artifacts/cnn_cifar10/MACs_pareto_Cifar10_multi_steps.png")
+        output_file="artifacts/cnn_cifar10/multi_steps_MACs_pareto_Cifar10.png")
+
+    #####multi_steps_multi_metrics_multiple_points_pareto_fronts
+    #MNIST
+    multi_steps_multi_metrics_multiple_points_pareto_fronts(
+         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+        ],
+        ["uNAS", "Ntk"],
+        x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,2,3], take_n=1000, every_n=500,
+        title="Pareto fronts for MNIST",
+        output_file="artifacts/cnn_mnist/multi_steps_multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
+    
+    multi_metrics_multiple_points_pareto_fronts(
+         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+        ],
+        ["uNAS", "Ntk"],
+        x_range=(0, 0.10), y_range=(0, 20000), y_key=[1,2], take_n=1000, every_n=500,
+        title="Pareto fronts for MNIST",
+        output_file="artifacts/cnn_mnist/multi_steps_multi_metrics_pareto_MNIST_PMU_MS.png")
+
+    multi_metrics_multiple_points_pareto_fronts(
+         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+        ],
+        ["uNAS", "Ntk"],
+        x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,3], take_n=1000, every_n=500,
+        title="Pareto fronts for MNIST",
+        output_file="artifacts/cnn_mnist/multi_steps_multi_metrics_pareto_MNIST_PMU_MACs.png")
+    
+    multi_metrics_multiple_points_pareto_fronts(
+         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+        ],
+        ["uNAS", "Ntk"],
+        x_range=(0, 0.10), y_range=(0, 100000), y_key=[2,3], take_n=1000, every_n=500,
+        title="Pareto fronts for MNIST",
+        output_file="artifacts/cnn_mnist/multi_steps_multi_metrics_pareto_MNIST_MS_MACs.png")
+
+
+
+    #Cifar10
+    multi_metrics_multiple_points_pareto_fronts(
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
+         ],
+        ["uNAS", "Ntk"],
+        x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,2,3], take_n=1000, every_n=500,
+        title="Pareto fronts for Cifar10",
+        output_file="artifacts/cnn_cifar10/multi_steps_multi_metrics_pareto_Cifar10_PMU_MS_MACs.png")
+    
+    multi_metrics_multiple_points_pareto_fronts(
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
+         ],
+        ["uNAS", "Ntk"],
+        x_range=(0.11, 0.40), y_range=(0, 250000), y_key=[1,2], take_n=1000, every_n=500,
+        title="Pareto fronts for Cifar10",
+        output_file="artifacts/cnn_cifar10/multi_steps_multi_metrics_pareto_Cifar10_PMU_MS.png")
+    
+    multi_metrics_multiple_points_pareto_fronts(
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
+         ],
+        ["uNAS", "Ntk"],
+        x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,3], take_n=1000, every_n=500,
+        title="Pareto fronts for Cifar10",
+        output_file="artifacts/cnn_cifar10/multi_steps_multi_metrics_pareto_Cifar10_PMU_MACs.png")
+    
+    multi_metrics_multiple_points_pareto_fronts(
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
+         ],
+        ["uNAS", "uNAS with Ntk"],
+        x_range=(0.11, 0.40), y_range=(0, 10000000), y_key=[2,3], take_n=1000, every_n=500,
+        title="Pareto fronts for Cifar10",
+        output_file="artifacts/cnn_cifar10/multi_steps_multi_metrics_pareto_Cifar10_MS_MACs.png")
