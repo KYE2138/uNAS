@@ -254,6 +254,18 @@ def multiple_best_model_point_pareto_fronts(search_state_files, descriptions, y_
 
     for points, desc, color in zip(point_lists, descriptions, colors):
         points.sort(key=lambda x: x[0])
+        is_best_points=[[]]
+        for i, c in enumerate(points):
+        is_best_points[i][0] = points[i][0]
+        y_key_sum = 0
+        for key in y_key:
+            #func
+            y_key_sum = y_key_sum + points[i][key]
+        #pdb.set_trace()
+        is_best_points[i][1] = y_key_sum
+
+
+
         is_best = is_best_model_point(points, y_key)
         err = np.array([o[0] for o in points])
         res = np.array([o[1] for o in points])
