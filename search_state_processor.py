@@ -263,11 +263,12 @@ def multiple_best_model_points_pareto_fronts(search_state_files, descriptions, y
     ax.set_xlabel("Error rate")
     #ax.set_ylabel(["Error rate", "Peak memory usage", "Model size", "MACs"][y_key])
     y_label = "Sum of "
+    y_label_list = ["Error rate", "Peak memory usage", "Model size", "MACs"]
     for i, item in enumerate(y_key):
         if i == 0:
-            y_label = y_label + f"{item}"
+            y_label = y_label + f"{y_label_list[item]}"
         else:
-            y_label = y_label + f",{item}"
+            y_label = y_label + f",{y_label_list[item]}"
     ax.set_ylabel(y_label)
     
     if title:
@@ -498,6 +499,6 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/oM_1_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle"
          ],
         ["uNAS", "uNAS with ntk 4000 bounds", "M_6", "oM_1"],
-        x_range=(0.11, 0.30), y_range=(0, 3000000), y_key=[1,2,3], take_n=1000,
+        x_range=(0.11, 0.30), y_range=(0, 5000000), y_key=[1,2,3], take_n=1000,
         title="Best model by sum of (PMU, MS, MACs)",
         output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10.pdf")
