@@ -443,9 +443,36 @@ if __name__ == '__main__':
     plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/M_3_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,1000),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/M_3_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.png")
     plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/M_4_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,1000),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/M_4_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.png")
 
+        ##Cifar10
+    multiple_pareto_fronts(
+        ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
+         ],
+        ["uNAS", "uNAS 4000"],
+        x_range=(0.11, 0.30), y_range=(0, 200000), y_key=1, take_n=1000,
+        title="PMU vs error rate Pareto fronts for Cifar10",
+        output_file="artifacts/cnn_cifar10/peak_mem_use_pareto_Cifar10.png")
+
+    multiple_pareto_fronts(
+        ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
+         ],
+        ["uNAS", "uNAS 4000"],
+        x_range=(0.11, 0.30), y_range=(0, 200000), y_key=1, take_n=1000,
+        title="Model size vs error rate Pareto fronts for Cifar10",
+        output_file="artifacts/cnn_cifar10/model_size_pareto_Cifar10.png")
+
+    multiple_pareto_fronts(
+        ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
+         "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
+         ],
+        ["uNAS", "uNAS 4000"],
+        x_range=(0.11, 0.30), y_range=(0, 200000), y_key=1, take_n=1000,
+        title="MACs vs error rate Pareto fronts for Cifar10",
+        output_file="artifacts/cnn_cifar10/MACs_pareto_Cifar10.png")
 
 
-    ##Cifar10
+    ##Cifar10_test
     multiple_pareto_fronts(
         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
@@ -494,16 +521,6 @@ if __name__ == '__main__':
 
 
     #MNIST
-    #test
-    multiple_best_model_points_pareto_fronts(
-         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
-        ],
-        ["uNAS", "ntk 1000"],
-        x_range=(0, 0.10), y_range=(0, 2000), y_key=[1], take_n=1000,
-        title="Best model of MNIST",
-        output_file="artifacts/cnn_mnist/Best_model_pareto_MNIST_PMU_test.png")
-
     multiple_best_model_points_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
