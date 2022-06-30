@@ -262,7 +262,7 @@ def multiple_best_model_points_pareto_fronts(search_state_files, descriptions, y
     ax.yaxis.grid(True, which='major', linewidth=0.5, linestyle=":")
     ax.set_xlabel("Error rate")
     #ax.set_ylabel(["Error rate", "Peak memory usage", "Model size", "MACs"][y_key])
-    ax.set_ylabel([y_key])
+    ax.set_ylabel(y_key)
     if title:
         ax.set_title(title)
 
@@ -492,5 +492,5 @@ if __name__ == '__main__':
          ],
         ["uNAS", "uNAS with ntk 4000 bounds", "M_6", "oM_1"],
         x_range=(0.11, 0.30), y_range=(0, 2000000), y_key=[1,2,3], take_n=1000,
-        title="Best model of PMU, Model size , MACs",
+        title="Best model by sum of (PMU, MS, MACs)",
         output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10.pdf")
