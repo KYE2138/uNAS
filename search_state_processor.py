@@ -22,7 +22,7 @@ def compute_x_ticks(x_min, x_max):
 def is_pareto_efficient(points):
     points = np.asarray(points)
     #(1070,2)
-    is_efficient = np.ones(points.shape[0], dtype=np.bool)
+    is_efficient = np.ones(points.shape[0])
     for i, c in enumerate(points):
         if is_efficient[i]:
             is_efficient[is_efficient] = np.any(points[is_efficient] < c, axis=1)
@@ -206,28 +206,15 @@ def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=200
     else:
         plt.show()
 
-def is_best_model_point(points, y_key):
-    points = np.asarray(points)
-    # (num_point, num_key)
-    is_best = np.ones(points.shape[0], dtype=np.bool)
-    #apply best func
-    is_best_points = np.ones((points.shape[0],2), dtype=np.bool)
-    for i, c in enumerate(points):
-        is_best_points[i][0] = points[i][0]
-        y_key_sum = 0
-        for key in y_key:
-            #func
-            y_key_sum = y_key_sum + points[i][key]
-        #pdb.set_trace()
-        is_best_points[i][1] = y_key_sum
-    
-    for i, c in enumerate(is_best_points):
-        if is_best[i]:
-            is_best[is_best] = np.any(is_best_points[is_best] < c, axis=1)
-            is_best[i] = True
-    return is_best 
+def best_func(points, y_key):
 
-def multiple_best_model_point_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000,
+    func_input_index = np.zeros(points.shape[1], dtype=np.bool)
+    func_input_index  = True
+    best_model_points = np.sum(points, where=func_input_index, axis=1)
+    best_list = np.sum(best_model_points, axis=1)
+    return best_list
+
+def multiple_best_model_points_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000,
                            x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
     point_lists = [load_search_state_file(file, filter_resources=None, num_points=num_points)[:take_n]
                    for file in search_state_files]
@@ -254,28 +241,21 @@ def multiple_best_model_point_pareto_fronts(search_state_files, descriptions, y_
 
     for points, desc, color in zip(point_lists, descriptions, colors):
         points.sort(key=lambda x: x[0])
-        is_best_points=[[]]
-        for i, c in enumerate(points):
-        is_best_points[i][0] = points[i][0]
-        y_key_sum = 0
-        for key in y_key:
-            #func
-            y_key_sum = y_key_sum + points[i][key]
-        #pdb.set_trace()
-        is_best_points[i][1] = y_key_sum
+        #apply best_func
+        #(num_error, num_key0, ...) to (num_error, num_best_func() )
+        best_model_points = best_func(points, y_key)
 
-
-
-        is_best = is_best_model_point(points, y_key)
-        err = np.array([o[0] for o in points])
-        res = np.array([o[1] for o in points])
-        scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_best), color=color)
-        ax.step(err[is_best], res[is_best], where="post", alpha=0.7)
+        is_eff = is_pareto_efficient(best_model_points)
+        err = np.array([o[0] for o in best_model_points])
+        res = np.array([o[1] for o in best_model_points])
+        scatter(err, res, label=desc, alpha=(0.04 + 0.96 * is_eff), color=color)
+        ax.step(err[is_eff], res[is_eff], where="post", alpha=0.7)
 
     ax.xaxis.grid(True, which='both', linewidth=0.5, linestyle=":")
     ax.yaxis.grid(True, which='major', linewidth=0.5, linestyle=":")
     ax.set_xlabel("Error rate")
     #ax.set_ylabel(["Error rate", "Peak memory usage", "Model size", "MACs"][y_key])
+    ax.set_ylabel([y_key])
     if title:
         ax.set_title(title)
 
@@ -492,7 +472,7 @@ if __name__ == '__main__':
     plot_accuracy_gain(search_state_file="artifacts/cnn_cifar10/M_6_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,1200),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/M_6_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pdf")
     plot_accuracy_gain(search_state_file="artifacts/cnn_cifar10/oM_1_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,1200),y_range=(0.80,0.89),output_file="artifacts/cnn_cifar10/oM_1_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pdf")
 
-    multiple_best_model_point_pareto_fronts(
+    '''multiple_best_model_point_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/M_6_ntk_4000_rn_1500_cnn_cifar10_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
@@ -501,4 +481,4 @@ if __name__ == '__main__':
         ["uNAS", "uNAS with ntk 4000 bounds", "M_6", "oM_1"],
         x_range=(0.11, 0.30), y_range=(0, 20000), y_key=[1,2,3], take_n=1000,
         title="Best model of PMU, Model size , MACs",
-        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10.pdf")
+        output_file="artifacts/cnn_cifar10/Best_model_pareto_Cifar10.pdf")'''
