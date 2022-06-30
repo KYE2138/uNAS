@@ -236,7 +236,7 @@ def multi_steps_multiple_pareto_fronts(search_state_files, descriptions, y_key=2
     def scatter(x, y, color, alpha, label):
         r, g, b = to_rgb(color)
         color = [(r, g, b, a) for a in alpha]
-        ax.scatter(x, y, marker="D", s=10, label=label, color=color)
+        ax.scatter(x, y, marker="D", s=10, label=label, color=color, fontsize=16)
 
     for points, desc, color in zip(point_lists, descriptions, colors):
         points.sort(key=lambda x: x[0])
