@@ -277,7 +277,7 @@ def best_func(points, y_key):
         best_model_points.append([points[idx][0], best_func_output_list[idx]])
     return best_model_points
 
-def multi_metrics_multiple_points_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000,
+def multi_metrics_multiple_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000,
                            x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
     point_lists = [load_search_state_file(file, filter_resources=None, num_points=num_points)[:take_n]
                    for file in search_state_files]
@@ -341,7 +341,7 @@ def multi_metrics_multiple_points_pareto_fronts(search_state_files, descriptions
     else:
         plt.show()
 
-def multi_steps_multi_metrics_multiple_points_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000, every_n=100,
+def multi_steps_multi_metrics_multiple_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000, every_n=100,
                            x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
     
     point_lists = []
@@ -650,7 +650,7 @@ if __name__ == '__main__':
 
     ###### multi_metrics_multiple_points_pareto_fronts
     #MNIST
-    multi_metrics_multiple_points_pareto_fronts(
+    multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
@@ -659,7 +659,7 @@ if __name__ == '__main__':
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
     
-    multi_metrics_multiple_points_pareto_fronts(
+    multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
@@ -668,7 +668,7 @@ if __name__ == '__main__':
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_PMU_MS.png")
 
-    multi_metrics_multiple_points_pareto_fronts(
+    multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
@@ -677,7 +677,7 @@ if __name__ == '__main__':
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/multi_metrics_pareto_MNIST_PMU_MACs.png")
     
-    multi_metrics_multiple_points_pareto_fronts(
+    multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
@@ -689,7 +689,7 @@ if __name__ == '__main__':
 
 
     #Cifar10
-    multi_metrics_multiple_points_pareto_fronts(
+    multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
@@ -698,7 +698,7 @@ if __name__ == '__main__':
         title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_PMU_MS_MACs.png")
     
-    multi_metrics_multiple_points_pareto_fronts(
+    multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
@@ -707,7 +707,7 @@ if __name__ == '__main__':
         title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_PMU_MS.png")
     
-    multi_metrics_multiple_points_pareto_fronts(
+    multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
@@ -716,7 +716,7 @@ if __name__ == '__main__':
         title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_metrics_pareto_Cifar10_PMU_MACs.png")
     
-    multi_metrics_multiple_points_pareto_fronts(
+    multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
@@ -782,9 +782,9 @@ if __name__ == '__main__':
         title="MACs vs error rate Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_steps_MACs_pareto_Cifar10.png")
 
-    #####multi_steps_multi_metrics_multiple_points_pareto_fronts
+    #####multi_steps_multi_metrics_multiple_pareto_fronts
     #MNIST
-    multi_steps_multi_metrics_multiple_points_pareto_fronts(
+    multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
@@ -793,7 +793,7 @@ if __name__ == '__main__':
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/multi_steps_multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
     
-    multi_steps_multi_metrics_multiple_points_pareto_fronts(
+    multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
@@ -802,7 +802,7 @@ if __name__ == '__main__':
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/multi_steps_multi_metrics_pareto_MNIST_PMU_MS.png")
 
-    multi_steps_multi_metrics_multiple_points_pareto_fronts(
+    multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
@@ -811,7 +811,7 @@ if __name__ == '__main__':
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/multi_steps_multi_metrics_pareto_MNIST_PMU_MACs.png")
     
-    multi_steps_multi_metrics_multiple_points_pareto_fronts(
+    multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
@@ -823,7 +823,7 @@ if __name__ == '__main__':
 
 
     #Cifar10
-    multi_steps_multi_metrics_multiple_points_pareto_fronts(
+    multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
@@ -832,7 +832,7 @@ if __name__ == '__main__':
         title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_steps_multi_metrics_pareto_Cifar10_PMU_MS_MACs.png")
     
-    multi_steps_multi_metrics_multiple_points_pareto_fronts(
+    multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
@@ -841,7 +841,7 @@ if __name__ == '__main__':
         title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_steps_multi_metrics_pareto_Cifar10_PMU_MS.png")
     
-    multi_steps_multi_metrics_multiple_points_pareto_fronts(
+    multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
@@ -850,7 +850,7 @@ if __name__ == '__main__':
         title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/multi_steps_multi_metrics_pareto_Cifar10_PMU_MACs.png")
     
-    multi_steps_multi_metrics_multiple_points_pareto_fronts(
+    multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
