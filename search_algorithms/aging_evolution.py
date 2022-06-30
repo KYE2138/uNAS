@@ -72,7 +72,7 @@ class GPUTrainer:
         if threshold.ntk!=None:
             ntk_threshold = threshold.ntk
         else:
-            ntk_threshold = 0
+            ntk_threshold = 1000000000
         # rns
         rn = np.mean(rns).astype('int64')
         #max rn ~ 3000
