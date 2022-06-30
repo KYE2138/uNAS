@@ -209,10 +209,16 @@ def multiple_pareto_fronts(search_state_files, descriptions, y_key=2, take_n=200
 def best_func(points, y_key):
 
     func_input_index = np.zeros(points.shape[1], dtype=np.bool)
-    func_input_index  = True
-    best_model_points = np.sum(points, where=func_input_index, axis=1)
-    best_list = np.sum(best_model_points, axis=1)
-    return best_list
+    #y_key = [1, 2, 3]
+    #func_input_index = [0, True, True, True]
+    for index_y_key in y_key:
+        func_input_index[index_y_key]  = True
+    # (num_points)
+    best_func_output_list = np.sum(points, where=func_input_index, axis=1)
+    best_model_points = []
+    for idx, entry in enumerate(points):
+        best_model_points.append([entry[idx], best_func_output_list[idx]])
+    return best_model_points
 
 def multiple_best_model_points_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000,
                            x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
@@ -242,7 +248,8 @@ def multiple_best_model_points_pareto_fronts(search_state_files, descriptions, y
     for points, desc, color in zip(point_lists, descriptions, colors):
         points.sort(key=lambda x: x[0])
         #apply best_func
-        #(num_error, num_key0, ...) to (num_error, num_best_func() )
+        #points = (num_error, num_key0, ...)
+        #best_model_points = (num_error, num_best_func() )
         best_model_points = best_func(points, y_key)
 
         is_eff = is_pareto_efficient(best_model_points)
