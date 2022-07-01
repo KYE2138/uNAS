@@ -213,7 +213,7 @@ def multi_steps_multiple_pareto_fronts(search_state_files, descriptions, y_key=2
     for file_index,file in enumerate(search_state_files):
         for every_n_i in  range(take_n//every_n):
             steps = (every_n_i+1) * every_n
-            if steps == 100:
+            if steps <= 100:
                 continue
             point_lists_temp = load_search_state_file(file, filter_resources=y_key, num_points=num_points)[:steps]       
 
@@ -352,7 +352,7 @@ def multi_steps_multi_metrics_multiple_pareto_fronts(search_state_files, descrip
     for file_index,file in enumerate(search_state_files):
         for every_n_i in  range(take_n//every_n):
             steps = (every_n_i+1) * every_n
-            if steps == 100:
+            if steps <= 100:
                 continue
             point_lists_temp = load_search_state_file(file, filter_resources=None, num_points=num_points)[:steps]       
             point_lists.append(point_lists_temp)
