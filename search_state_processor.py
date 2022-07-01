@@ -210,6 +210,10 @@ def multi_steps_multiple_pareto_fronts(search_state_files, descriptions, y_key=2
                            x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
     point_lists = []
     descriptions_all = []
+    # 100
+    point_lists_temp = load_search_state_file(file, filter_resources=None, num_points=num_points)[:100]       
+    point_lists.append(point_lists_temp)
+    descriptions_all.append(f"{descriptions[file_index]} #100")
     for file_index,file in enumerate(search_state_files):
         for every_n_i in  range(take_n//every_n):
             steps = (every_n_i+1) * every_n
@@ -349,6 +353,11 @@ def multi_steps_multi_metrics_multiple_pareto_fronts(search_state_files, descrip
     
     point_lists = []
     descriptions_all = []
+    # 100
+    point_lists_temp = load_search_state_file(file, filter_resources=None, num_points=num_points)[:100]       
+    point_lists.append(point_lists_temp)
+    descriptions_all.append(f"{descriptions[file_index]} #100")
+
     for file_index,file in enumerate(search_state_files):
         for every_n_i in  range(take_n//every_n):
             steps = (every_n_i+1) * every_n
