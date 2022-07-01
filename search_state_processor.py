@@ -550,8 +550,9 @@ if __name__ == '__main__':
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/oM_0_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
-        ["uNAS","uNAS_b64", "Ntk"],
+        ["uNAS","uNAS_b64", "Ntk_M2", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,2,3], take_n=200, every_n=50,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
@@ -560,8 +561,9 @@ if __name__ == '__main__':
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/oM_0_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
-        ["uNAS","uNAS_b64", "Ntk"],
+        ["uNAS","uNAS_b64", "Ntk_M2", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 20000), y_key=[1,2], take_n=200, every_n=50,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_PMU_MS.png")
@@ -570,8 +572,9 @@ if __name__ == '__main__':
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/oM_0_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
-        ["uNAS","uNAS_b64", "Ntk"],
+        ["uNAS","uNAS_b64", "Ntk_M2", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,3], take_n=200, every_n=50,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_PMU_MACs.png")
@@ -580,8 +583,9 @@ if __name__ == '__main__':
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/oM_0_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
-        ["uNAS","uNAS_b64", "Ntk"],
+        ["uNAS","uNAS_b64", "Ntk_M2", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[2,3], take_n=200, every_n=50,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_MS_MACs.png")
