@@ -211,7 +211,7 @@ def multi_steps_multiple_pareto_fronts(search_state_files, descriptions, y_key=2
     point_lists = []
     descriptions_all = []
     # 100
-    point_lists_temp = load_search_state_file(file, filter_resources=None, num_points=num_points)[:100]       
+    point_lists_temp = load_search_state_file(search_state_files[0], filter_resources=None, num_points=num_points)[:100]       
     point_lists.append(point_lists_temp)
     descriptions_all.append(f"{descriptions[file_index]} #100")
     for file_index,file in enumerate(search_state_files):
