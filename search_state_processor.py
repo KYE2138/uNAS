@@ -364,7 +364,8 @@ def multi_steps_multi_metrics_multiple_pareto_fronts(search_state_files, descrip
                 continue
             point_lists.append(point_lists_temp)
             descriptions_all.append(f"{descriptions[file_index]} #{steps}")
-    
+    descriptions = descriptions_all
+
     plt.rcParams["font.family"] = "Arial"
     fig = plt.figure(figsize=[5.4, 3.0], dpi=300)
     ax = fig.add_subplot()
