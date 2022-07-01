@@ -69,19 +69,19 @@ class GPUTrainer:
 
         ntk = np.mean(ntks).astype('int64')
         # ntk_threshold是bound三倍
-        if threshold.ntk!=None:
-            ntk_threshold = threshold.ntk
+        if threshold.ntk==None:
+            ntk_threshold = 1000000000000
         else:
-            ntk_threshold = 1000000000
+            ntk_threshold = threshold.ntk
         # rns
         rn = np.mean(rns).astype('int64')
         #max rn ~ 3000
         # 限制rn在1500以上
         rn = 4000-rn
-        if threshold.rn!=None:
-            rn_threshold = threshold.rn
-        else:
+        if threshold.rn==None:
             rn_threshold = 4001
+        else:
+            rn_threshold = threshold.rn
         # rn要在2500以下
         #pdb.set_trace()
         if ntk>ntk_threshold or rn>=rn_threshold:
