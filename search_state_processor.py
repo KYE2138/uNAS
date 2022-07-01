@@ -353,12 +353,17 @@ def multi_steps_multi_metrics_multiple_pareto_fronts(search_state_files, descrip
     point_lists = []
     descriptions_all = []
     for file_index,file in enumerate(search_state_files):
+        #100
+        point_lists_temp = load_search_state_file(file, filter_resources=y_key, num_points=num_points)[:100]       
+        point_lists.append(point_lists_temp)
+        descriptions_all.append(f"{descriptions[file_index]} #100")
         for every_n_i in  range(take_n//every_n):
             steps = (every_n_i+1) * every_n
-            point_lists_temp = load_search_state_file(file, filter_resources=None, num_points=num_points)[:steps]       
+            point_lists_temp = load_search_state_file(file, filter_resources=y_key, num_points=num_points)[:steps]       
+            if steps == 100:
+                continue
             point_lists.append(point_lists_temp)
             descriptions_all.append(f"{descriptions[file_index]} #{steps}")
-    descriptions = descriptions_all
     
     plt.rcParams["font.family"] = "Arial"
     fig = plt.figure(figsize=[5.4, 3.0], dpi=300)
