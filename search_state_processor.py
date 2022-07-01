@@ -543,7 +543,7 @@ if __name__ == '__main__':
     #MNIST
     multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+         "artifacts/cnn_mnist/oM_0_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,2,3], take_n=200, every_n=100,
@@ -552,7 +552,7 @@ if __name__ == '__main__':
     
     multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+         "artifacts/cnn_mnist/oM_0_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 20000), y_key=[1,2], take_n=200, every_n=100,
@@ -561,7 +561,7 @@ if __name__ == '__main__':
 
     multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+         "artifacts/cnn_mnist/oM_0_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,3], take_n=200, every_n=100,
@@ -570,7 +570,7 @@ if __name__ == '__main__':
     
     multi_steps_multi_metrics_multiple_pareto_fronts(
          ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+         "artifacts/cnn_mnist/oM_0_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         ],
         ["uNAS", "Ntk"],
         x_range=(0, 0.10), y_range=(0, 100000), y_key=[2,3], take_n=200, every_n=100,
@@ -584,6 +584,7 @@ if __name__ == '__main__':
     plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/M_3_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,1000),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/M_3_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.png")
     plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/M_4_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,1000),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/M_4_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.png")
     plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/M_4_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,1000),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/M_4_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.png")
+    plot_accuracy_gain(search_state_file="artifacts/cnn_mnist/oM_0_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",x_range=(100,1000),y_range=(0.990,0.999),output_file="artifacts/cnn_mnist/oM_0_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state_accuracy_gain.png")
 
 
     #Cifar10
