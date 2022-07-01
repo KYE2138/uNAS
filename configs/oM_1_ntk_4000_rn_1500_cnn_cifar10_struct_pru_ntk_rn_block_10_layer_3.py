@@ -23,14 +23,13 @@ training_config = TrainingConfig(
     optimizer=lambda: tfa.optimizers.SGDW(learning_rate=0.01, momentum=0.9, weight_decay=1e-5),
     batch_size=64,
     epochs=130,
-    #epochs=1,
     callbacks=lambda: [LearningRateScheduler(lr_schedule)],
 )
 
 
 search_config = AgingEvoConfig(
     search_space=CnnSearchSpace(dropout=0.15),
-    rounds=800,
+    rounds=100,
     checkpoint_dir="artifacts/cnn_cifar10",
     #max_parallel_evaluations = 1,
     #population_size = 10,
@@ -50,8 +49,8 @@ bound_config = BoundConfig(
     peak_mem_bound=50000,
     model_size_bound=50000,
     mac_bound=60000000,
-    ntk=4000,
-    rn=1500,
+    #ntk=4000,
+    #rn=1500,
     #ntk_PMU = 200000000,
     #ntk_MS = 200000000,
     #ntk_MACs = 240000000000,
@@ -69,7 +68,7 @@ bound_config = BoundConfig(
 
 threshold_config = ThresholdConfig(
     # bound_config.ntk * 3
-    ntk = 12000,
+    #ntk = 12000,
     # 4000 - bound_config.rn
-    rn = 2500
+    #rn = 2500
 )
