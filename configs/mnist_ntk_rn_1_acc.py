@@ -59,5 +59,5 @@ threshold_config = ThresholdConfig(
     # bound_config.ntk * 3
     ntk = 12000,
     # 4000 - bound_config.rn
-    rn = 2500
+    #rn = 2500
 )
