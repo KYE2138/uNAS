@@ -345,14 +345,14 @@ def multi_metrics_multiple_pareto_fronts(search_state_files, descriptions, y_key
         plt.show()
 
 def multi_steps_multi_metrics_multiple_pareto_fronts(search_state_files, descriptions, y_key=[1,2,3], take_n=2000, every_n=100,
-                           x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None):
+                           x_range=(0.0, 1.0), y_range=(0.0, 3e6), title=None, output_file=None, num_points=None, first_pop=False):
     
     point_lists = []
     descriptions_all = []
     for file_index,file in enumerate(search_state_files):
         for every_n_i in  range(take_n//every_n):
             steps = (every_n_i+1) * every_n
-            if steps <= 100:
+            if steps <= 100 and first_pop:
                 continue
             point_lists_temp = load_search_state_file(file, filter_resources=None, num_points=num_points)[:steps]       
             point_lists.append(point_lists_temp)
@@ -553,7 +553,7 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
         ["uNAS","uNAS_b64", "ntk_1", "Ntk"],
-        x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,2,3], take_n=500, every_n=250,
+        x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,2,3], take_n=200, every_n=100, first_pop=True,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
     
@@ -564,7 +564,7 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
         ["uNAS","uNAS_b64", "ntk_1", "Ntk"],
-        x_range=(0, 0.10), y_range=(0, 20000), y_key=[1,2], take_n=500, every_n=250,
+        x_range=(0, 0.10), y_range=(0, 20000), y_key=[1,2], take_n=200, every_n=100, first_pop=True,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_PMU_MS.png")
 
@@ -575,7 +575,7 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
         ["uNAS","uNAS_b64", "ntk_1", "Ntk"],
-        x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,3], take_n=500, every_n=250,
+        x_range=(0, 0.10), y_range=(0, 100000), y_key=[1,3], take_n=200, every_n=100, first_pop=True,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_PMU_MACs.png")
     
@@ -586,7 +586,7 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
         ],
         ["uNAS","uNAS_b64", "ntk_1", "Ntk"],
-        x_range=(0, 0.10), y_range=(0, 100000), y_key=[2,3], take_n=500, every_n=250,
+        x_range=(0, 0.10), y_range=(0, 100000), y_key=[2,3], take_n=200, every_n=100, first_pop=True,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_MS_MACs.png")
 
