@@ -600,7 +600,7 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
-        x_range=(0.11, 0.40), y_range=(0, 10000000), y_key=[1,2,3], take_n=320, every_n=100,
+        x_range=(0.11, 0.40), y_range=(0, 10000000), y_key=[1,2,3], take_n=320, every_n=80,
         title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/test_multi_steps_multi_metrics_pareto_Cifar10_PMU_MS_MACs.png")
     
@@ -609,7 +609,7 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
-        x_range=(0.11, 0.40), y_range=(0, 250000), y_key=[1,2], take_n=320, every_n=100,
+        x_range=(0.11, 0.40), y_range=(0, 250000), y_key=[1,2], take_n=320, every_n=80,
         title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/test_multi_steps_multi_metrics_pareto_Cifar10_PMU_MS.png")
     
@@ -618,7 +618,7 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
-        x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,3], take_n=320, every_n=100,
+        x_range=(0.11, 0.40), y_range=(0, 5000000), y_key=[1,3], take_n=320, every_n=80,
         title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/test_multi_steps_multi_metrics_pareto_Cifar10_PMU_MACs.png")
     
@@ -627,7 +627,7 @@ if __name__ == '__main__':
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
-        x_range=(0.11, 0.40), y_range=(0, 10000000), y_key=[2,3], take_n=320, every_n=100,
+        x_range=(0.11, 0.40), y_range=(0, 10000000), y_key=[2,3], take_n=320, every_n=80,
         title="Pareto fronts for Cifar10",
         output_file="artifacts/cnn_cifar10/test_multi_steps_multi_metrics_pareto_Cifar10_MS_MACs.png")
     
