@@ -548,9 +548,9 @@ if __name__ == '__main__':
     #MNIST
     multi_steps_multi_metrics_multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/M_4_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/M_7_ntk_1000_rn_1500_cnn_mnist_struct_pru_ntk_rn_block_10_layer_3_agingevosearch_state.pickle",
         ],
-        ["uNAS","M_4",],
+        ["uNAS","M_7",],
         x_range=(0, 0.03), y_range=(0, 600000), y_key=[1,2,3], take_n=1000, every_n=500, first_pop=False,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
