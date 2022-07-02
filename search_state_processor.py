@@ -547,7 +547,7 @@ if __name__ == '__main__':
     #test
     #MNIST
     multi_steps_multi_metrics_multiple_pareto_fronts(
-        ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_agingevosearch_state.pickle",
+        ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/mnist_ntk_2_pre_search_agingevosearch_state.pickle",
         ],
         ["uNAS","ntk_2_pre_search",],
