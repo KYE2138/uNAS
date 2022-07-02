@@ -551,7 +551,7 @@ if __name__ == '__main__':
          "artifacts/cnn_mnist/mnist_ntk_2_pre_search_agingevosearch_state.pickle",
         ],
         ["uNAS","ntk_2_pre_search",],
-        x_range=(0, 0.10), y_range=(0, 400000), y_key=[1,2,3], take_n=700, every_n=350, first_pop=False,
+        x_range=(0, 0.10), y_range=(0, 400000), y_key=[1,2,3], take_n=1000, every_n=250, first_pop=False,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
     
