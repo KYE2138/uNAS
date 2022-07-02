@@ -20,6 +20,7 @@ class PruningConfig:
     finish_pruning_by_epoch: int = None
     min_sparsity: float = 0
     max_sparsity: float = 0.995
+    update_iterations:  int = None
 
 
 @dataclass
