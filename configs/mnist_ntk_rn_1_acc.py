@@ -52,7 +52,8 @@ training_config.pruning = PruningConfig(
     start_pruning_at_epoch=3,
     finish_pruning_by_epoch=18,
     min_sparsity=0.05,
-    max_sparsity=0.8
+    max_sparsity=0.8,
+    update_iterations=4,
 )
 
 threshold_config = ThresholdConfig(
