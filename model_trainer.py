@@ -98,7 +98,8 @@ class ModelTrainer:
                 self.log.info(f"Target sparsity: {sparsity:.4f}")
                 pruning_cb = DPFPruning(target_sparsity=sparsity, structured=self.pruning.structured,
                                         start_pruning_at_epoch=self.pruning.start_pruning_at_epoch,
-                                        finish_pruning_by_epoch=self.pruning.finish_pruning_by_epoch)
+                                        finish_pruning_by_epoch=self.pruning.finish_pruning_by_epoch,
+                                        update_iterations=self.pruning.update_iterations)
                 check_logs_from_epoch = self.pruning.finish_pruning_by_epoch
                 callbacks.append(pruning_cb)
 
