@@ -596,7 +596,7 @@ if __name__ == '__main__':
 
     #Cifar10
     multi_steps_multi_metrics_multiple_pareto_fronts(
-         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_b64_agingevosearch_state.pickle",
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
@@ -605,7 +605,7 @@ if __name__ == '__main__':
         output_file="artifacts/cnn_cifar10/test_multi_steps_multi_metrics_pareto_Cifar10_PMU_MS_MACs.png")
     
     multi_steps_multi_metrics_multiple_pareto_fronts(
-         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_b64_agingevosearch_state.pickle",
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
@@ -614,7 +614,7 @@ if __name__ == '__main__':
         output_file="artifacts/cnn_cifar10/test_multi_steps_multi_metrics_pareto_Cifar10_PMU_MS.png")
     
     multi_steps_multi_metrics_multiple_pareto_fronts(
-         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_b64_agingevosearch_state.pickle",
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
@@ -623,7 +623,7 @@ if __name__ == '__main__':
         output_file="artifacts/cnn_cifar10/test_multi_steps_multi_metrics_pareto_Cifar10_PMU_MACs.png")
     
     multi_steps_multi_metrics_multiple_pareto_fronts(
-         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_b64_agingevosearch_state.pickle",
+         ["artifacts/cnn_cifar10/example_cnn_cifar10_struct_pru_2_agingevosearch_state.pickle",
          "artifacts/cnn_cifar10/pre_ntk_cnn_cifar10_struct_pru_agingevosearch_state.pickle",
          ],
         ["uNAS", "Ntk"],
