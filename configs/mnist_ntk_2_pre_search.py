@@ -18,17 +18,17 @@ training_config = TrainingConfig(
 search_config = AgingEvoConfig(
     search_space=CnnSearchSpace(),
     checkpoint_dir="artifacts/cnn_mnist",
-    rounds=500,
+    rounds=1000,
     #max_parallel_evaluations = 2
 )
 
 bound_config = BoundConfig(
-    #error_bound=0.035,
+    error_bound=0.035,
     peak_mem_bound=2500,
     model_size_bound=4500,
     mac_bound=30000000,
     ntk=4000,
-    rn=1500,
+    #rn=1500,
     #ntk_PMU = 200000000,
     #ntk_MS = 200000000,
     #ntk_MACs = 240000000000,
@@ -54,12 +54,11 @@ training_config.pruning = PruningConfig(
     min_sparsity=0.05,
     max_sparsity=0.8,
     #update_iterations=4,
-
 )
 
 threshold_config = ThresholdConfig(
     # bound_config.ntk * 3
     ntk = 12000,
     # 4000 - bound_config.rn
-    rn = 2500
+    #rn = 2500
 )
