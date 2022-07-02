@@ -207,8 +207,12 @@ def get_ntk(save_path, input_finish_info={}):
         ntks = [torch.einsum('nc,mc->nm', [_grads, _grads]) for _grads in grads]
         conds = []
         for ntk in ntks:
-            eigenvalues, _ = torch.symeig(ntk)  # ascending
-            conds.append(np.nan_to_num((eigenvalues[-1] / eigenvalues[0]).item(), copy=True, nan=100000.0))
+            try:
+                eigenvalues, _ = torch.symeig(ntk)  # ascending
+                conds.append(np.nan_to_num((eigenvalues[-1] / eigenvalues[0]).item(), copy=True, nan=100000.0))
+
+            except:
+                conds.append(100000)
 
         return conds
 
