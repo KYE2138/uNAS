@@ -18,7 +18,7 @@ training_config = TrainingConfig(
 search_config = AgingEvoConfig(
     search_space=CnnSearchSpace(),
     checkpoint_dir="artifacts/cnn_mnist",
-    rounds=1000,
+    rounds=2000,
     #max_parallel_evaluations = 2
 )
 
