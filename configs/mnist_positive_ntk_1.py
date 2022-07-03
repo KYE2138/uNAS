@@ -28,7 +28,7 @@ bound_config = BoundConfig(
     model_size_bound=4500,
     mac_bound=30000000,
     ntk=1000,
-    rn=1500,
+    #rn=1500,
     #ntk_PMU = 200000000,
     #ntk_MS = 200000000,
     #ntk_MACs = 240000000000,
@@ -59,5 +59,5 @@ threshold_config = ThresholdConfig(
     # bound_config.ntk * 3
     ntk = 3000,
     # 4000 - bound_config.rn
-    rn = 2500
+    #rn = 2500
 )
