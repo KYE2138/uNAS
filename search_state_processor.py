@@ -546,6 +546,16 @@ if __name__ == '__main__':
     
     #test
     #MNIST
+    multiple_pareto_fronts(
+         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/mnist_ntk_2_pre_search_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+        ],
+        ["uNAS_b64","ntk_2_pre_search","pre_ntk"],
+        x_range=(0, 0.10), y_range=(0, 10000), y_key=2, take_n=500,
+        title="Model size vs error rate Pareto fronts for MNIST",
+        output_file="artifacts/cnn_mnist/model_size_pareto_MNIST.png")
+
     multi_steps_multi_metrics_multiple_pareto_fronts(
         ["artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/mnist_ntk_2_pre_search_agingevosearch_state.pickle",
