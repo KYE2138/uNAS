@@ -557,7 +557,7 @@ if __name__ == '__main__':
          "ntk_2_pre_search",
          #"pre_ntk"
          ],
-        x_range=(0, 0.06), y_range=(0, 200000), y_key=[1,2,3], take_n=1000, every_n=500, first_pop=False,
+        x_range=(0, 0.06), y_range=(0, 200000), y_key=[1,2,3], take_n=1800, every_n=600, first_pop=False,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
     
