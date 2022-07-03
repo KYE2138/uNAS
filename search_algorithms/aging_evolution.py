@@ -84,7 +84,7 @@ class GPUTrainer:
             rn_threshold = threshold.rn
         # rn要在2500以下
         #pdb.set_trace()
-        if ntk>ntk_threshold or rn>=rn_threshold or self.bound_config.error_bound==None:
+        if ntk<0 or ntk>ntk_threshold or rn>=rn_threshold or self.bound_config.error_bound==None:
             print(f'ntks = {ntks}, ntk = {ntk}')
             print(f'rns = {rns}, rn = {rn}')
             print(f'epochs = 1')
