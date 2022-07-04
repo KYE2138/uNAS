@@ -548,14 +548,18 @@ if __name__ == '__main__':
     #MNIST
     multi_steps_multi_metrics_multiple_pareto_fronts(
         [#"artifacts/cnn_mnist/mnist_first_population_example_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
+         #"artifacts/cnn_mnist/example_cnn_mnist_struct_pru_b64_agingevosearch_state.pickle",
          #"artifacts/cnn_mnist/mnist_ntk_2_pre_search_agingevosearch_state.pickle",
-         "artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+         #"artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
+         "artifacts/cnn_mnist/mnist_positive_ntk_rn_first_population_example_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/mnist_positive_ntk_1_agingevosearch_state.pickle",
         ],
         [#"first_population",
-         "uNAS_b64",
+         #"uNAS_b64",
          #"ntk_2_pre_search",
-         "pre_ntk"
+         #"pre_ntk",
+         "positive_ntk_rn",
+         "positive_ntk_1"
          ],
         x_range=(0, 0.06), y_range=(0, 50000), y_key=[1,2,3], take_n=500, every_n=100, first_pop=False,
         title="Pareto fronts for MNIST",
