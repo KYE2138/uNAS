@@ -560,7 +560,7 @@ if __name__ == '__main__':
          #"ntk_2_pre_search",
          #"pre_ntk",
          "positive_ntk_rn",
-         "positive_ntk_1"
+         "positive_ntk_1",
          "positive_ntk_2"
          ],
         x_range=(0, 0.1), y_range=(0, 100000), y_key=[1,2,3], take_n=1000, every_n=500, first_pop=True,
