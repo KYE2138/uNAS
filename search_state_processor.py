@@ -553,6 +553,7 @@ if __name__ == '__main__':
          #"artifacts/cnn_mnist/pre_ntk_cnn_mnist_struct_pru_agingevosearch_state_ntk_1000.pickle",
          "artifacts/cnn_mnist/mnist_positive_ntk_rn_first_population_example_agingevosearch_state.pickle",
          "artifacts/cnn_mnist/mnist_positive_ntk_1_agingevosearch_state.pickle",
+         "artifacts/cnn_mnist/mnist_positive_ntk_2_agingevosearch_state.pickle",
         ],
         [#"first_population",
          #"uNAS_b64",
@@ -560,8 +561,9 @@ if __name__ == '__main__':
          #"pre_ntk",
          "positive_ntk_rn",
          "positive_ntk_1"
+         "positive_ntk_2"
          ],
-        x_range=(0, 0.1), y_range=(0, 100000), y_key=[1,2,3], take_n=500, every_n=100, first_pop=True,
+        x_range=(0, 0.1), y_range=(0, 100000), y_key=[1,2,3], take_n=1000, every_n=500, first_pop=True,
         title="Pareto fronts for MNIST",
         output_file="artifacts/cnn_mnist/test_multi_steps_multi_metrics_pareto_MNIST_PMU_MS_MACs.png")
     
